@@ -1,0 +1,347 @@
+/* ===============================
+   RESET / BASE
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f9;
+  color: #333;
+}
+
+/* ===============================
+   SIDEBAR
+================================ */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 260px;
+  height: 100vh;
+  background: #002855;
+  color: #fff;
+  transition: width 0.35s ease;
+  z-index: 100;
+}
+
+.sidebar.active {
+  width: 80px;
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.sidebar.active .logo span {
+  display: none;
+}
+
+.sidebar .menu {
+  margin-top: 30px;
+}
+
+.sidebar .menu a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 20px;
+  color: #cfd8e3;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.sidebar .menu a i {
+  font-size: 18px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.sidebar.active .menu a span {
+  display: none;
+}
+
+.sidebar .menu a:hover,
+.sidebar .menu a.active {
+  background: #004080;
+  color: #fff;
+}
+
+.sidebar .logout {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}
+
+/* ===============================
+   MAIN LAYOUT
+================================ */
+.main {
+  margin-left: 260px;
+  min-height: 100vh;
+  transition: margin-left 0.35s ease;
+}
+
+.main.shifted {
+  margin-left: 80px;
+}
+
+/* ===============================
+   TOPBAR
+================================ */
+.topbar {
+  background: #ffffff;
+  padding: 16px 22px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.topbar h2 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #002855;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ===============================
+   CARDS FILTROS
+================================ */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 25px 30px;
+}
+
+/* CARD BASE */
+.info-card {
+  position: relative;
+  padding: 20px;
+  border-radius: 18px;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+
+/* HOVER */
+.info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* ICONO GRANDE */
+.info-card .icon {
+  position: absolute;
+  right: 15px;
+  bottom: 10px;
+  font-size: 65px;
+  opacity: 0.18;
+}
+
+/* TEXTO */
+.info-card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.info-card p {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* 📁 TODOS */
+.info-card.tramites {
+  background: #ffffff;
+  color: #111827;
+}
+
+.info-card.tramites .icon {
+  color: #4a4a4b;
+}
+
+/* 🟡 PENDIENTES */
+.info-card.pendientes {
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: white;
+}
+
+.info-card.pendientes .icon {
+  color: #52525b;
+}
+
+/* 🔵 EN REVISIÓN */
+.info-card.revision {
+  background: linear-gradient(135deg, #002855, #2563eb);
+  color: white;
+}
+
+.info-card.revision .icon {
+  color: #dbeafe;
+}
+
+/* 🟢 APROBADOS */
+.info-card.aprobados {
+  background: linear-gradient(135deg, #0f740b, #16a34a);
+  color: white;
+}
+
+.info-card.aprobados .icon {
+  color: #dcfce7;
+}
+
+/* 🔴 RECHAZADOS */
+.info-card.rechazados {
+  background: linear-gradient(135deg, #7f1d1d, #dc2626);
+  color: white;
+}
+
+.info-card.rechazados .icon {
+  color: #fee2e2;
+}
+
+.info-card.active {
+  outline: 3px solid black;
+}
+
+/* ===============================
+   TABLA / SECCIÓN
+================================ */
+.avisos {
+  margin: 0 30px 40px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.avisos h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #002855;
+}
+
+/* CONTENEDOR BONITO */
+.table {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+/* HEADER PRO */
+.table thead {
+  background: linear-gradient(135deg, #002855, #2563eb);
+  color: #fff;
+}
+
+.table thead th {
+  border: none;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+/* CELDAS */
+.table td, .table th {
+  border: none;
+}
+
+/* HOVER FILAS */
+.table tbody tr {
+  transition: all 0.2s ease;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  text-align: center;
+  background-color: #7faeec;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  text-align: center;
+  background-color: #dbeafe;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  text-align: center;
+  background-color: #dbeafe;
+}
+
+.table th:nth-child(4),
+.table td:nth-child(4) {
+  text-align: center;
+  background-color: #dbeafe;
+}
+
+.table th:nth-child(5),
+.table td:nth-child(5) {
+  text-align: center;
+  background-color: #dbeafe;
+}
+
+.table th:nth-child(6),
+.table td:nth-child(6) {
+  text-align: center;
+  background-color: #dbeafe;
+}
+
+.table thead th {
+  font-size: 14px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 80px;
+  }
+
+  .main {
+    margin-left: 80px;
+  }
+
+  .sidebar .logo span,
+  .sidebar .menu a span {
+    display: none;
+  }
+
+  .cards-container {
+    padding: 20px;
+  }
+
+  .avisos {
+    margin: 20px;
+  }
+}

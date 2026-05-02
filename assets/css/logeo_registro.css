@@ -1,0 +1,136 @@
+:root {
+    --azul: #003A8F;
+    --amarillo: #ffd000;
+    --negro: #000000;
+    --blanco: #FFFFFF;
+    --rojo: #C62828;
+    --verde: #0f960f;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: linear-gradient(
+        135deg,
+        var(--azul),
+        var(--negro)
+    );
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-card {
+    background: var(--blanco);
+    width: 380px;
+    padding: 35px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+}
+
+.auth-card img {
+    margin-top: -20px;
+    width: 120px;
+    margin-bottom: 15px;
+}
+
+.auth-card h2 {
+    color: var(--negro);
+    margin-bottom: 5px;
+    margin-top: -25px;
+}
+
+.auth-card p {
+    color: var(--azul);
+    margin-top: -5px;
+    font-size: 14px;
+    margin-bottom: 25px;
+}
+
+.auth-card input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.auth-card input:focus {
+    outline: none;
+    border-color: var(--azul);
+}
+
+.auth-card button {
+    width: 100%;
+    padding: 12px;
+    background: var(--verde);
+    color: var(--blanco);
+    border: none;
+    border-radius: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-card button:hover {
+    background: #0c7a0c;
+}
+
+.auth-card a {
+    display: block;
+    margin-top: 15px;
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--azul);
+}
+
+.auth-card a:hover {
+    text-decoration: underline;
+}
+
+/* ALERTAS */
+
+.alert {
+    padding: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-size: 14px;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.alert-error {
+    background: #fdecea;
+    color: var(--rojo);
+    border-left: 5px solid var(--rojo);
+}
+
+.alert-success {
+    background: #e8f5e9;
+    color: var(--verde);
+    border-left: 5px solid var(--verde);
+}
+
+.alert.ocultar {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.6s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

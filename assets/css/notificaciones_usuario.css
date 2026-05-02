@@ -1,0 +1,175 @@
+/* ===============================
+   RESET / BASE
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f9;
+  color: #333;
+}
+
+/* ===============================
+   SIDEBAR (IGUAL QUE DASHBOARD)
+================================ */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 260px;
+  height: 100vh;
+  background: #002855;
+  color: #fff;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+}
+
+.sidebar.active {
+  width: 80px;
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.sidebar.active .logo span {
+  display: none;
+}
+
+.sidebar .menu {
+  margin-top: 30px;
+}
+
+.sidebar .menu a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 20px;
+  color: #cfd8e3;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.sidebar .menu a i {
+  font-size: 18px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.sidebar .menu a span {
+  transition: opacity 0.3s;
+}
+
+.sidebar.active .menu a span {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar .menu a:hover,
+.sidebar .menu a.active {
+  background: #004080;
+  color: #fff;
+}
+
+.sidebar .logout {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}
+
+/* ===============================
+   MAIN (AQUÍ ESTABA EL PROBLEMA)
+================================ */
+.main {
+  margin-left: 260px;
+  transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100vh;
+}
+
+.main.shifted {
+  margin-left: 80px;
+}
+
+/* ===============================
+   TOPBAR
+================================ */
+.topbar {
+  background: #fff;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ===============================
+   NOTIFICACIONES
+================================ */
+.notificaciones-section {
+  padding: 30px;
+}
+
+.notificaciones-container {
+  background: #fff;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.notificacion-card {
+  display: flex;
+  gap: 15px;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+  transition: background 0.3s ease;
+}
+
+.notificacion-card:hover {
+  background: #f9fbff;
+}
+
+.notificacion-card:last-child {
+  border-bottom: none;
+}
+
+.notif-icon {
+  font-size: 22px;
+  color: #002855;
+}
+
+.notif-content h5 {
+  margin-bottom: 6px;
+}
+
+.notif-content p {
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.fecha {
+  font-size: 12px;
+  color: #777;
+}

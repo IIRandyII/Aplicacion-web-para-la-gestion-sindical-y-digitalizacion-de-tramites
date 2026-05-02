@@ -1,0 +1,730 @@
+/* ===============================
+   RESET / BASE
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f9;
+  color: #333;
+}
+
+/* ===============================
+   SIDEBAR
+================================ */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 260px;
+  height: 100vh;
+  background: #002855;
+  color: #fff;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+}
+
+.sidebar.active {
+  width: 80px;
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.sidebar.active .logo span {
+  display: none;
+}
+
+.sidebar .menu {
+  margin-top: 30px;
+}
+
+.sidebar .menu a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 20px;
+  color: #cfd8e3;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.sidebar .menu a i {
+  font-size: 18px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.sidebar .menu a span {
+  transition: opacity 0.3s;
+}
+
+.sidebar.active .menu a span {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar .menu a:hover,
+.sidebar .menu a.active {
+  background: #004080;
+  color: #fff;
+}
+
+.sidebar .logout {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}
+
+/* ===============================
+   MAIN / LAYOUT
+================================ */
+.main {
+  margin-left: 260px;
+  transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100vh;
+}
+
+.main.shifted {
+  margin-left: 80px;
+}
+
+/* ===============================
+   TOPBAR
+================================ */
+.topbar {
+  background: #fff;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ===============================
+   NUEVO TRÁMITE
+================================ */
+.tramite-section {
+  padding: 30px;
+}
+
+.tramite-section h2 {
+  margin-bottom: 20px;
+}
+
+.tramite-header {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 20px;
+}
+
+.tramites-contenedor {
+    margin-top: -50px;
+    background: #fff;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.tramites-contenedor h4 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #002855;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ===============================
+   TABLA DE TRÁMITES - DISEÑO PRO
+================================ */
+.tabla-tramites {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+
+/* HEADER PROFESIONAL */
+.tabla-tramites thead {
+    background: linear-gradient(135deg, #002855, #2563eb);
+    color: #fff;
+}
+
+.tabla-tramites th {
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-align: center;
+    padding: 14px 15px;
+    border: none;
+    font-weight: 600;
+}
+
+/* CELDAS CON COLORES ALTERNADOS */
+.tabla-tramites th:nth-child(1),
+.tabla-tramites td:nth-child(1) {
+    text-align: center;
+    background-color: #7faeec;
+    width: 8%;
+}
+
+.tabla-tramites th:nth-child(2),
+.tabla-tramites td:nth-child(2) {
+    text-align: center;
+    background-color: #dbeafe;
+    width: 12%;
+}
+
+.tabla-tramites th:nth-child(3),
+.tabla-tramites td:nth-child(3) {
+    text-align: center;
+    background-color: #dbeafe;
+    width: 14%;
+}
+
+.tabla-tramites th:nth-child(4),
+.tabla-tramites td:nth-child(4) {
+    text-align: center;
+    background-color: #dbeafe;
+    width: 15%;
+}
+
+.tabla-tramites th:nth-child(5),
+.tabla-tramites td:nth-child(5) {
+    text-align: center;
+    background-color: #dbeafe;
+    width: 10%;
+}
+
+.tabla-tramites th:nth-child(6),
+.tabla-tramites td:nth-child(6) {
+    text-align: center;
+    background-color: #dbeafe;
+    width: 12%;
+}
+
+.tabla-tramites th:nth-child(7),
+.tabla-tramites td:nth-child(7) {
+    text-align: center;
+    background-color: #dbeafe;
+    width: 10%;
+}
+
+.tabla-tramites th:nth-child(8),
+.tabla-tramites td:nth-child(8) {
+    text-align: center;
+    background-color: #dbeafe;
+    width: 12%;
+}
+
+.tabla-tramites th:nth-child(9),
+.tabla-tramites td:nth-child(9) {
+    text-align: center;
+    background-color: #dbeafe;
+    width: 10%;
+}
+
+/* CONTENIDO */
+.tabla-tramites td {
+    padding: 12px 15px;
+    border: none;
+    font-size: 13px;
+}
+
+/* HOVER FILAS */
+.tabla-tramites tbody tr {
+    transition: all 0.2s ease;
+}
+
+.tabla-tramites tbody tr:hover {
+    background-color: #f0f7ff !important;
+}
+
+/* VACIO */
+.tabla-tramites .vacio {
+    text-align: center;
+    color: #777;
+    font-style: italic;
+    padding: 30px !important;
+}
+
+
+.btn-primary {
+  background: #005baa;
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary:hover {
+  background: #004a8c;
+}
+
+/* ===============================
+   MODAL
+================================ */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #fff;
+  width: 90%;
+  max-width: 850px;
+  margin: 4vh auto;
+  padding: 25px;
+  border-radius: 8px;
+  position: relative;
+}
+
+.modal-content h3 {
+  margin-bottom: 15px;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.modal-content textarea {
+  resize: vertical;
+}
+
+.close {
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.sidebar .menu a span {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar.active .menu a span {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+/* ===============================
+   FORMULARIOS RESPONSIVOS
+================================ */
+
+#formularioTramite {
+  margin-top: 15px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.form-section {
+  margin-top: 15px;
+}
+
+.form-section h4 {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #004080;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+  font-size: 14px;
+}
+
+hr {
+  margin: 15px 0;
+  border: 0;
+  border-top: 1px solid #ddd;
+}
+
+.fila-selects {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.fila-selects div {
+  flex: 1;
+}
+
+.fila-selects select {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.fila-doble {
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
+}
+
+.fila-doble div {
+  flex: 1;
+}
+
+.fila-doble input {
+  width: 100%;
+  max-width: 100% !important;
+}
+
+/* Igualar tamaño de selects de trámites con el de Departamento */
+.fila-doble select {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.fila-doble-descuento select {
+    width: 49% !important;
+    max-width: 100% !important;
+}
+ 
+.fila-doble-descuento {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+/* Forzar que cada columna mida 49% desde el inicio */
+.fila-doble-descuento > div {
+    width: 49% !important;
+    max-width: 49% !important;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Que select e input respeten ese tamaño */
+.fila-doble-descuento select,
+.fila-doble-descuento input {
+    width: 100% !important;
+}
+
+.btn-ver {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: #005baa;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    padding: 6px 12px;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+}
+
+.btn-ver i {
+    font-size: 14px;
+}
+
+.btn-ver:hover {
+    background: #003f7a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.filtros-tabla {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.buscador {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+}
+
+.buscador i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 16px;
+}
+
+.buscador input {
+    width: 100%;
+    padding: 10px 12px 10px 40px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.buscador input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+#ordenFecha {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+#ordenFecha:hover {
+    border-color: #2563eb;
+}
+
+#ordenFecha:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* Fondo modal */
+#modalVerTramite {
+    backdrop-filter: blur(4px);
+}
+
+/* Grid principal */
+.modal-grid {
+    display: grid;
+    gap: 20px;
+}
+
+/* Tarjetas */
+.card-detalle {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card-detalle h3 {
+    margin-bottom: 15px;
+    color: #0d3b66;
+    border-bottom: 2px solid #f1f1f1;
+    padding-bottom: 8px;
+}
+
+/* Items */
+.detalle-item {
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* Estado */
+.estado-contenedor {
+    margin-top: 15px;
+}
+
+.badge-estado {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* PDF */
+.card-pdf iframe {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+
+.archivo-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f4f6f9;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    margin-top: 10px;
+}
+
+.archivo-box i {
+    color: #e74c3c;
+    font-size: 22px;
+    margin-right: 10px;
+}
+
+.btn-descargar {
+    background: #0d6efd;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+.btn-descargar:hover {
+    background: #0b5ed7;
+}
+
+.btn-secondary {
+  background: transparent;
+  color: #005baa;
+  border: 2px solid #005baa;
+  padding: 10px 22px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: #005baa;
+  color: #fff;
+}
+
+.icono-notificacion {
+    position: relative;
+    display: inline-block;
+}
+
+.badge-notificacion {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 11px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+/* TABLETS */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 80px;
+  }
+
+  .sidebar .logo span,
+  .sidebar .menu a span {
+    display: none;
+  }
+
+  .main {
+    margin-left: 80px;
+  }
+
+  .filtros-tabla {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .buscador {
+    min-width: 100%;
+  }
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+  .tramite-section {
+    padding: 15px;
+  }
+
+  .tramites-contenedor {
+    padding: 15px;
+  }
+
+  .tabla-tramites {
+    font-size: 12px;
+  }
+
+  .tabla-tramites th,
+  .tabla-tramites td {
+    padding: 8px 10px;
+  }
+
+  .btn-ver {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
+
+  .filtros-tabla {
+    flex-direction: column;
+  }
+
+  .buscador {
+    min-width: 100%;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin: 5% auto;
+    padding: 15px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

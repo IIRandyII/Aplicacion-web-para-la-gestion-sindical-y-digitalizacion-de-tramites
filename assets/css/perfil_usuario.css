@@ -1,0 +1,378 @@
+/* ===============================
+   BASE
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f9;
+  color: #333;
+}
+
+/* ===============================
+   SIDEBAR (ESTILO UNIFICADO)
+================================ */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 260px;
+  height: 100vh;
+  background: #002855;
+  color: #fff;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+}
+
+.sidebar.active {
+  width: 80px;
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.sidebar.active .logo span {
+  display: none;
+}
+
+.sidebar .menu {
+  margin-top: 30px;
+}
+
+.sidebar .menu a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 20px;
+  color: #cfd8e3;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.sidebar .menu a i {
+  font-size: 18px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.sidebar .menu a span {
+  transition: opacity 0.3s;
+}
+
+.sidebar.active .menu a span {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar .menu a:hover,
+.sidebar .menu a.active {
+  background: #004080;
+  color: #fff;
+}
+
+.sidebar .logout {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}
+
+/* ===============================
+   TOPBAR (IGUAL AL DASHBOARD)
+================================ */
+/* ===============================
+   TOPBAR
+================================ */
+.topbar {
+  background: #fff;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+/* ===============================
+   CONTENT
+================================ */
+.content {
+  margin-left: 260px;
+  margin-top: 60px;
+  padding: 20px;
+  background: #f4f6f9;
+  min-height: calc(100vh - 60px);
+  transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ===============================
+   CONTENIDO (CLAVE PARA QUE NO SE TAPE)
+================================ */
+.main {
+  margin-left: 260px;
+  padding: 0px;
+  transition: 0.3s;
+}
+
+.sidebar.active ~ .main {
+  margin-left: 80px;
+}
+
+/* ===============================
+   FORMULARIO PERFIL
+================================ */
+.card-body {
+  padding: 30px;
+  background: #0463a7;
+  border-radius: 5px;
+}
+
+h6 {
+  padding: 10px;
+  border-radius: 8px;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.form-control {
+  height: 36px;
+  font-size: 14px;
+  border-radius: 6px;
+}
+
+textarea.form-control {
+  height: 70px;
+}
+
+
+.form-control:focus {
+  border-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(204,0,0,0.15);
+}
+
+.img-thumbnail {
+  border-radius: 50%;
+}
+
+
+.profile-pic {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+
+
+.upload-btn {
+  display: inline-block;
+  background: #ffffff;
+  color: #0463a7;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.section-title {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 20px;
+  border-bottom: 2px solid rgba(255,255,255,0.3);
+  padding-bottom: 6px;
+}
+
+.text-end button {
+background-color: green;
+}
+
+.text-end button:hover {
+  background-color: green;
+}
+
+.avatar-iniciales {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1e88e5, #42a5f5);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* SweetAlert perfil */
+.swal-perfil {
+    border-radius: 14px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,.12) !important;
+    padding: 12px 16px !important;
+}
+
+.swal-title {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+}
+
+.swal-text {
+    font-size: 13px !important;
+    color: #555 !important;
+    margin-top: 4px !important;
+}
+
+.icono-notificacion {
+    position: relative;
+    display: inline-block;
+}
+
+.badge-notificacion {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 11px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* ===============================
+   📱 RESPONSIVE
+================================ */
+
+/* Tablets */
+@media (max-width: 992px) {
+
+  .sidebar {
+    width: 80px;
+  }
+
+  .sidebar span {
+    display: none;
+  }
+
+  .main {
+    margin-left: 80px;
+  }
+
+}
+
+/* 📱 MÓVILES */
+@media (max-width: 768px) {
+
+  .overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 90;
+}
+
+.overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+  /* Sidebar oculto por defecto */
+  .sidebar {
+    left: -260px;
+    width: 260px;
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  /* MAIN ocupa todo */
+  .main {
+    margin-left: 0;
+  }
+
+  /* Topbar */
+  .topbar {
+    justify-content: space-between;
+  }
+
+  /* Avatar más pequeño */
+  .profile-pic,
+  .avatar-iniciales {
+    width: 120px;
+    height: 120px;
+    font-size: 40px;
+  }
+
+  /* Formulario en columna */
+  .row {
+    flex-direction: column;
+  }
+
+  .col-md-6,
+  .col-md-3,
+  .col-md-9,
+  .col-md-12 {
+    width: 100%;
+  }
+
+  /* Inputs */
+  .form-control {
+    font-size: 13px;
+  }
+
+  /* Botones */
+  .text-end {
+    text-align: center !important;
+  }
+
+}
+
+/* 📱 EXTRA PEQUEÑOS */
+@media (max-width: 480px) {
+
+  .topbar h2 {
+    font-size: 18px;
+  }
+
+  .card-body {
+    padding: 15px;
+  }
+
+}

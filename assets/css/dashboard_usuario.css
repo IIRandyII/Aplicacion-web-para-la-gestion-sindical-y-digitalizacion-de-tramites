@@ -1,0 +1,352 @@
+/* ===============================
+   RESET / BASE
+================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f9;
+  color: #333;
+}
+
+/* ===============================
+   SIDEBAR (ESTILO UNIFICADO)
+================================ */
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 260px;
+  height: 100vh;
+  background: #002855;
+  color: #fff;
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
+}
+
+.sidebar.active {
+  width: 80px;
+}
+
+.sidebar .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.sidebar .logo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.sidebar.active .logo span {
+  display: none;
+}
+
+.sidebar .menu {
+  margin-top: 30px;
+}
+
+.sidebar .menu a {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 14px 20px;
+  color: #cfd8e3;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.sidebar .menu a i {
+  font-size: 18px;
+  min-width: 20px;
+  text-align: center;
+}
+
+.sidebar .menu a span {
+  transition: opacity 0.3s;
+}
+
+.sidebar.active .menu a span {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sidebar .menu a:hover,
+.sidebar .menu a.active {
+  background: #004080;
+  color: #fff;
+}
+
+.sidebar .logout {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}
+
+/* ===============================
+   MAIN / LAYOUT
+================================ */
+.main {
+  margin-left: 260px;
+  transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  min-height: 100vh;
+}
+
+.main.shifted {
+  margin-left: 80px;
+}
+
+/* ===============================
+   TOPBAR (ESTILO NUEVO TRÁMITE)
+================================ */
+.topbar {
+  background: #fff;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+/* ===============================
+   CARDS DEL DASHBOARD
+================================ */
+/* CONTENEDOR */
+.cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+/* CARD BASE */
+.info-card {
+  position: relative;
+  padding: 20px;
+  border-radius: 18px;
+  overflow: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* HOVER */
+.info-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+}
+
+/* ICONO GRANDE (marca de agua) */
+.info-card .icon {
+  position: absolute;
+  right: 15px;
+  bottom: 10px;
+  font-size: 65px;
+  opacity: 0.18;
+}
+
+/* TEXTO */
+.info-card h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.info-card p {
+  font-size: 30px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* 📁 MIS TRÁMITES (neutral elegante) */
+.info-card.tramites {
+  background: #ffffff;
+  color: #111827;
+}
+
+.info-card.tramites .icon {
+  color: #4a4a4b;
+}
+
+/* 🟡 PENDIENTES (MOSTAZA) */
+.info-card.pendientes {
+  background: linear-gradient(135deg, #facc15, #eab308);
+  color: white;
+}
+
+.info-card.pendientes .icon {
+  color: #52525b;
+}
+
+/* 🔵 EN REVISIÓN (AZUL) */
+.info-card.revision {
+  background: linear-gradient(135deg, #002855, #2563eb);
+  color: white;
+}
+
+.info-card.revision .icon {
+  color: #dbeafe;
+}
+
+/* 🟢 APROBADOS (VERDE) */
+.info-card.aprobados {
+  background: linear-gradient(135deg, #0f740b, #16a34a);
+  color: white;
+}
+
+.info-card.aprobados .icon {
+  color: #dcfce7;
+}
+
+/* ===============================
+   SECCIÓN DE AVISOS
+================================ */
+.avisos {
+  margin: 0 30px 40px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.avisos h3 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  font-size: 20px;
+  color: #580805;
+}
+
+.avisos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.aviso {
+  background: #f9fbff;
+  border-left: 5px solid #580805;
+  padding: 18px 20px;
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.aviso:hover {
+  transform: translateY(-3px);
+}
+
+.aviso h4 {
+  margin-bottom: 8px;
+  color: red;
+}
+
+.aviso p {
+  font-size: 14px;
+  color: #eb0303;
+  line-height: 1.5;
+}
+
+.aviso .fecha {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #777;
+}
+
+.icono-notificacion {
+    position: relative;
+    display: inline-block;
+}
+
+.badge-notificacion {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 11px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+/* TABLETS */
+@media (max-width: 992px) {
+
+  .sidebar {
+    width: 80px;
+  }
+
+  .sidebar .logo span,
+  .sidebar .menu a span {
+    display: none;
+  }
+
+  .main {
+    margin-left: 80px;
+  }
+}
+
+/* MÓVIL */
+@media (max-width: 768px) {
+
+  .sidebar {
+    position: fixed;
+    left: -260px;
+    width: 260px;
+    height: 100%;
+    z-index: 200;
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .main {
+    margin-left: 0;
+  }
+
+  .main.shifted {
+    margin-left: 0;
+  }
+
+  /* Overlay oscuro */
+  .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 150;
+    display: none;
+  }
+
+  .overlay.active {
+    display: block;
+  }
+}
