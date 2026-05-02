@@ -70,6 +70,9 @@ Este proyecto se encuentra en desarrollo activo. Las mejoras previstas incluyen:
 - 🔒 Mejoras en seguridad y validaciones
 
 ---
+## ⚙️ Configuración
+Renombra `config/db.example.php` a `config/db.php` y configura 
+tus credenciales de base de datos.
 
 ## 👨‍💻 Autor
 
