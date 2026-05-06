@@ -1,3 +1,7 @@
+/* =============================================
+   VARIABLES GLOBALES
+   Colores principales del sistema sindical
+   ============================================= */
 :root {
     --azul: #003A8F;
     --amarillo: #ffd000;
@@ -7,6 +11,11 @@
     --verde: #0f960f;
 }
 
+/* =============================================
+   RESET GENERAL
+   Elimina márgenes y padding por defecto
+   del navegador en todos los elementos
+   ============================================= */
 * {
     margin: 0;
     padding: 0;
@@ -14,6 +23,11 @@
     font-family: 'Segoe UI', Arial, sans-serif;
 }
 
+/* =============================================
+   BODY
+   Fondo degradado azul a negro, centra
+   verticalmente el contenido en pantalla
+   ============================================= */
 body {
     background: linear-gradient(
         135deg,
@@ -26,6 +40,11 @@ body {
     justify-content: center;
 }
 
+/* =============================================
+   TARJETA DE AUTENTICACIÓN
+   Contenedor principal del formulario
+   de login y registro
+   ============================================= */
 .auth-card {
     background: var(--blanco);
     width: 380px;
@@ -35,18 +54,21 @@ body {
     box-shadow: 0 15px 30px rgba(0,0,0,0.4);
 }
 
+/* Logo del sindicato */
 .auth-card img {
     margin-top: -20px;
     width: 120px;
     margin-bottom: 15px;
 }
 
+/* Título principal */
 .auth-card h2 {
     color: var(--negro);
     margin-bottom: 5px;
     margin-top: -25px;
 }
 
+/* Subtítulo "Sección 49" */
 .auth-card p {
     color: var(--azul);
     margin-top: -5px;
@@ -54,6 +76,11 @@ body {
     margin-bottom: 25px;
 }
 
+/* =============================================
+   INPUTS DEL FORMULARIO
+   ============================================= */
+
+/* Estilo base de todos los inputs */
 .auth-card input {
     width: 100%;
     padding: 12px;
@@ -63,11 +90,17 @@ body {
     font-size: 14px;
 }
 
+/* Borde azul al hacer foco en un input */
 .auth-card input:focus {
     outline: none;
     border-color: var(--azul);
 }
 
+/* =============================================
+   BOTÓN DE ENVÍO
+   ============================================= */
+
+/* Estilo base del botón */
 .auth-card button {
     width: 100%;
     padding: 12px;
@@ -80,10 +113,15 @@ body {
     transition: 0.3s;
 }
 
+/* Oscurece el botón al pasar el mouse */
 .auth-card button:hover {
     background: #0c7a0c;
 }
 
+/* =============================================
+   ENLACE DE NAVEGACIÓN
+   (Registrarse / Ya tienes cuenta)
+   ============================================= */
 .auth-card a {
     display: block;
     margin-top: 15px;
@@ -96,8 +134,12 @@ body {
     text-decoration: underline;
 }
 
-/* ALERTAS */
+/* =============================================
+   ALERTAS
+   Mensajes de error y éxito dentro de la card
+   ============================================= */
 
+/* Estilo base de todas las alertas */
 .alert {
     padding: 12px;
     border-radius: 6px;
@@ -106,24 +148,31 @@ body {
     animation: fadeIn 0.4s ease-in-out;
 }
 
+/* Alerta de error (correo incorrecto, campos vacíos, etc.) */
 .alert-error {
     background: #fdecea;
     color: var(--rojo);
     border-left: 5px solid var(--rojo);
 }
 
+/* Alerta de éxito (registro completado) */
 .alert-success {
     background: #e8f5e9;
     color: var(--verde);
     border-left: 5px solid var(--verde);
 }
 
+/* Clase que se agrega con JS para ocultar la alerta suavemente */
 .alert.ocultar {
     opacity: 0;
     transform: translateY(-10px);
     transition: all 0.6s ease;
 }
 
+/* =============================================
+   ANIMACIÓN FADE IN
+   Entrada suave de la alerta al aparecer
+   ============================================= */
 @keyframes fadeIn {
     from {
         opacity: 0;

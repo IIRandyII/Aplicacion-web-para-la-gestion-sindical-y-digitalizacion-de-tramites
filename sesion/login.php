@@ -4,7 +4,6 @@ require_once __DIR__ . "/../config/db.php";
 
 // Si ya hay sesión iniciada, redirigir automáticamente
 if (isset($_SESSION["rol"])) {
-
     if ($_SESSION["rol"] === "admin") {
         header("Location: ../admin/dashboard_admin.php");
     } elseif ($_SESSION["rol"] === "afiliado") {
@@ -15,9 +14,19 @@ if (isset($_SESSION["rol"])) {
     exit();
 }
 
+// Capturar mensaje de registro exitoso enviado desde register.php
+$toast_success = null;
+if (isset($_SESSION["registro_exitoso"])) {
+    $toast_success = $_SESSION["registro_exitoso"];
+    unset($_SESSION["registro_exitoso"]);
+}
+
+$error = null;
+
+// Procesar formulario de login
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $email = trim($_POST["email"]);
+    $email    = trim($_POST["email"]);
     $password = trim($_POST["password"]);
 
     if (!empty($email) && !empty($password)) {
@@ -36,19 +45,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if ($password === $user["password"]) {
 
                 // 🔐 Crear sesión
-                $_SESSION["id_usuario"] = $user["id_usuario"];
-                $_SESSION["nombre"] = $user["nombre"];
-                $_SESSION["rol"] = $user["rol"];
+                $_SESSION["id_usuario"]      = $user["id_usuario"];
+                $_SESSION["nombre"]          = $user["nombre"];
+                $_SESSION["rol"]             = $user["rol"];
                 $_SESSION["id_departamento"] = $user["id_departamento"];
 
                 // 🕒 Actualizar fecha de acceso
-                $update = $conn->prepare(
-                    "UPDATE usuarios SET fecha_acceso = NOW() WHERE id_usuario = ?"
-                );
+                $update = $conn->prepare("UPDATE usuarios SET fecha_acceso = NOW() WHERE id_usuario = ?");
                 $update->bind_param("i", $user["id_usuario"]);
                 $update->execute();
 
-                // 🚀 Redirección directa según rol
+                // 🚀 Redirección según rol
                 if ($user["rol"] === "admin") {
                     header("Location: ../admin/dashboard_admin.php");
                 } elseif ($user["rol"] === "afiliado") {
@@ -56,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     header("Location: ../usuario/dashboard_usuario.php");
                 }
-
                 exit();
 
             } else {
@@ -84,13 +90,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <div class="auth-card">
 
     <img src="../assets/img/logo.jpg" alt="Logo Sindicato 49">
-
     <h2>Sistema Sindical</h2>
     <p>Sección 49</p>
 
-    <?php if (isset($error)): ?>
-        <div class="alert alert-error">
+    <!-- Alerta de error de login -->
+    <?php if ($error): ?>
+        <div class="alert alert-error" id="alerta">
             <?php echo $error; ?>
+        </div>
+    <?php endif; ?>
+
+    <!-- Alerta de registro exitoso enviada desde register.php -->
+    <?php if ($toast_success): ?>
+        <div class="alert alert-success" id="alerta">
+            <?php echo $toast_success; ?>
         </div>
     <?php endif; ?>
 
@@ -102,6 +115,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <a href="register.php">Registrarse</a>
 </div>
+
+<script>
+    // Auto-ocultar alerta después de 3 segundos
+    const alerta = document.getElementById("alerta");
+    if (alerta) {
+        setTimeout(() => {
+            alerta.classList.add("ocultar");
+            setTimeout(() => alerta.remove(), 600);
+        }, 3000);
+    }
+</script>
 
 </body>
 </html>
