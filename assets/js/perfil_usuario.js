@@ -1,64 +1,78 @@
 // ===============================
-// SIDEBAR + RESPONSIVE
-// ===============================
-const toggleBtn = document.getElementById("toggleSidebar");
-const sidebar = document.getElementById("sidebar");
-
-// Crear overlay dinámico (para móvil)
-const overlay = document.createElement("div");
-overlay.classList.add("overlay");
-document.body.appendChild(overlay);
-
-// Toggle sidebar
-toggleBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("active");
-    overlay.classList.toggle("active");
-});
-
-// Cerrar sidebar al dar click en overlay
-overlay.addEventListener("click", () => {
-    sidebar.classList.remove("active");
-    overlay.classList.remove("active");
-});
-
-// ===============================
-// RESPONSIVE AUTOMÁTICO
-// ===============================
-function ajustarSidebar() {
-    if (window.innerWidth <= 768) {
-        sidebar.classList.remove("active");
-        overlay.classList.remove("active");
-    } else {
-        sidebar.classList.remove("active"); 
-        overlay.classList.remove("active");
-    }
-}
-
-// Ejecutar al cargar y al cambiar tamaño
-window.addEventListener("load", ajustarSidebar);
-window.addEventListener("resize", ajustarSidebar);
-
-// ===============================
 // PERFIL: EDITAR / GUARDAR
+// Habilita los campos del formulario
+// al hacer click en el botón editar
 // ===============================
-const btnEditar = document.getElementById("btnEditar");
+const btnEditar  = document.getElementById("btnEditar");
 const btnGuardar = document.getElementById("btnGuardar");
 
 if (btnEditar && btnGuardar) {
 
     btnEditar.addEventListener("click", () => {
 
-        // Habilitar solo campos editables
-        const camposEditables = ["telefono", "email", "direccion", "fecha_nacimiento", "nombre", "numero_ficha", "curp", "rfc"];
+        // Campos que el usuario puede editar
+        const camposEditables = [
+            "telefono",
+            "email",
+            "direccion",
+            "fecha_nacimiento",
+            "nombre",
+            "numero_ficha",
+            "curp",
+            "rfc"
+        ];
 
+        // Habilitar solo los campos permitidos
         document.querySelectorAll("input, textarea").forEach(el => {
             if (camposEditables.includes(el.name)) {
                 el.removeAttribute("disabled");
             }
         });
 
+        // Mostrar botón guardar y ocultar editar
         btnGuardar.classList.remove("d-none");
         btnEditar.classList.add("d-none");
     });
-
 }
+
+// ===============================
+// ALERTA DE PERFIL GUARDADO
+// Se ejecuta solo cuando la URL
+// contiene ?status=ok
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get('status') === 'ok') {
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Perfil actualizado',
+            text: 'Tus cambios se guardaron correctamente',
+            timer: 1600,
+            showConfirmButton: false,
+            toast: true,
+            position: 'top',
+            width: 300,
+            background: '#ffffff',
+            iconColor: '#22c55e',
+            showClass: {
+                popup: 'animate__animated animate__fadeInDown animate__faster'
+            },
+            hideClass: {
+                popup: 'animate__animated animate__fadeOutUp animate__faster'
+            },
+            customClass: {
+                popup:         'swal-perfil',
+                title:         'swal-title',
+                htmlContainer: 'swal-text'
+            }
+        });
+
+        // Limpiar ?status=ok de la URL
+        const url = new URL(window.location);
+        url.searchParams.delete('status');
+        window.history.replaceState({}, document.title, url.pathname);
+    }
+});
