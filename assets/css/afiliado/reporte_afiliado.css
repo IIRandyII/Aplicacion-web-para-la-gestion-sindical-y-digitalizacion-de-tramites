@@ -1,212 +1,109 @@
 /* ===============================
-   RESET / BASE
+   REPORTE AFILIADO
+   Estilos específicos de la página
+   de reportes del afiliado
 ================================ */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f4f6f9;
-  color: #333;
-}
-
-/* ===============================
-   SIDEBAR
-================================ */
-.sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 260px;
-  height: 100vh;
-  background: #002855;
-  color: #fff;
-  transition: width 0.35s ease;
-  z-index: 100;
-}
-
-.sidebar.active {
-  width: 80px;
-}
-
-.sidebar .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 20px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.sidebar .logo img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.sidebar.active .logo span {
-  display: none;
-}
-
-.sidebar .menu {
-  margin-top: 30px;
-}
-
-.sidebar .menu a {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 14px 20px;
-  color: #cfd8e3;
-  text-decoration: none;
-  transition: background 0.3s;
-}
-
-.sidebar .menu a i {
-  font-size: 18px;
-  min-width: 20px;
-  text-align: center;
-}
-
-.sidebar.active .menu a span {
-  display: none;
-}
-
-.sidebar .menu a:hover,
-.sidebar .menu a.active {
-  background: #004080;
-  color: #fff;
-}
-
-.sidebar .logout {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-}
-
-
-/* ===============================
-   MAIN LAYOUT
-================================ */
-.main {
-  margin-left: 260px;
-  min-height: 100vh;
-  transition: margin-left 0.35s ease;
-}
-
-.main.shifted {
-  margin-left: 80px;
-}
 
 /* ===============================
    TOPBAR
 ================================ */
 .topbar {
-  background: #ffffff;
-  padding: 16px 22px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  border-bottom: 1px solid #ddd;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    background: #ffffff;
+    padding: 16px 22px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid #ddd;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
 }
 
 .topbar h2 {
-  font-size: 20px;
-  font-weight: 600;
-  color: #002855;
+    font-size: 20px;
+    font-weight: 600;
+    color: #002855;
 }
 
 .toggle-btn {
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
 }
 
-
 /* ===============================
-   SECCIÓN REPORTES
+   SECCIÓN PRINCIPAL DE REPORTES
 ================================ */
-/* ===============================
-   SECCIÓN AVISOS / REPORTES
-================================ */
-
 .avisos {
-  margin: 10px;
-  background: #fff;
-  padding: 15px;
-  border-radius: 14px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    margin: 10px;
+    background: #fff;
+    padding: 15px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
-
-
-/* ===============================
-   BOTONES EXPORTAR
-================================ */
 
 .avisos .mb-4 {
-  margin-bottom: 30px !important;
+    margin-bottom: 30px !important;
+}
+
+/* ===============================
+   BOTONES DE EXPORTACIÓN
+================================ */
+.botones-reportes {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
 }
 
 .avisos .btn {
-  padding: 10px 18px;
-  font-size: 14px;
-  border-radius: 8px;
-  font-weight: 500;
+    padding: 10px 18px;
+    font-size: 14px;
+    border-radius: 8px;
+    font-weight: 500;
 }
 
 .avisos .btn i {
-  margin-right: 6px;
+    margin-right: 6px;
 }
 
 /* ===============================
    CONTENEDORES DE GRÁFICAS
 ================================ */
-
 .grafica-box {
-  background: #fff;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-  margin-bottom: 20px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
 }
 
 .grafica-box h4 {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 18px;
-  color: #002855;
-  margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    color: #002855;
+    margin-bottom: 15px;
 }
 
 /* ===============================
    PLACEHOLDER DE GRÁFICA
 ================================ */
-
 .grafica-placeholder {
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #777;
-  border: 2px dashed #ddd;
-  border-radius: 10px;
-  background: #fafafa;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    background: #fafafa;
 }
 
 /* ===============================
-   RESPONSIVE
+   RESPONSIVE - MÓVIL
 ================================ */
-
 @media (max-width: 768px) {
-
-.cards-container {
-  grid-template-columns: repeat(2, 1fr);
-}
-
+    .cards-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
