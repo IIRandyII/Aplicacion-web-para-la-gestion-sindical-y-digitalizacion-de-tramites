@@ -32,12 +32,16 @@ body {
     color: #fff;
     transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 100;
+    overflow: hidden;
 }
 
 .sidebar.active {
     width: 80px;
 }
 
+/* ===============================
+   LOGO
+================================ */
 .sidebar .logo {
     display: flex;
     align-items: center;
@@ -45,18 +49,32 @@ body {
     padding: 20px;
     font-size: 18px;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .sidebar .logo img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Texto del logo se desvanece al colapsar */
+.sidebar .logo span {
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .sidebar.active .logo span {
-    display: none;
+    opacity: 0;
+    transform: translateX(-10px);
 }
 
+/* ===============================
+   MENÚ DE NAVEGACIÓN
+================================ */
 .sidebar .menu {
     margin-top: 30px;
 }
@@ -68,30 +86,46 @@ body {
     padding: 14px 20px;
     color: #cfd8e3;
     text-decoration: none;
-    transition: background 0.3s;
+    transition: background 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
+/* Ícono del menú */
 .sidebar .menu a i {
     font-size: 18px;
     min-width: 20px;
     text-align: center;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
 }
 
+/* Texto del menú se desvanece al colapsar */
 .sidebar .menu a span {
-    transition: opacity 0.3s;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    opacity: 1;
+    transform: translateX(0);
 }
 
 .sidebar.active .menu a span {
     opacity: 0;
+    transform: translateX(-10px);
     pointer-events: none;
 }
 
+/* Hover y link activo */
 .sidebar .menu a:hover,
 .sidebar .menu a.active {
     background: #004080;
     color: #fff;
 }
 
+/* Efecto hover en el ícono */
+.sidebar .menu a:hover i {
+    transform: scale(1.15);
+}
+
+/* Cerrar sesión al fondo */
 .sidebar .logout {
     position: absolute;
     bottom: 20px;
@@ -128,6 +162,12 @@ body {
     border: none;
     font-size: 22px;
     cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+/* Rotación del botón hamburguesa al abrir */
+.toggle-btn.rotado {
+    transform: rotate(90deg);
 }
 
 /* ===============================
@@ -165,7 +205,8 @@ body {
 
     .sidebar .logo span,
     .sidebar .menu a span {
-        display: none;
+        opacity: 0;
+        transform: translateX(-10px);
     }
 
     .main {
@@ -177,16 +218,27 @@ body {
    RESPONSIVE - MÓVIL
 ================================ */
 @media (max-width: 768px) {
+
+    /* Sidebar oculto fuera de pantalla */
     .sidebar {
         position: fixed;
         left: -260px;
         width: 260px;
         height: 100%;
         z-index: 200;
+        transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     .sidebar.active {
         left: 0;
+        width: 260px;
+    }
+
+    /* Restaurar spans en móvil */
+    .sidebar.active .menu a span,
+    .sidebar.active .logo span {
+        opacity: 1;
+        transform: translateX(0);
     }
 
     .main {
@@ -197,6 +249,7 @@ body {
         margin-left: 0;
     }
 
+    /* Overlay con transición suave */
     .overlay {
         position: fixed;
         top: 0;
@@ -205,10 +258,13 @@ body {
         height: 100%;
         background: rgba(0,0,0,0.4);
         z-index: 150;
-        display: none;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.35s ease, visibility 0.35s ease;
     }
 
     .overlay.active {
-        display: block;
+        opacity: 1;
+        visibility: visible;
     }
 }
