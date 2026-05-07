@@ -1,6 +1,7 @@
 <?php
 require_once("../includes/auth_afiliado.php");
 
+$paginaActiva = "inicio";
 $nombreAfiliado = $_SESSION['nombre'];
 ?>
 <!DOCTYPE html>
@@ -9,35 +10,14 @@ $nombreAfiliado = $_SESSION['nombre'];
     <meta charset="UTF-8">
     <title>Dashboard Afiliado | Sección 49</title>
     <link rel="stylesheet" href="../assets/css/afiliado/dashboard_afiliado.css"> 
+    <link rel="stylesheet" href="../assets/css/afiliado/sidebar_afiliado.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
 <!-- SIDEBAR -->
-<aside class="sidebar" id="sidebar">
-    <div class="logo">
-        <img src="../assets/img/logo.jpg" alt="Logo">
-        <span>Sección 49</span>
-    </div>
-
-    <nav class="menu">
-        <a href="dashboard_afiliado.php" class="active">
-            <i class="fa-solid fa-house"></i>
-            <span>Inicio</span>
-        </a>
-
-    <a href="reportes_afiliado.php">
-        <i class="fa-solid fa-file-lines"></i>
-        <span>Reportes</span>
-    </a>
-
-        <a href="../sesion/logout.php" class="logout">
-            <i class="fa-solid fa-right-from-bracket"></i>
-            <span>Cerrar sesión</span>
-        </a>
-    </nav>
-</aside>
+<?php include "../includes/sidebar_afiliado.php"; ?>
 
 <!-- CONTENIDO -->
 <main class="main">
@@ -142,6 +122,7 @@ $nombreAfiliado = $_SESSION['nombre'];
 </div>
 </main>
 
+<script src="../assets/js/afiliado/sidebar_afiliado.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/js/afiliado/dashboard_afiliado.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

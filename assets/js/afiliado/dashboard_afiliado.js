@@ -1,11 +1,6 @@
 let estadoActual = "Todos";
 let busquedaActual = "";
 let fechaActual = "Todos";
-// Sidebar toggle
-document.getElementById("toggleSidebar").addEventListener("click", () => {
-    document.getElementById("sidebar").classList.toggle("active");
-    document.querySelector(".main").classList.toggle("shifted");
-});
 
 // Al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
