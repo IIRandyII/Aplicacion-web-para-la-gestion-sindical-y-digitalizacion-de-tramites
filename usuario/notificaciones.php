@@ -2,9 +2,12 @@
 require_once("../includes/auth_usuario.php");
 require_once("../config/db.php");
 
+// Variables de sesión y página activa
+$paginaActiva  = "notificaciones";
 $nombreUsuario = $_SESSION['nombre'];
-$id_usuario = $_SESSION['id_usuario'];
+$id_usuario    = $_SESSION['id_usuario'];
 
+// Obtener notificaciones del usuario ordenadas por fecha
 $stmt = $conn->prepare("
     SELECT titulo, mensaje, fecha 
     FROM notificaciones 
@@ -15,7 +18,7 @@ $stmt->bind_param("i", $id_usuario);
 $stmt->execute();
 $result = $stmt->get_result();
 
-/* 🔔 Marcar notificaciones como leídas */
+// Marcar todas las notificaciones como leídas
 $stmtMarcar = $conn->prepare("
     UPDATE notificaciones 
     SET leida = 1 
@@ -30,29 +33,23 @@ $stmtMarcar->execute();
     <meta charset="UTF-8">
     <title>Notificaciones | Sección 49</title>
 
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="../assets/css/sidebar_usuario.css">
+    <link rel="stylesheet" href="../assets/css/notificaciones_usuario.css">
+
+    <!-- Librerías externas -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/notificaciones_usuario.css">
 </head>
 <body>
 
-<aside class="sidebar" id="sidebar">
-    <div class="logo">
-        <img src="../assets/img/logo.jpg" alt="Logo">
-        <span>Sección 49</span>
-    </div>
+<!-- SIDEBAR -->
+<?php include "../includes/sidebar_usuario.php"; ?>
 
-    <nav class="menu">
-        <a href="dashboard_usuario.php"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
-        <a href="perfil_usuario.php"><i class="fa-solid fa-user"></i><span>Mi perfil</span></a>
-        <a href="nuevo_tramite.php"><i class="fa-solid fa-file-circle-plus"></i><span>Nuevo trámite</span></a>
-        <a href="notificaciones.php" class="active"><i class="fa-solid fa-bell"></i><span>Notificaciones</span></a>
-        <a href="../sesion/logout.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span></a>
-    </nav>
-</aside>
-
+<!-- CONTENIDO PRINCIPAL -->
 <main class="main">
 
+    <!-- TOPBAR -->
     <div class="topbar">
         <button class="toggle-btn" id="toggleSidebar">
             <i class="fa-solid fa-bars"></i>
@@ -60,13 +57,13 @@ $stmtMarcar->execute();
         <h2>Mis Notificaciones</h2>
     </div>
 
+    <!-- LISTA DE NOTIFICACIONES -->
     <section class="notificaciones-section">
         <div class="notificaciones-container">
 
             <?php if ($result->num_rows > 0): ?>
-                
+
                 <?php while($notif = $result->fetch_assoc()): ?>
-                    
                     <div class="notificacion-card">
                         <div class="notif-icon">
                             <i class="fa-solid fa-bell"></i>
@@ -79,11 +76,11 @@ $stmtMarcar->execute();
                             </span>
                         </div>
                     </div>
-
                 <?php endwhile; ?>
 
             <?php else: ?>
 
+                <!-- Mensaje cuando no hay notificaciones -->
                 <div class="notificacion-card">
                     <div class="notif-content">
                         <h5>No tienes notificaciones</h5>
@@ -98,7 +95,9 @@ $stmtMarcar->execute();
 
 </main>
 
-<script src="../assets/js/dashboard_usuario.js"></script>
+<!-- SCRIPTS -->
+<script src="../assets/js/sidebar_usuario.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

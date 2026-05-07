@@ -2,145 +2,55 @@
    RESET / BASE
 ================================ */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f4f6f9;
-  color: #333;
-}
-
-/* ===============================
-   SIDEBAR
-================================ */
-.sidebar {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 260px;
-  height: 100vh;
-  background: #002855;
-  color: #fff;
-  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 100;
-}
-
-.sidebar.active {
-  width: 80px;
-}
-
-.sidebar .logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 20px;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.sidebar .logo img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-}
-
-.sidebar.active .logo span {
-  display: none;
-}
-
-.sidebar .menu {
-  margin-top: 30px;
-}
-
-.sidebar .menu a {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 14px 20px;
-  color: #cfd8e3;
-  text-decoration: none;
-  transition: background 0.3s;
-}
-
-.sidebar .menu a i {
-  font-size: 18px;
-  min-width: 20px;
-  text-align: center;
-}
-
-.sidebar .menu a span {
-  transition: opacity 0.3s;
-}
-
-.sidebar.active .menu a span {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.sidebar .menu a:hover,
-.sidebar .menu a.active {
-  background: #004080;
-  color: #fff;
-}
-
-.sidebar .logout {
-  position: absolute;
-  bottom: 20px;
-  width: 100%;
-}
-
-/* ===============================
-   MAIN / LAYOUT
-================================ */
-.main {
-  margin-left: 260px;
-  transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-  min-height: 100vh;
-}
-
-.main.shifted {
-  margin-left: 80px;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f9;
+    color: #333;
 }
 
 /* ===============================
    TOPBAR
 ================================ */
 .topbar {
-  background: #fff;
-  padding: 15px 20px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  border-bottom: 1px solid #ddd;
+    background: #fff;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid #ddd;
 }
 
 .toggle-btn {
-  background: none;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
 }
 
 /* ===============================
-   NUEVO TRÁMITE
+   SECCIÓN PRINCIPAL DE TRÁMITES
 ================================ */
 .tramite-section {
-  padding: 30px;
+    padding: 30px;
 }
 
 .tramite-section h2 {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
+/* Botón crear trámite alineado a la derecha */
 .tramite-header {
     display: flex;
     justify-content: flex-end;
     padding-right: 20px;
 }
 
+/* Contenedor de la tabla */
 .tramites-contenedor {
     margin-top: -50px;
     background: #fff;
@@ -159,7 +69,7 @@ body {
 }
 
 /* ===============================
-   TABLA DE TRÁMITES - DISEÑO PRO
+   TABLA DE TRÁMITES
 ================================ */
 .tabla-tramites {
     width: 100%;
@@ -170,7 +80,7 @@ body {
     background: #fff;
 }
 
-/* HEADER PROFESIONAL */
+/* Header con gradiente */
 .tabla-tramites thead {
     background: linear-gradient(135deg, #002855, #2563eb);
     color: #fff;
@@ -186,7 +96,7 @@ body {
     font-weight: 600;
 }
 
-/* CELDAS CON COLORES ALTERNADOS */
+/* Columna ID con color diferente */
 .tabla-tramites th:nth-child(1),
 .tabla-tramites td:nth-child(1) {
     text-align: center;
@@ -194,70 +104,39 @@ body {
     width: 8%;
 }
 
+/* Resto de columnas */
 .tabla-tramites th:nth-child(2),
-.tabla-tramites td:nth-child(2) {
-    text-align: center;
-    background-color: #dbeafe;
-    width: 12%;
-}
+.tabla-tramites td:nth-child(2) { text-align: center; background-color: #dbeafe; width: 12%; }
 
 .tabla-tramites th:nth-child(3),
-.tabla-tramites td:nth-child(3) {
-    text-align: center;
-    background-color: #dbeafe;
-    width: 14%;
-}
+.tabla-tramites td:nth-child(3) { text-align: center; background-color: #dbeafe; width: 14%; }
 
 .tabla-tramites th:nth-child(4),
-.tabla-tramites td:nth-child(4) {
-    text-align: center;
-    background-color: #dbeafe;
-    width: 15%;
-}
+.tabla-tramites td:nth-child(4) { text-align: center; background-color: #dbeafe; width: 15%; }
 
 .tabla-tramites th:nth-child(5),
-.tabla-tramites td:nth-child(5) {
-    text-align: center;
-    background-color: #dbeafe;
-    width: 10%;
-}
+.tabla-tramites td:nth-child(5) { text-align: center; background-color: #dbeafe; width: 10%; }
 
 .tabla-tramites th:nth-child(6),
-.tabla-tramites td:nth-child(6) {
-    text-align: center;
-    background-color: #dbeafe;
-    width: 12%;
-}
+.tabla-tramites td:nth-child(6) { text-align: center; background-color: #dbeafe; width: 12%; }
 
 .tabla-tramites th:nth-child(7),
-.tabla-tramites td:nth-child(7) {
-    text-align: center;
-    background-color: #dbeafe;
-    width: 10%;
-}
+.tabla-tramites td:nth-child(7) { text-align: center; background-color: #dbeafe; width: 10%; }
 
 .tabla-tramites th:nth-child(8),
-.tabla-tramites td:nth-child(8) {
-    text-align: center;
-    background-color: #dbeafe;
-    width: 12%;
-}
+.tabla-tramites td:nth-child(8) { text-align: center; background-color: #dbeafe; width: 12%; }
 
 .tabla-tramites th:nth-child(9),
-.tabla-tramites td:nth-child(9) {
-    text-align: center;
-    background-color: #dbeafe;
-    width: 10%;
-}
+.tabla-tramites td:nth-child(9) { text-align: center; background-color: #dbeafe; width: 10%; }
 
-/* CONTENIDO */
+/* Celdas */
 .tabla-tramites td {
     padding: 12px 15px;
     border: none;
     font-size: 13px;
 }
 
-/* HOVER FILAS */
+/* Hover en filas */
 .tabla-tramites tbody tr {
     transition: all 0.2s ease;
 }
@@ -266,7 +145,7 @@ body {
     background-color: #f0f7ff !important;
 }
 
-/* VACIO */
+/* Mensaje cuando no hay trámites */
 .tabla-tramites .vacio {
     text-align: center;
     color: #777;
@@ -274,184 +153,46 @@ body {
     padding: 30px !important;
 }
 
+/* ===============================
+   BOTONES
+================================ */
 
+/* Botón primario */
 .btn-primary {
-  background: #005baa;
-  color: #fff;
-  border: none;
-  padding: 12px 22px;
-  font-size: 15px;
-  border-radius: 6px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+    background: #005baa;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    font-size: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn-primary:hover {
-  background: #004a8c;
+    background: #004a8c;
 }
 
-/* ===============================
-   MODAL
-================================ */
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
+/* Botón secundario (outline) */
+.btn-secondary {
+    background: transparent;
+    color: #005baa;
+    border: 2px solid #005baa;
+    padding: 10px 22px;
+    font-size: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.modal-content {
-  background: #fff;
-  width: 90%;
-  max-width: 850px;
-  margin: 4vh auto;
-  padding: 25px;
-  border-radius: 8px;
-  position: relative;
+.btn-secondary:hover {
+    background: #005baa;
+    color: #fff;
 }
 
-.modal-content h3 {
-  margin-bottom: 15px;
-}
-
-.modal-content label {
-  display: block;
-  margin-top: 12px;
-  font-weight: bold;
-}
-
-.modal-content input,
-.modal-content select,
-.modal-content textarea {
-  width: 100%;
-  padding: 8px;
-  margin-top: 6px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.modal-content textarea {
-  resize: vertical;
-}
-
-.close {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-.sidebar .menu a span {
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.sidebar.active .menu a span {
-  opacity: 0;
-  transform: translateX(-10px);
-}
-
-/* ===============================
-   FORMULARIOS RESPONSIVOS
-================================ */
-
-#formularioTramite {
-  margin-top: 15px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px;
-  margin-top: 10px;
-}
-
-.form-section {
-  margin-top: 15px;
-}
-
-.form-section h4 {
-  margin-bottom: 10px;
-  font-size: 16px;
-  color: #004080;
-}
-
-.modal-content input,
-.modal-content select,
-.modal-content textarea {
-  font-size: 14px;
-}
-
-hr {
-  margin: 15px 0;
-  border: 0;
-  border-top: 1px solid #ddd;
-}
-
-.fila-selects {
-  display: flex;
-  gap: 15px;
-  align-items: flex-start;
-}
-
-.fila-selects div {
-  flex: 1;
-}
-
-.fila-selects select {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-.fila-doble {
-  display: flex;
-  gap: 15px;
-  align-items: flex-start;
-}
-
-.fila-doble div {
-  flex: 1;
-}
-
-.fila-doble input {
-  width: 100%;
-  max-width: 100% !important;
-}
-
-/* Igualar tamaño de selects de trámites con el de Departamento */
-.fila-doble select {
-    width: 100% !important;
-    max-width: 100% !important;
-}
-
-.fila-doble-descuento select {
-    width: 49% !important;
-    max-width: 100% !important;
-}
- 
-.fila-doble-descuento {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-/* Forzar que cada columna mida 49% desde el inicio */
-.fila-doble-descuento > div {
-    width: 49% !important;
-    max-width: 49% !important;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Que select e input respeten ese tamaño */
-.fila-doble-descuento select,
-.fila-doble-descuento input {
-    width: 100% !important;
-}
-
+/* Botón ver trámite en tabla */
 .btn-ver {
     display: inline-flex;
     align-items: center;
@@ -474,9 +215,12 @@ hr {
 .btn-ver:hover {
     background: #003f7a;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
+/* ===============================
+   FILTROS DE TABLA
+================================ */
 .filtros-tabla {
     display: flex;
     justify-content: space-between;
@@ -486,6 +230,7 @@ hr {
     flex-wrap: wrap;
 }
 
+/* Buscador con ícono */
 .buscador {
     position: relative;
     flex: 1;
@@ -513,9 +258,10 @@ hr {
 .buscador input:focus {
     outline: none;
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
 }
 
+/* Select de orden por fecha */
 #ordenFecha {
     padding: 10px 12px;
     border-radius: 6px;
@@ -526,28 +272,174 @@ hr {
     transition: all 0.2s ease;
 }
 
-#ordenFecha:hover {
-    border-color: #2563eb;
-}
-
+#ordenFecha:hover,
 #ordenFecha:focus {
     outline: none;
     border-color: #2563eb;
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
 }
 
-/* Fondo modal */
+/* ===============================
+   MODAL CREAR TRÁMITE
+================================ */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 850px;
+    margin: 4vh auto;
+    padding: 25px;
+    border-radius: 8px;
+    position: relative;
+}
+
+.modal-content h3 {
+    margin-bottom: 15px;
+}
+
+.modal-content label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+.modal-content input,
+.modal-content select,
+.modal-content textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.modal-content textarea {
+    resize: vertical;
+}
+
+/* Botón cerrar modal */
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+hr {
+    margin: 15px 0;
+    border: 0;
+    border-top: 1px solid #ddd;
+}
+
+/* ===============================
+   FORMULARIOS DINÁMICOS
+================================ */
+
+/* Contenedor del formulario dinámico */
+#formularioTramite {
+    margin-top: 15px;
+}
+
+/* Grid de inputs generales */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+}
+
+/* Sección de formulario */
+.form-section {
+    margin-top: 15px;
+}
+
+.form-section h4 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #004080;
+}
+
+/* Selects de departamento y trámite en fila */
+.fila-selects {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.fila-selects div {
+    flex: 1;
+}
+
+.fila-selects select {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+/* Dos columnas iguales */
+.fila-doble {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+}
+
+.fila-doble div   { flex: 1; }
+.fila-doble input { width: 100%; max-width: 100% !important; }
+.fila-doble select { width: 100% !important; max-width: 100% !important; }
+
+/* Fila especial para descuento */
+.fila-doble-descuento {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.fila-doble-descuento > div {
+    width: 49% !important;
+    max-width: 49% !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.fila-doble-descuento select,
+.fila-doble-descuento input {
+    width: 100% !important;
+}
+
+/* Animación de spans del sidebar al colapsar */
+.sidebar .menu a span {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.sidebar.active .menu a span {
+    opacity: 0;
+    transform: translateX(-10px);
+}
+
+/* ===============================
+   MODAL VER DETALLE DEL TRÁMITE
+================================ */
+
+/* Fondo con blur */
 #modalVerTramite {
     backdrop-filter: blur(4px);
 }
 
-/* Grid principal */
+/* Grid de cards de detalle */
 .modal-grid {
     display: grid;
     gap: 20px;
 }
 
-/* Tarjetas */
+/* Card de detalle */
 .card-detalle {
     background: #ffffff;
     padding: 20px;
@@ -562,13 +454,13 @@ hr {
     padding-bottom: 8px;
 }
 
-/* Items */
+/* Items de detalle */
 .detalle-item {
     margin-bottom: 8px;
     font-size: 14px;
 }
 
-/* Estado */
+/* Badge de estado */
 .estado-contenedor {
     margin-top: 15px;
 }
@@ -580,14 +472,7 @@ hr {
     font-weight: 600;
 }
 
-/* PDF */
-.card-pdf iframe {
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
-}
-
-
+/* Caja de documento adjunto */
 .archivo-box {
     display: flex;
     align-items: center;
@@ -605,6 +490,7 @@ hr {
     margin-right: 10px;
 }
 
+/* Botón descargar PDF */
 .btn-descargar {
     background: #0d6efd;
     color: white;
@@ -619,112 +505,63 @@ hr {
     background: #0b5ed7;
 }
 
-.btn-secondary {
-  background: transparent;
-  color: #005baa;
-  border: 2px solid #005baa;
-  padding: 10px 22px;
-  font-size: 15px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
+/* ===============================
+   RESPONSIVE - TABLETS
+================================ */
+@media (max-width: 992px) {
 
-.btn-secondary:hover {
-  background: #005baa;
-  color: #fff;
-}
+    .filtros-tabla {
+        flex-direction: column;
+        align-items: stretch;
+    }
 
-.icono-notificacion {
-    position: relative;
-    display: inline-block;
-}
-
-.badge-notificacion {
-    position: absolute;
-    top: -6px;
-    right: -8px;
-    background-color: #dc3545;
-    color: white;
-    font-size: 11px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 5px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
+    .buscador {
+        min-width: 100%;
+    }
 }
 
 /* ===============================
-   RESPONSIVE
+   RESPONSIVE - MÓVIL
 ================================ */
-
-/* TABLETS */
-@media (max-width: 992px) {
-  .sidebar {
-    width: 80px;
-  }
-
-  .sidebar .logo span,
-  .sidebar .menu a span {
-    display: none;
-  }
-
-  .main {
-    margin-left: 80px;
-  }
-
-  .filtros-tabla {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .buscador {
-    min-width: 100%;
-  }
-}
-
-/* MÓVIL */
 @media (max-width: 768px) {
-  .tramite-section {
-    padding: 15px;
-  }
 
-  .tramites-contenedor {
-    padding: 15px;
-  }
+    .tramite-section {
+        padding: 15px;
+    }
 
-  .tabla-tramites {
-    font-size: 12px;
-  }
+    .tramites-contenedor {
+        padding: 15px;
+    }
 
-  .tabla-tramites th,
-  .tabla-tramites td {
-    padding: 8px 10px;
-  }
+    .tabla-tramites {
+        font-size: 12px;
+    }
 
-  .btn-ver {
-    padding: 4px 8px;
-    font-size: 11px;
-  }
+    .tabla-tramites th,
+    .tabla-tramites td {
+        padding: 8px 10px;
+    }
 
-  .filtros-tabla {
-    flex-direction: column;
-  }
+    .btn-ver {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
 
-  .buscador {
-    min-width: 100%;
-  }
+    .filtros-tabla {
+        flex-direction: column;
+    }
 
-  .modal-content {
-    width: 95%;
-    margin: 5% auto;
-    padding: 15px;
-  }
+    .buscador {
+        min-width: 100%;
+    }
 
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+        padding: 15px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
 }

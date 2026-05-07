@@ -2,42 +2,28 @@
 require_once("../includes/auth_usuario.php");
 require_once __DIR__ . "/../config/db.php";
 
-$id_usuario = $_SESSION['id_usuario'];
-
-/* 🔔 Contar notificaciones no leídas */
-$stmtNotif = $conn->prepare("
-    SELECT COUNT(*) AS total 
-    FROM notificaciones 
-    WHERE id_usuario = ? AND leida = 0
-");
-$stmtNotif->bind_param("i", $id_usuario);
-$stmtNotif->execute();
-$resultNotif = $stmtNotif->get_result();
-$rowNotif = $resultNotif->fetch_assoc();
-$totalNoLeidas = $rowNotif['total'];
+// Variables de sesión y página activa
+$paginaActiva = "perfil";
+$id_usuario   = $_SESSION['id_usuario'];
 
 // Obtener datos del usuario
-$sql = "SELECT * FROM usuarios WHERE id_usuario = ?";
+$sql  = "SELECT * FROM usuarios WHERE id_usuario = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id_usuario);
 $stmt->execute();
 $usuario = $stmt->get_result()->fetch_assoc();
 
-// Función para obtener iniciales
+// Función para obtener iniciales del nombre
 function obtenerIniciales($nombre) {
     if (empty(trim($nombre))) return '?';
-    
-    $partes = explode(" ", trim($nombre));
+    $partes  = explode(" ", trim($nombre));
     $inicial1 = strtoupper($partes[0][0]);
-    $ultimo = end($partes);
+    $ultimo   = end($partes);
     $inicial2 = (count($partes) > 1 && !empty($ultimo)) ? strtoupper($ultimo[0]) : '';
-    
     return $inicial1 . $inicial2;
 }
 
-$iniciales = !empty($usuario['nombre']) ? obtenerIniciales($usuario['nombre']) : '?';
-
-// Password oculta
+$iniciales      = !empty($usuario['nombre']) ? obtenerIniciales($usuario['nombre']) : '?';
 $password_oculta = str_repeat('*', strlen($usuario['password']));
 ?>
 <!DOCTYPE html>
@@ -46,43 +32,22 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
     <meta charset="UTF-8">
     <title>Mi perfil | Sección 49</title>
 
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="../assets/css/sidebar_usuario.css">
     <link rel="stylesheet" href="../assets/css/perfil_usuario.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- Librerías externas -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
 <!-- SIDEBAR -->
-<aside class="sidebar" id="sidebar">
-    <div class="logo">
-        <img src="../assets/img/logo.jpg">
-        <span>Sección 49</span>
-    </div>
+<?php include "../includes/sidebar_usuario.php"; ?>
 
-    <nav class="menu">
-        <a href="dashboard_usuario.php"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
-        <a href="perfil_usuario.php" class="active"><i class="fa-solid fa-user"></i><span>Mi perfil</span></a>
-        <a href="nuevo_tramite.php"><i class="fa-solid fa-file-circle-plus"></i><span>Nuevo trámite</span></a>
-<a href="notificaciones.php" class="notificacion-link">
-    <span class="icono-notificacion">
-        <i class="fa-solid fa-bell"></i>
-        <?php if ($totalNoLeidas > 0): ?>
-            <span class="badge-notificacion">
-                <?= $totalNoLeidas ?>
-            </span>
-        <?php endif; ?>
-    </span>
-    <span>Notificaciones</span>
-</a>
-        <a href="../sesion/logout.php" class="logout">
-            <i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span>
-        </a>
-    </nav>
-</aside>
-
+<!-- CONTENIDO PRINCIPAL -->
 <main class="main">
 
     <!-- TOPBAR -->
@@ -99,12 +64,13 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
 
                 <form action="guardar_perfil.php" method="POST" enctype="multipart/form-data">
 
+                    <!-- SECCIÓN: DATOS DEL USUARIO -->
                     <h3 class="section-title">Datos del usuario</h3>
 
                     <div class="row mb-3">
-                        <div class="col-md-3 text-center">
 
-                            <!-- AVATAR -->
+                        <!-- AVATAR / FOTO -->
+                        <div class="col-md-3 text-center">
                             <?php if (!empty($usuario['foto'])): ?>
                                 <img src="../<?= $usuario['foto'] ?>" class="profile-pic mb-3">
                             <?php else: ?>
@@ -119,6 +85,7 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
                             </label>
                         </div>
 
+                        <!-- DATOS PERSONALES -->
                         <div class="col-md-9">
                             <div class="row">
 
@@ -155,7 +122,7 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
                                 <div class="col-md-6 mb-3">
                                     <label>Password</label>
                                     <input type="password" class="form-control"
-                                    value="<?= $password_oculta ?>" disabled>
+                                           value="<?= $password_oculta ?>" disabled>
                                 </div>
 
                             </div>
@@ -164,6 +131,7 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
 
                     <hr>
 
+                    <!-- SECCIÓN: CONTACTO -->
                     <h3 class="section-title">Contacto</h3>
 
                     <div class="row">
@@ -185,11 +153,11 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
                         </div>
                     </div>
 
+                    <!-- BOTONES EDITAR / GUARDAR -->
                     <div class="text-end mt-4">
                         <button type="button" id="btnEditar" class="btn btn-secondary">
                             <i class="fa-solid fa-pen"></i> Editar
                         </button>
-
                         <button type="submit" id="btnGuardar" class="btn btn-primary d-none">
                             <i class="fa-solid fa-floppy-disk"></i> Guardar cambios
                         </button>
@@ -203,47 +171,10 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
 
 </main>
 
-<?php if (isset($_GET['status']) && $_GET['status'] === 'ok'): ?>
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-    Swal.fire({
-        icon: 'success',
-        title: 'Perfil actualizado',
-        text: 'Tus cambios se guardaron correctamente',
-        timer: 1600,
-        showConfirmButton: false,
-
-        toast: true,
-        position: 'top',
-        width: 300,
-
-        background: '#ffffff',
-        iconColor: '#22c55e',
-
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown animate__faster'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp animate__faster'
-        },
-
-        customClass: {
-            popup: 'swal-perfil',
-            title: 'swal-title',
-            htmlContainer: 'swal-text'
-        }
-    });
-
-    const url = new URL(window.location);
-    url.searchParams.delete('status');
-    window.history.replaceState({}, document.title, url.pathname);
-
-});
-</script>
-<?php endif; ?>
-
+<!-- SCRIPTS -->
+<script src="../assets/js/sidebar_usuario.js"></script>
 <script src="../assets/js/perfil_usuario.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
