@@ -62,7 +62,8 @@ body {
 
 /* Texto del logo se desvanece al colapsar */
 .sidebar .logo span {
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition-delay: 0.1s;
     opacity: 1;
     transform: translateX(0);
 }
@@ -70,6 +71,7 @@ body {
 .sidebar.active .logo span {
     opacity: 0;
     transform: translateX(-10px);
+    transition-delay: 0s;
 }
 
 /* ===============================
@@ -102,14 +104,17 @@ body {
 
 /* Texto del menú se desvanece al colapsar */
 .sidebar .menu a span {
-    transition: opacity 0.25s ease, transform 0.25s ease;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition-delay: 0.1s;
     opacity: 1;
     transform: translateX(0);
+    white-space: nowrap;
 }
 
 .sidebar.active .menu a span {
     opacity: 0;
     transform: translateX(-10px);
+    transition-delay: 0s;
     pointer-events: none;
 }
 
