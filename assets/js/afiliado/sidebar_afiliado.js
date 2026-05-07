@@ -28,3 +28,27 @@ overlay.addEventListener("click", () => {
     overlay.classList.remove("active");
     toggleBtn.classList.remove("rotado");
 });
+
+// ===============================
+// CONFIRMACIÓN AL CERRAR SESIÓN
+// Muestra un SweetAlert antes
+// de redirigir al logout
+// ===============================
+document.querySelector(".logout").addEventListener("click", (e) => {
+    e.preventDefault();
+
+    Swal.fire({
+        title: "¿Cerrar sesión?",
+        text: "¿Estás seguro que deseas salir del sistema?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: "Sí, salir",
+        cancelButtonText: "Cancelar",
+        confirmButtonColor: "#C62828",
+        cancelButtonColor: "#003A8F"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "../sesion/logout.php";
+        }
+    });
+});
