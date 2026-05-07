@@ -18,6 +18,7 @@ toggleBtn.addEventListener("click", () => {
     sidebar.classList.toggle("active");
     main.classList.toggle("shifted");
     overlay.classList.toggle("active");
+    toggleBtn.classList.toggle("rotado"); // Rota el ícono de hamburguesa
 });
 
 // Cerrar sidebar al hacer click fuera (móvil)
@@ -25,4 +26,5 @@ overlay.addEventListener("click", () => {
     sidebar.classList.remove("active");
     main.classList.remove("shifted");
     overlay.classList.remove("active");
+    toggleBtn.classList.remove("rotado");
 });
