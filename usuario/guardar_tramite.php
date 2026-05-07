@@ -2,41 +2,48 @@
 require_once("../includes/auth_usuario.php");
 require_once __DIR__ . "/../config/db.php";
 
+// Solo permitir método POST
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(405);
     exit();
 }
 
-$id_usuario = $_SESSION['id_usuario'];
-
-// ======================
-// DATOS GENERALES
-// ======================
+// ===============================
+// VARIABLES DE SESIÓN Y POST
+// Datos generales del trámite
+// ===============================
+$id_usuario      = $_SESSION['id_usuario'];
 $id_departamento = $_POST['id_departamento'];
-$tipo_tramite   = $_POST['tipo_tramite'];
-$nombre         = $_POST['nombre_completo'];
-$ficha          = $_POST['numero_ficha'];
-$categoria      = $_POST['categoria'];
-$turno          = $_POST['turno'];
-$email          = $_POST['email'];
-$curp           = $_POST['curp'];
-$telefono       = $_POST['telefono'];
+$tipo_tramite    = $_POST['tipo_tramite'];
+$nombre          = $_POST['nombre_completo'];
+$ficha           = $_POST['numero_ficha'];
+$categoria       = $_POST['categoria'];
+$turno           = $_POST['turno'];
+$email           = $_POST['email'];
+$curp            = $_POST['curp'];
+$telefono        = $_POST['telefono'];
 
 $documentoRuta = null;
 
+// ===============================
+// SUBIR DOCUMENTO PDF
+// Solo se procesa si el usuario
+// adjuntó un archivo
+// ===============================
 if (!empty($_FILES['documento_respaldo']['name'])) {
 
-    $archivo = $_FILES['documento_respaldo'];
+    $archivo   = $_FILES['documento_respaldo'];
+    $extension = strtolower(pathinfo($archivo['name'], PATHINFO_EXTENSION));
 
     if ($archivo['error'] === 0) {
 
-        $extension = strtolower(pathinfo($archivo['name'], PATHINFO_EXTENSION));
-
+        // Solo se permiten archivos PDF
         if ($extension === "pdf") {
 
             $nombreArchivo = uniqid() . "_" . basename($archivo['name']);
-            $directorio = __DIR__ . "/../uploads/tramites/";
+            $directorio    = __DIR__ . "/../uploads/tramites/";
 
+            // Crear carpeta si no existe
             if (!is_dir($directorio)) {
                 mkdir($directorio, 0777, true);
             }
@@ -46,6 +53,7 @@ if (!empty($_FILES['documento_respaldo']['name'])) {
             if (move_uploaded_file($archivo['tmp_name'], $rutaDestino)) {
                 $documentoRuta = "uploads/tramites/" . $nombreArchivo;
             }
+
         } else {
             http_response_code(400);
             echo json_encode(["success" => false, "error" => "Solo se permiten archivos PDF"]);
@@ -54,10 +62,12 @@ if (!empty($_FILES['documento_respaldo']['name'])) {
     }
 }
 
-
-// ======================
+// ===============================
 // DATOS ESPECÍFICOS
-// ======================
+// Se toman todos los campos POST
+// y se eliminan los generales para
+// guardar solo los específicos en JSON
+// ===============================
 $datos_especificos = $_POST;
 
 unset(
@@ -74,9 +84,10 @@ unset(
 
 $datos_especificos_json = json_encode($datos_especificos, JSON_UNESCAPED_UNICODE);
 
-// ======================
-// INSERT
-// ======================
+// ===============================
+// INSERT EN BASE DE DATOS
+// Estado inicial siempre es Pendiente
+// ===============================
 $sql = "INSERT INTO tramites (
             id_usuario,
             id_departamento,
@@ -95,7 +106,6 @@ $sql = "INSERT INTO tramites (
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'Pendiente', ?)";
 
 $stmt = $conn->prepare($sql);
-
 $stmt->bind_param(
     "iissssssssss",
     $id_usuario,
@@ -114,13 +124,14 @@ $stmt->bind_param(
 
 if ($stmt->execute()) {
 
-$stmtDept = $conn->prepare("SELECT nombre FROM departamentos WHERE id_departamento = ?");
-$stmtDept->bind_param("i", $id_departamento);
-$stmtDept->execute();
-$resultDept = $stmtDept->get_result();
-$deptData = $resultDept->fetch_assoc();
-$nombreDepartamento = $deptData['nombre'];
+    // Obtener nombre del departamento para retornarlo al JS
+    $stmtDept = $conn->prepare("SELECT nombre FROM departamentos WHERE id_departamento = ?");
+    $stmtDept->bind_param("i", $id_departamento);
+    $stmtDept->execute();
+    $deptData           = $stmtDept->get_result()->fetch_assoc();
+    $nombreDepartamento = $deptData['nombre'];
 
+    // Respuesta exitosa con datos del trámite creado
     echo json_encode([
         "success"      => true,
         "id_tramite"   => $stmt->insert_id,
@@ -134,9 +145,11 @@ $nombreDepartamento = $deptData['nombre'];
     ]);
 
 } else {
+
+    // Error al insertar
     http_response_code(500);
     echo json_encode([
         "success" => false,
-        "error" => $stmt->error
+        "error"   => $stmt->error
     ]);
 }
