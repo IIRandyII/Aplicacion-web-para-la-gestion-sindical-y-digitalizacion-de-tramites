@@ -2,19 +2,9 @@
 require_once("../includes/auth_usuario.php");
 require_once __DIR__ . "/../config/db.php";
 
-$id_usuario = $_SESSION['id_usuario'];
-
-/* 🔔 Contar notificaciones no leídas */
-$stmtNotif = $conn->prepare("
-    SELECT COUNT(*) AS total 
-    FROM notificaciones 
-    WHERE id_usuario = ? AND leida = 0
-");
-$stmtNotif->bind_param("i", $id_usuario);
-$stmtNotif->execute();
-$resultNotif = $stmtNotif->get_result();
-$rowNotif = $resultNotif->fetch_assoc();
-$totalNoLeidas = $rowNotif['total'];
+// Variables de sesión y página activa
+$paginaActiva = "tramites";
+$id_usuario   = $_SESSION['id_usuario'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -22,41 +12,23 @@ $totalNoLeidas = $rowNotif['total'];
     <meta charset="UTF-8">
     <title>Nuevo Trámite | Sección 49</title>
 
+    <!-- Estilos propios -->
+    <link rel="stylesheet" href="../assets/css/sidebar_usuario.css">
     <link rel="stylesheet" href="../assets/css/nuevo_tramite.css">
+
+    <!-- Librerías externas -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<aside class="sidebar" id="sidebar">
-    <div class="logo">
-        <img src="../assets/img/logo.jpg" alt="Logo">
-        <span>Sección 49</span>
-    </div>
+<!-- SIDEBAR -->
+<?php include "../includes/sidebar_usuario.php"; ?>
 
-    <nav class="menu">
-        <a href="dashboard_usuario.php"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
-        <a href="perfil_usuario.php"><i class="fa-solid fa-user"></i><span>Mi perfil</span></a>
-        <a href="nuevo_tramite.php" class="active"><i class="fa-solid fa-file-circle-plus"></i><span>Nuevo trámite</span></a>
-
-        <a href="notificaciones.php" class="notificacion-link">
-            <span class="icono-notificacion">
-                <i class="fa-solid fa-bell"></i>
-                <?php if ($totalNoLeidas > 0): ?>
-                    <span class="badge-notificacion"><?= $totalNoLeidas ?></span>
-                <?php endif; ?>
-            </span>
-            <span>Notificaciones</span>
-        </a>
-
-        <a href="../sesion/logout.php" class="logout">
-            <i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span>
-        </a>
-    </nav>
-</aside>
-
+<!-- CONTENIDO PRINCIPAL -->
 <main class="main">
 
+    <!-- TOPBAR -->
     <div class="topbar">
         <button class="toggle-btn" id="toggleSidebar">
             <i class="fa-solid fa-bars"></i>
@@ -64,28 +36,33 @@ $totalNoLeidas = $rowNotif['total'];
         <h2>Crear nuevo trámite</h2>
     </div>
 
+    <!-- SECCIÓN PRINCIPAL DE TRÁMITES -->
     <section class="tramite-section">
+
+        <!-- BOTÓN CREAR TRÁMITE -->
         <div class="tramite-header">
             <button id="btnAbrirModal" class="btn-primary">
                 <i class="fa-solid fa-plus"></i> Crear trámite
             </button>
         </div>
 
+        <!-- TABLA DE TRÁMITES -->
         <div class="tramites-contenedor">
             <h4><i class="fa-solid fa-list-check"></i> Mis trámites</h4>
 
+            <!-- FILTROS -->
             <div class="filtros-tabla">
                 <div class="buscador">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" id="buscarTramite" placeholder="Buscar trámite...">
                 </div>
-
                 <select id="ordenFecha">
                     <option value="desc">Más reciente</option>
                     <option value="asc">Más antiguo</option>
                 </select>
             </div>
 
+            <!-- TABLA -->
             <table class="tabla-tramites">
                 <thead>
                     <tr>
@@ -100,7 +77,6 @@ $totalNoLeidas = $rowNotif['total'];
                         <th>Acción</th>
                     </tr>
                 </thead>
-
                 <tbody id="listaTramites">
                     <tr>
                         <td colspan="9" class="vacio">
@@ -110,14 +86,15 @@ $totalNoLeidas = $rowNotif['total'];
                 </tbody>
             </table>
         </div>
+
     </section>
 
 </main>
 
+<!-- MODAL: CREAR NUEVO TRÁMITE -->
 <div class="modal" id="modalTramite">
     <div class="modal-content">
         <span class="close">&times;</span>
-
         <h3>Nuevo trámite</h3>
 
         <div class="fila-selects">
@@ -130,7 +107,6 @@ $totalNoLeidas = $rowNotif['total'];
                     <option value="3">Secretaría de Ajustes</option>
                 </select>
             </div>
-
             <div>
                 <label>Trámite</label>
                 <select id="tipoTramite">
@@ -139,23 +115,27 @@ $totalNoLeidas = $rowNotif['total'];
             </div>
         </div>
 
+        <!-- Formulario dinámico según tipo de trámite -->
         <div id="formularioTramite"></div>
     </div>
 </div>
 
+<!-- MODAL: VER DETALLE DEL TRÁMITE -->
 <div class="modal" id="modalVerTramite">
     <div class="modal-content modal-grande">
         <span class="close" id="cerrarVerTramite">&times;</span>
-
         <h3>Detalle del trámite</h3>
 
-        <div id="detalleTramite">
-            <!-- aquí se inyecta la info -->
-        </div>
+        <!-- Contenido inyectado dinámicamente con JS -->
+        <div id="detalleTramite"></div>
     </div>
 </div>
 
+<!-- SCRIPTS -->
+<script src="../assets/js/sidebar_usuario.js"></script>
+<script src="../assets/js/formularios_tramite.js"></script>
 <script src="../assets/js/nuevo_tramite.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
