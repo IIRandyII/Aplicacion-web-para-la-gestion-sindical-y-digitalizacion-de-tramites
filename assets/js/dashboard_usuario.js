@@ -13,6 +13,28 @@ document.querySelectorAll(".info-card").forEach(card => {
 });
 
 // ===============================
+// EFECTO CASINO EN CONTADORES
+// Anima el número desde 0 hasta
+// el valor real al cargar
+// ===============================
+function animarContador(elemento, valorFinal, duracion = 1000) {
+    const inicio    = 0;
+    const incremento = valorFinal / (duracion / 16);
+    let valorActual  = inicio;
+
+    const intervalo = setInterval(() => {
+        valorActual += incremento;
+
+        if (valorActual >= valorFinal) {
+            elemento.textContent = valorFinal;
+            clearInterval(intervalo);
+        } else {
+            elemento.textContent = Math.floor(valorActual);
+        }
+    }, 16);
+}
+
+// ===============================
 // CONTEO DINÁMICO
 // Obtiene y actualiza los contadores
 // de trámites cada 10 segundos
@@ -21,10 +43,10 @@ function cargarConteo() {
     fetch('obtener_conteo_usuario.php')
     .then(response => response.json())
     .then(data => {
-        document.getElementById('total').textContent      = data.total     || 0;
-        document.getElementById('pendientes').textContent = data.pendientes || 0;
-        document.getElementById('revision').textContent   = data.revision   || 0;
-        document.getElementById('aprobados').textContent  = data.aprobados  || 0;
+        animarContador(document.getElementById('total'),      data.total      || 0);
+        animarContador(document.getElementById('pendientes'), data.pendientes || 0);
+        animarContador(document.getElementById('revision'),   data.revision   || 0);
+        animarContador(document.getElementById('aprobados'),  data.aprobados  || 0);
     })
     .catch(error => console.error('Error al cargar conteo:', error));
 }
