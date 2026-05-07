@@ -116,16 +116,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <a href="register.php">Registrarse</a>
 </div>
 
-<script>
-    // Auto-ocultar alerta después de 3 segundos
-    const alerta = document.getElementById("alerta");
-    if (alerta) {
-        setTimeout(() => {
-            alerta.classList.add("ocultar");
-            setTimeout(() => alerta.remove(), 600);
-        }, 3000);
-    }
-</script>
-
+<script src="../assets/js/alertas.js"></script>
 </body>
 </html>
