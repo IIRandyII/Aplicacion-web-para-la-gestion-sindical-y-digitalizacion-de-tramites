@@ -3,7 +3,7 @@
 Proyecto desarrollado por **Randy Azael Daniel Ruiz**  
 **Ingeniería en Entornos Virtuales y Negocios Digitales**  
 **Universidad Tecnológica de Cadereyta**  
-Estadías Profesionales — 6° Cuatrimestre
+Estadías Profesionales
 
 ---
 
@@ -80,6 +80,5 @@ tus credenciales de base de datos.
 Ingeniería en Entornos Virtuales y Negocios Digitales  
 Universidad Tecnológica de Cadereyta  
 
-> *Proyecto desarrollado con fines académicos durante estadías profesionales.
 > Los datos incluidos en el sistema son ficticios y fueron utilizados únicamente
 > para propósitos de demostración.*
