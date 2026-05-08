@@ -13,31 +13,47 @@ document.querySelectorAll(".info-card").forEach(card => {
 });
 
 // ===============================
-// EFECTO CASINO EN CONTADORES
-// Anima el número desde 0 hasta
-// el valor real al cargar
+// EFECTO CONTADOR ANIMADO
+// El número sube progresivamente
+// con una curva de desaceleración
+// para un efecto más limpio y visual
 // ===============================
-function animarContador(elemento, valorFinal, duracion = 1000) {
-    const inicio    = 0;
-    const incremento = valorFinal / (duracion / 16);
-    let valorActual  = inicio;
+function animarContador(elemento, valorFinal, duracion = 800) {
 
-    const intervalo = setInterval(() => {
-        valorActual += incremento;
+    // Si el valor es 0 no hay nada que animar
+    if (valorFinal === 0) {
+        elemento.textContent = 0;
+        return;
+    }
 
-        if (valorActual >= valorFinal) {
-            elemento.textContent = valorFinal;
-            clearInterval(intervalo);
+    let inicio    = 0;
+    let startTime = null;
+
+    function paso(timestamp) {
+
+        if (!startTime) startTime = timestamp;
+
+        // Progreso entre 0 y 1
+        const progreso = Math.min((timestamp - startTime) / duracion, 1);
+
+        // Curva ease-out: desacelera al final para efecto suave
+        const easeOut = 1 - Math.pow(1 - progreso, 3);
+
+        // Calcular número actual
+        elemento.textContent = Math.floor(easeOut * valorFinal);
+
+        // Continuar animación hasta llegar al final
+        if (progreso < 1) {
+            requestAnimationFrame(paso);
         } else {
-            elemento.textContent = Math.floor(valorActual);
+            elemento.textContent = valorFinal;
         }
-    }, 16);
-}
+    }
 
+    requestAnimationFrame(paso);
+}
 // ===============================
 // CONTEO DINÁMICO
-// Obtiene y actualiza los contadores
-// de trámites cada 10 segundos
 // ===============================
 function cargarConteo() {
     fetch('obtener_conteo_usuario.php')
@@ -51,8 +67,5 @@ function cargarConteo() {
     .catch(error => console.error('Error al cargar conteo:', error));
 }
 
-// Ejecutar al cargar la página
 document.addEventListener("DOMContentLoaded", cargarConteo);
-
-// Actualizar cada 10 segundos
 setInterval(cargarConteo, 10000);
