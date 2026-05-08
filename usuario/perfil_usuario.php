@@ -51,12 +51,10 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
 <main class="main">
 
     <!-- TOPBAR -->
-    <div class="topbar">
-        <button class="toggle-btn" id="toggleSidebar">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <h2>Mi perfil</h2>
-    </div>
+    <?php
+    $tituloTopbar = "Mi perfil";
+    include "../includes/topbar_usuario.php";
+    ?>
 
     <div class="container mt-4">
         <div class="card shadow">

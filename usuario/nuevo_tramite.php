@@ -29,12 +29,10 @@ $id_usuario   = $_SESSION['id_usuario'];
 <main class="main">
 
     <!-- TOPBAR -->
-    <div class="topbar">
-        <button class="toggle-btn" id="toggleSidebar">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <h2>Crear nuevo trámite</h2>
-    </div>
+    <?php
+    $tituloTopbar = "Nuevo Tramite";
+    include "../includes/topbar_usuario.php";
+    ?>
 
     <!-- SECCIÓN PRINCIPAL DE TRÁMITES -->
     <section class="tramite-section">
