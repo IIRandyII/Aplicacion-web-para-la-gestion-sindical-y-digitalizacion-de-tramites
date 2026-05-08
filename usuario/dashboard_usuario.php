@@ -80,9 +80,8 @@ $id_usuario    = $_SESSION['id_usuario'];
 
 </main>
 
-<script src="../assets/js/dashboard_usuario.js"></script>
 <script src="../assets/js/sidebar_usuario.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../assets/js/dashboard_usuario.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
