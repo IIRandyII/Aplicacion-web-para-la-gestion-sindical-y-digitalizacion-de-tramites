@@ -50,12 +50,10 @@ $stmtMarcar->execute();
 <main class="main">
 
     <!-- TOPBAR -->
-    <div class="topbar">
-        <button class="toggle-btn" id="toggleSidebar">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <h2>Mis Notificaciones</h2>
-    </div>
+    <?php
+    $tituloTopbar = "Mis Notificaciones";
+    include "../includes/topbar_usuario.php";
+    ?>
 
     <!-- LISTA DE NOTIFICACIONES -->
     <section class="notificaciones-section">

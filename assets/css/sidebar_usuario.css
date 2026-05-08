@@ -162,6 +162,7 @@ body {
     border-bottom: 1px solid #ddd;
 }
 
+/* Botón hamburguesa */
 .toggle-btn {
     background: none;
     border: none;
@@ -173,6 +174,58 @@ body {
 /* Rotación del botón hamburguesa al abrir */
 .toggle-btn.rotado {
     transform: rotate(90deg);
+}
+
+/* Título centrado y grande */
+.topbar-titulo {
+    flex: 1;
+    font-size: 25px;
+    margin-top: 5px;
+    font-weight: 700;
+    color: #002855;
+}
+
+/* Contenedor de foto y nombre
+   flex-direction: row-reverse invierte
+   el orden para que la foto quede
+   a la izquierda y el nombre a la derecha */
+.topbar-usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-direction: row-reverse;
+}
+
+/* Nombre del usuario */
+.topbar-nombre {
+    font-size: 20px;
+    font-weight: 500;
+    color: #333;
+    white-space: nowrap;
+}
+
+/* Foto de perfil circular */
+.topbar-foto {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Avatar de iniciales cuando no hay foto */
+.topbar-iniciales {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #002855, #2563eb);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    flex-shrink: 0;
 }
 
 /* ===============================
@@ -217,6 +270,11 @@ body {
     .main {
         margin-left: 80px;
     }
+
+    /* Ocultar nombre en tablets para ahorrar espacio */
+    .topbar-nombre {
+        display: none;
+    }
 }
 
 /* ===============================
@@ -252,6 +310,11 @@ body {
 
     .main.shifted {
         margin-left: 0;
+    }
+
+    /* Título más pequeño en móvil */
+    .topbar-titulo {
+        font-size: 16px;
     }
 
     /* Overlay con transición suave */
