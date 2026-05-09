@@ -78,56 +78,61 @@ body {
     border-radius: 12px;
     overflow: hidden;
     background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-/* Header con gradiente */
+/* Header con gradiente azul del sistema */
 .tabla-tramites thead {
-    background: linear-gradient(135deg, #002855, #2563eb);
-    color: #fff;
+    background: linear-gradient(135deg, #002855, #1a4a8a);
 }
 
 .tabla-tramites th {
-    font-size: 14px;
+    font-size: 13px;
     letter-spacing: 0.5px;
     text-transform: uppercase;
     text-align: center;
     padding: 14px 15px;
     border: none;
-    font-weight: 600;
+    font-weight: 700;
+    color: #ffffff;
 }
 
-/* Columna ID */
-.tabla-tramites th:nth-child(1),
-.tabla-tramites td:nth-child(1) {
+/* Header siempre blanco sin importar nth-child */
+.tabla-tramites thead th {
+    background: transparent !important;
+    color: #ffffff;
+}
+
+/* Columnas impares - azul medio */
+.tabla-tramites td:nth-child(odd) {
+    background-color: #b8d4f0;
+    color: #000;
     text-align: center;
-    background-color: #7faeec;
-    width: 8%;
 }
 
-/* Resto de columnas */
-.tabla-tramites th:nth-child(2),
-.tabla-tramites td:nth-child(2) { text-align: center; background-color: #dbeafe; width: 12%; }
+/* Columnas pares - azul claro */
+.tabla-tramites td:nth-child(even) {
+    background-color: #dbeafe;
+    color: #000;
+    text-align: center;
+}
 
-.tabla-tramites th:nth-child(3),
-.tabla-tramites td:nth-child(3) { text-align: center; background-color: #dbeafe; width: 14%; }
+/* Celdas */
+.tabla-tramites td {
+    padding: 12px 15px;
+    border: none;
+    font-size: 13px;
+    border-bottom: 1px solid rgba(0,40,85,0.06);
+}
 
-.tabla-tramites th:nth-child(4),
-.tabla-tramites td:nth-child(4) { text-align: center; background-color: #dbeafe; width: 15%; }
-
-.tabla-tramites th:nth-child(5),
-.tabla-tramites td:nth-child(5) { text-align: center; background-color: #dbeafe; width: 10%; }
-
-.tabla-tramites th:nth-child(6),
-.tabla-tramites td:nth-child(6) { text-align: center; background-color: #dbeafe; width: 12%; }
-
-.tabla-tramites th:nth-child(7),
-.tabla-tramites td:nth-child(7) { text-align: center; background-color: #dbeafe; width: 10%; }
-
-.tabla-tramites th:nth-child(8),
-.tabla-tramites td:nth-child(8) { text-align: center; background-color: #dbeafe; width: 12%; }
-
-.tabla-tramites th:nth-child(9),
-.tabla-tramites td:nth-child(9) { text-align: center; background-color: #dbeafe; width: 10%; }
+/* Mensaje cuando no hay trámites */
+.tabla-tramites .vacio {
+    text-align: center;
+    color: #777;
+    font-style: italic;
+    padding: 30px !important;
+    background-color: #fff !important;
+}
 
 /* Celdas */
 .tabla-tramites td {
@@ -136,19 +141,10 @@ body {
     font-size: 13px;
 }
 
-/* Hover en filas */
-.tabla-tramites tbody tr {
-    transition: all 0.2s ease;
-}
-
-.tabla-tramites tbody tr:hover {
-    background-color: #f0f7ff !important;
-}
-
 /* Mensaje cuando no hay trámites */
 .tabla-tramites .vacio {
     text-align: center;
-    color: #777;
+    color: #ffffff;
     font-style: italic;
     padding: 30px !important;
 }
@@ -214,8 +210,47 @@ body {
 
 .btn-ver:hover {
     background: #003f7a;
-    transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* ===============================
+   BADGES DE ESTADO
+   Colores representativos por estado
+================================ */
+.badge.bg-warning {
+    background-color: #ffd000 !important;
+    color: #000 !important;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.badge.bg-info {
+    background-color: #2563eb !important;
+    color: #fff !important;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.badge.bg-success {
+    background-color: #16a34a !important;
+    color: #fff !important;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+.badge.bg-danger {
+    background-color: #dc2626 !important;
+    color: #fff !important;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
 }
 
 /* ===============================
