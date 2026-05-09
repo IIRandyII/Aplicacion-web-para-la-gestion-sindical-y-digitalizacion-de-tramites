@@ -25,7 +25,7 @@ $ruta_foto = null;
 // ===============================
 if (!empty($_FILES['foto']['name'])) {
 
-    $ext       = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
+    $ext        = strtolower(pathinfo($_FILES['foto']['name'], PATHINFO_EXTENSION));
     $permitidas = ['jpg', 'jpeg', 'png'];
 
     if (in_array($ext, $permitidas)) {
@@ -99,6 +99,19 @@ if ($ruta_foto) {
 }
 
 $stmt->execute();
+
+// ===============================
+// ACTUALIZAR SESIÓN
+// Para que el nombre y foto se
+// reflejen inmediatamente en el
+// topbar sin necesidad de
+// cerrar y volver a iniciar sesión
+// ===============================
+$_SESSION['nombre'] = $nombre;
+
+if ($ruta_foto) {
+    $_SESSION['foto'] = $ruta_foto;
+}
 
 // Redirigir al perfil con mensaje de éxito
 header("Location: perfil_usuario.php?status=ok");

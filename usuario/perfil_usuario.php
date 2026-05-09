@@ -16,14 +16,14 @@ $usuario = $stmt->get_result()->fetch_assoc();
 // Función para obtener iniciales del nombre
 function obtenerIniciales($nombre) {
     if (empty(trim($nombre))) return '?';
-    $partes  = explode(" ", trim($nombre));
+    $partes   = explode(" ", trim($nombre));
     $inicial1 = strtoupper($partes[0][0]);
     $ultimo   = end($partes);
     $inicial2 = (count($partes) > 1 && !empty($ultimo)) ? strtoupper($ultimo[0]) : '';
     return $inicial1 . $inicial2;
 }
 
-$iniciales      = !empty($usuario['nombre']) ? obtenerIniciales($usuario['nombre']) : '?';
+$iniciales       = !empty($usuario['nombre']) ? obtenerIniciales($usuario['nombre']) : '?';
 $password_oculta = str_repeat('*', strlen($usuario['password']));
 ?>
 <!DOCTYPE html>
@@ -69,18 +69,33 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
 
                         <!-- AVATAR / FOTO -->
                         <div class="col-md-3 text-center">
+
                             <?php if (!empty($usuario['foto'])): ?>
-                                <img src="../<?= $usuario['foto'] ?>" class="profile-pic mb-3">
+                                <!-- Foto de perfil existente -->
+                                <img src="../<?= $usuario['foto'] ?>"
+                                     class="profile-pic mb-3"
+                                     id="previewFoto">
                             <?php else: ?>
-                                <div class="avatar-iniciales mb-3">
+                                <!-- Avatar con iniciales -->
+                                <div class="avatar-iniciales mb-3" id="avatarIniciales">
                                     <?= $iniciales ?>
                                 </div>
+                                <!-- Preview oculto hasta seleccionar foto -->
+                                <img src="" class="profile-pic mb-3 d-none" id="previewFoto">
                             <?php endif; ?>
 
-                            <label class="upload-btn">
+                            <!-- Input de archivo oculto -->
+                            <input type="file" name="foto" id="inputFoto" hidden accept="image/*">
+
+                            <!-- Botón deshabilitado por defecto -->
+                            <button type="button"
+                                    class="upload-btn"
+                                    id="btnCambiarFoto"
+                                    disabled
+                                    style="opacity:0.5; cursor:not-allowed;">
                                 <i class="fa-solid fa-upload"></i> Cambiar foto
-                                <input type="file" name="foto" hidden accept="image/*">
-                            </label>
+                            </button>
+
                         </div>
 
                         <!-- DATOS PERSONALES -->
@@ -147,7 +162,8 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
 
                         <div class="col-md-12 mb-3">
                             <label>Dirección</label>
-                            <textarea name="direccion" class="form-control" disabled><?= $usuario['direccion'] ?></textarea>
+                            <textarea name="direccion" class="form-control"
+                                      disabled><?= $usuario['direccion'] ?></textarea>
                         </div>
                     </div>
 

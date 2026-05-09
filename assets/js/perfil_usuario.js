@@ -1,25 +1,66 @@
 // ===============================
-// PERFIL: EDITAR / GUARDAR
-// Habilita los campos del formulario
-// al hacer click en el botón editar
+// REFERENCIAS DEL DOM
 // ===============================
-const btnEditar  = document.getElementById("btnEditar");
-const btnGuardar = document.getElementById("btnGuardar");
+const btnEditar      = document.getElementById("btnEditar");
+const btnGuardar     = document.getElementById("btnGuardar");
+const btnCambiarFoto = document.getElementById("btnCambiarFoto");
+const inputFoto      = document.getElementById("inputFoto");
+const previewFoto    = document.getElementById("previewFoto");
+const avatarIniciales = document.getElementById("avatarIniciales");
 
+// ===============================
+// PREVIEW DE FOTO AL SELECCIONAR
+// Muestra la imagen inmediatamente
+// sin necesitar guardar cambios
+// ===============================
+if (inputFoto) {
+    inputFoto.addEventListener("change", (e) => {
+        const archivo = e.target.files[0];
+        if (!archivo) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+
+            if (previewFoto) {
+                // Mostrar preview con la imagen seleccionada
+                previewFoto.src = event.target.result;
+                previewFoto.classList.remove("d-none");
+            }
+
+            // Ocultar avatar de iniciales si existe
+            if (avatarIniciales) {
+                avatarIniciales.classList.add("d-none");
+            }
+        };
+        reader.readAsDataURL(archivo);
+    });
+}
+
+// ===============================
+// BOTÓN CAMBIAR FOTO
+// Abre el selector de archivo
+// solo cuando está habilitado
+// ===============================
+if (btnCambiarFoto) {
+    btnCambiarFoto.addEventListener("click", () => {
+        inputFoto.click();
+    });
+}
+
+// ===============================
+// PERFIL: EDITAR / GUARDAR
+// Habilita campos y botón de foto
+// al hacer click en editar
+// ===============================
 if (btnEditar && btnGuardar) {
 
     btnEditar.addEventListener("click", () => {
 
         // Campos que el usuario puede editar
         const camposEditables = [
-            "telefono",
-            "email",
-            "direccion",
-            "fecha_nacimiento",
-            "nombre",
-            "numero_ficha",
-            "curp",
-            "rfc"
+            "telefono", "email", "direccion",
+            "fecha_nacimiento", "nombre",
+            "numero_ficha", "curp", "rfc"
         ];
 
         // Habilitar solo los campos permitidos
@@ -29,7 +70,14 @@ if (btnEditar && btnGuardar) {
             }
         });
 
-        // Mostrar botón guardar y ocultar editar
+        // Habilitar botón de foto
+        if (btnCambiarFoto) {
+            btnCambiarFoto.disabled      = false;
+            btnCambiarFoto.style.opacity = "1";
+            btnCambiarFoto.style.cursor  = "pointer";
+        }
+
+        // Mostrar guardar y ocultar editar
         btnGuardar.classList.remove("d-none");
         btnEditar.classList.add("d-none");
     });
