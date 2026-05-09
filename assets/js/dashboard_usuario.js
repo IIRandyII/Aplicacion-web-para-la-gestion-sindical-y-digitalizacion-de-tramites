@@ -69,3 +69,102 @@ function cargarConteo() {
 
 document.addEventListener("DOMContentLoaded", cargarConteo);
 setInterval(cargarConteo, 10000);
+
+// ===============================
+// CARRUSEL DE AVISOS
+// Automático cada 4 segundos
+// con navegación manual
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+
+    const contenedor   = document.getElementById("carruselContenedor");
+    const btnPrev      = document.getElementById("btnPrev");
+    const btnNext      = document.getElementById("btnNext");
+    const indicadores  = document.getElementById("carruselIndicadores");
+
+    if (!contenedor) return;
+
+    const items        = contenedor.querySelectorAll(".carrusel-item");
+    const totalItems   = items.length;
+    const itemsPorVista = window.innerWidth <= 768 ? 1 : window.innerWidth <= 992 ? 2 : 3;
+    let   indiceActual = 0;
+    let   intervalo;
+
+    // Crear indicadores de puntos
+    const totalPuntos = Math.ceil(totalItems / itemsPorVista);
+    for (let i = 0; i < totalPuntos; i++) {
+        const punto = document.createElement("div");
+        punto.classList.add("carrusel-punto");
+        if (i === 0) punto.classList.add("activo");
+        punto.addEventListener("click", () => irA(i));
+        indicadores.appendChild(punto);
+    }
+
+    // Mover carrusel a un índice
+    function irA(indice) {
+        indiceActual = indice;
+        const anchoItem = items[0].offsetWidth + 20;
+        contenedor.scrollLeft = anchoItem * itemsPorVista * indice;
+
+        // Actualizar puntos
+        document.querySelectorAll(".carrusel-punto").forEach((p, i) => {
+            p.classList.toggle("activo", i === indice);
+        });
+    }
+
+    // Siguiente
+    function siguiente() {
+        const siguienteIndice = (indiceActual + 1) % totalPuntos;
+        irA(siguienteIndice);
+    }
+
+    // Anterior
+    function anterior() {
+        const anteriorIndice = (indiceActual - 1 + totalPuntos) % totalPuntos;
+        irA(anteriorIndice);
+    }
+
+    btnNext.addEventListener("click", () => {
+        siguiente();
+        reiniciarIntervalo();
+    });
+
+    btnPrev.addEventListener("click", () => {
+        anterior();
+        reiniciarIntervalo();
+    });
+
+    // Autoplay cada 4 segundos
+    function iniciarIntervalo() {
+        intervalo = setInterval(siguiente, 4000);
+    }
+
+    function reiniciarIntervalo() {
+        clearInterval(intervalo);
+        iniciarIntervalo();
+    }
+
+    iniciarIntervalo();
+});
+
+// ===============================
+// MODAL DE AVISO COMPLETO
+// ===============================
+function abrirModalAviso(titulo, mensaje, departamento, fecha) {
+    document.getElementById("modalAvisoDeptNombre").textContent = departamento;
+    document.getElementById("modalAvisoTitulo").textContent     = titulo;
+    document.getElementById("modalAvisoMensaje").textContent    = mensaje;
+    document.getElementById("modalAvisoFecha").textContent      = "Publicado: " + fecha;
+
+    document.getElementById("modalAvisoUsuario").classList.add("activo");
+}
+
+document.getElementById("cerrarModalAvisoUsuario").addEventListener("click", () => {
+    document.getElementById("modalAvisoUsuario").classList.remove("activo");
+});
+
+document.getElementById("modalAvisoUsuario").addEventListener("click", (e) => {
+    if (e.target === document.getElementById("modalAvisoUsuario")) {
+        document.getElementById("modalAvisoUsuario").classList.remove("activo");
+    }
+});

@@ -119,7 +119,9 @@ body {
     gap: 12px;
     margin-bottom: 25px;
     font-size: 20px;
-    color: #580805;
+    color: #002855;
+    border-bottom: 2px solid #e8f0fe;
+    padding-bottom: 12px;
 }
 
 /* Grid de avisos */
@@ -131,32 +133,250 @@ body {
 
 /* Card individual de aviso */
 .aviso {
-    background: #f9fbff;
-    border-left: 5px solid #580805;
+    background: #f8faff;
+    border-left: 4px solid #002855;
     padding: 18px 20px;
     border-radius: 10px;
-    transition: transform 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .aviso:hover {
     transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,40,85,0.1);
 }
 
+/* Badge del departamento */
+.aviso-departamento {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #002855;
+    background: #e8f0fe;
+    padding: 3px 10px;
+    border-radius: 20px;
+    width: fit-content;
+}
+
+/* Título del aviso */
 .aviso h4 {
-    margin-bottom: 8px;
-    color: red;
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #002855;
 }
 
+/* Mensaje del aviso con corte de texto */
 .aviso p {
-    font-size: 14px;
-    color: #eb0303;
-    line-height: 1.5;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
 }
 
-/* Fecha de publicación del aviso */
+/* Fecha de publicación */
 .aviso .fecha {
     display: block;
-    margin-top: 10px;
-    font-size: 12px;
-    color: #777;
+    font-size: 11px;
+    color: #999;
+    margin-top: 4px;
+}
+
+/* Estado vacío */
+.avisos-vacio {
+    text-align: center;
+    padding: 40px;
+    color: #aaa;
+    grid-column: 1 / -1;
+}
+
+.avisos-vacio i {
+    font-size: 36px;
+    margin-bottom: 10px;
+    color: #ccd6e8;
+    display: block;
+}
+
+/* ===============================
+   CARRUSEL DE AVISOS
+================================ */
+.carrusel-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.carrusel-contenedor {
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+    flex: 1;
+    scroll-behavior: smooth;
+}
+
+/* Cada item del carrusel ocupa 1/3 del contenedor */
+.carrusel-item {
+    min-width: calc(33.333% - 14px);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.carrusel-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,40,85,0.15);
+}
+
+/* Botones de navegación */
+.carrusel-btn {
+    background: #002855;
+    color: #fff;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,40,85,0.2);
+}
+
+.carrusel-btn:hover {
+    background: #004080;
+    transform: scale(1.1);
+}
+
+/* Indicadores de puntos */
+.carrusel-indicadores {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.carrusel-punto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ccd6e8;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.carrusel-punto.activo {
+    background: #002855;
+    transform: scale(1.3);
+}
+
+/* ===============================
+   MODAL AVISO USUARIO
+================================ */
+.modal-aviso-usuario {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-aviso-usuario.activo {
+    display: flex;
+}
+
+.modal-aviso-usuario-content {
+    background: #fff;
+    width: 90%;
+    max-width: 520px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    animation: entradaModal 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes entradaModal {
+    from { opacity: 0; transform: translateY(-20px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Header del modal */
+.modal-aviso-usuario-header {
+    background: linear-gradient(135deg, #002855, #1a4a8a);
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-aviso-usuario-cerrar {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: background 0.2s ease;
+}
+
+.modal-aviso-usuario-cerrar:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Body del modal */
+.modal-aviso-usuario-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.modal-aviso-usuario-body h3 {
+    font-size: 18px;
+    font-weight: 700;
+    color: #002855;
+    margin: 0;
+}
+
+.modal-aviso-usuario-body p {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+    margin: 0;
+    word-break: break-word;
+}
+
+/* Responsive carrusel en móvil */
+@media (max-width: 768px) {
+    .carrusel-item {
+        min-width: 100%;
+    }
+}
+
+@media (max-width: 992px) {
+    .carrusel-item {
+        min-width: calc(50% - 10px);
+    }
 }
