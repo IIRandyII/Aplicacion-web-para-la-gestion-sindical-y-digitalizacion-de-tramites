@@ -109,6 +109,13 @@
     color: #444;
     line-height: 1.6;
     margin: 0;
+    max-height: 100px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    -webkit-box-orient: vertical;
+    word-break: break-all;
 }
 
 /* Botones editar y eliminar */
