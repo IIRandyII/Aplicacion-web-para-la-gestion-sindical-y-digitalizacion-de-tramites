@@ -1,8 +1,11 @@
 <?php
 require_once("../includes/auth_afiliado.php");
+require_once("../config/db.php");
 
-$paginaActiva = "inicio";
-$nombreAfiliado = $_SESSION['nombre'];
+// Variables de sesión y página activa
+$paginaActiva    = "inicio";
+$nombreAfiliado  = $_SESSION['nombre'];
+$id_departamento = $_SESSION['id_departamento'];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -17,18 +20,13 @@ $nombreAfiliado = $_SESSION['nombre'];
 <body>
 
 <!-- SIDEBAR -->
-<?php include "../includes/sidebar_afiliado.php"; ?>
+ <?php include "../includes/sidebar_afiliado.php"; ?>
 
 <!-- CONTENIDO -->
-<main class="main">
+<main class="main"> 
 
-    <!-- TOPBAR -->
-    <div class="topbar">
-        <button class="toggle-btn" id="toggleSidebar">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <h2>Panel del Departamento - <?php echo htmlspecialchars($nombreAfiliado); ?></h2>
-    </div>
+<!-- TOPBAR -->
+ <?php include "../includes/topbar_afiliado.php"; ?>
 
     <div class="cards-container">
     <div class="info-card tramites active" onclick="cargarTramites('Todos', this)">

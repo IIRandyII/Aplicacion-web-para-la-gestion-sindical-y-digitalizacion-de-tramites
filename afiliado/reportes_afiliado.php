@@ -83,13 +83,10 @@ while ($fila = $resMes->fetch_assoc()) {
 <!-- CONTENIDO PRINCIPAL -->
 <main class="main">
 
-    <!-- TOPBAR -->
-    <div class="topbar">
-        <button class="toggle-btn" id="toggleSidebar">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <h2>Reportes del Departamento - <?php echo htmlspecialchars($nombreAfiliado); ?></h2>
-    </div>
+    <?php
+    $tituloTopbar = "Reportes";
+    include "../includes/topbar_afiliado.php";
+    ?>
 
     <!-- SECCIÓN DE REPORTES -->
     <section class="avisos">

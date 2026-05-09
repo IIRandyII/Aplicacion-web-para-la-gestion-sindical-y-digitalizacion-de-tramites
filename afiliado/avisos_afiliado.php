@@ -53,13 +53,10 @@ $avisos = $stmtAvisos->get_result();
 <!-- CONTENIDO PRINCIPAL -->
 <main class="main">
 
-    <!-- TOPBAR -->
-    <div class="topbar">
-        <button class="toggle-btn" id="toggleSidebar">
-            <i class="fa-solid fa-bars"></i>
-        </button>
-        <h2>Avisos — <?= htmlspecialchars($nombreDepartamento) ?></h2>
-    </div>
+    <?php
+    $tituloTopbar = "Avisos";
+    include "../includes/topbar_afiliado.php";
+    ?>
 
     <section class="avisos-section">
 

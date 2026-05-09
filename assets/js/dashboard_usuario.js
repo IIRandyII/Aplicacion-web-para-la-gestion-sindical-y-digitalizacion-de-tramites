@@ -68,7 +68,7 @@ function cargarConteo() {
 }
 
 document.addEventListener("DOMContentLoaded", cargarConteo);
-setInterval(cargarConteo, 10000);
+
 
 // ===============================
 // CARRUSEL DE AVISOS
