@@ -22,6 +22,10 @@
             <i class="fa-solid fa-file-lines"></i>
             <span>Reportes</span>
         </a>
+        <a href="avisos_afiliado.php" class="<?= $paginaActiva === 'avisos' ? 'active' : '' ?>">
+            <i class="fa-solid fa-bullhorn"></i>
+            <span>Crear avisos</span>
+        </a>
         <a href="../sesion/logout.php" class="logout">
             <i class="fa-solid fa-right-from-bracket"></i>
             <span>Cerrar sesión</span>

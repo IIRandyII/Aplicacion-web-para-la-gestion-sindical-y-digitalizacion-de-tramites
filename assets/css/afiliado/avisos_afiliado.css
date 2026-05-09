@@ -1,0 +1,340 @@
+/* ===============================
+   AVISOS AFILIADO
+   Estilos de la página de avisos
+================================ */
+
+/* ===============================
+   TOPBAR
+================================ */
+.topbar {
+    background: #fff;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* ===============================
+   SECCIÓN PRINCIPAL
+================================ */
+.avisos-section {
+    padding: 30px;
+}
+
+/* Botón nuevo aviso alineado a la derecha */
+.avisos-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 25px;
+}
+
+.btn-nuevo-aviso {
+    background: #002855;
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s ease;
+}
+
+.btn-nuevo-aviso:hover {
+    background: #004080;
+}
+
+/* ===============================
+   LISTA DE AVISOS
+================================ */
+.avisos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Card individual de aviso */
+.aviso-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    border-left: 5px solid #002855;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.aviso-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Header de la card */
+.aviso-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.aviso-info h4 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #002855;
+    margin-bottom: 4px;
+}
+
+/* Fecha del aviso */
+.aviso-fecha {
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Mensaje del aviso */
+.aviso-mensaje {
+    font-size: 14px;
+    color: #444;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Botones editar y eliminar */
+.aviso-acciones {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-editar {
+    background: #e8f0fe;
+    color: #2563eb;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-editar:hover {
+    background: #bfcffa;
+}
+
+.btn-eliminar {
+    background: #fdecea;
+    color: #dc2626;
+    border: none;
+    padding: 7px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.btn-eliminar:hover {
+    background: #fca5a5;
+}
+
+/* Estado vacío */
+.avisos-vacio {
+    text-align: center;
+    padding: 60px 20px;
+    color: #aaa;
+}
+
+.avisos-vacio i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #ccd6e8;
+}
+
+.avisos-vacio p {
+    font-size: 16px;
+}
+
+/* ===============================
+   MODAL CREAR/EDITAR AVISO
+================================ */
+.modal-aviso {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-aviso.activo {
+    display: flex;
+}
+
+/* Contenido del modal */
+.modal-aviso-content {
+    background: #fff;
+    width: 90%;
+    max-width: 550px;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    animation: entradaModal 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes entradaModal {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Header del modal */
+.modal-aviso-header {
+    background: linear-gradient(135deg, #002855, #1a4a8a);
+    padding: 18px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+}
+
+.modal-aviso-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Botón cerrar modal */
+.modal-aviso-cerrar {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: background 0.2s ease;
+}
+
+.modal-aviso-cerrar:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Formulario */
+#formAviso {
+    padding: 24px;
+}
+
+.form-grupo {
+    margin-bottom: 18px;
+}
+
+.form-grupo label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.form-grupo input,
+.form-grupo textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 14px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    outline: none;
+}
+
+.form-grupo textarea {
+    height: 120px;
+    resize: vertical;
+}
+
+.form-grupo input:focus,
+.form-grupo textarea:focus {
+    border-color: #002855;
+    box-shadow: 0 0 0 3px rgba(0,40,85,0.1);
+}
+
+/* Botones del formulario */
+.form-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.btn-cancelar {
+    background: #d60505;
+    color: #fafafa;
+    border: 1px solid #ddd;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s ease;
+}
+
+.btn-cancelar:hover {
+    background: #7a0707;
+}
+
+.btn-guardar {
+    background: #06a701;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: background 0.2s ease;
+}
+
+.btn-guardar:hover {
+    background: #03570a;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+    .avisos-section {
+        padding: 15px;
+    }
+
+    .aviso-card-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .aviso-acciones {
+        align-self: flex-end;
+    }
+}
