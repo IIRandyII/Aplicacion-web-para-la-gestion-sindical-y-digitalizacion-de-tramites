@@ -279,69 +279,131 @@ document.addEventListener("click", function (e) {
         .catch(() => alert("Error de conexión"));
 });
 
-// Construye y muestra el contenido del modal de detalle
+// Construye y muestra el modal de detalle con diseño mejorado y animación
 function mostrarDetalleTramite(tramite) {
     const contenedor = document.getElementById("detalleTramite");
 
-    let html = `
-        <div class="modal-grid">
-            <div class="card-detalle">
-                <h3>Información general</h3>
-                <div class="detalle-item"><strong>ID:</strong> ${tramite.id_tramite}</div>
-                <div class="detalle-item"><strong>Departamento:</strong> ${tramite.departamento}</div>
-                <div class="detalle-item"><strong>Trámite:</strong> ${tramite.tipo_tramite}</div>
-                <div class="detalle-item"><strong>Nombre:</strong> ${tramite.nombre_completo}</div>
-                <div class="detalle-item"><strong>Ficha:</strong> ${tramite.numero_ficha}</div>
-                <div class="detalle-item"><strong>Categoría:</strong> ${tramite.categoria}</div>
-                <div class="detalle-item"><strong>Turno:</strong> ${tramite.turno}</div>
-                <div class="detalle-item"><strong>Email:</strong> ${tramite.email}</div>
-                <div class="detalle-item"><strong>Teléfono:</strong> ${tramite.telefono}</div>
-                <div class="detalle-item"><strong>CURP:</strong> ${tramite.curp}</div>
-                <div class="estado-contenedor">
-                    <span class="badge bg-${getColorEstado(tramite.estado)}">${tramite.estado}</span>
-                </div>
-            </div>
-
-            <div class="card-detalle">
-                <h3>Datos específicos</h3>
-    `;
-
-    // Renderizar datos específicos del trámite
+    // Parsear datos específicos del trámite
     const datos = JSON.parse(tramite.datos_especificos || "{}");
+
+    // Construir filas de datos específicos
+    let datosEspecificosHTML = "";
     for (const campo in datos) {
-        html += `
-            <div class="detalle-item">
-                <strong>${campo.replace(/_/g, " ")}:</strong> ${datos[campo]}
+        datosEspecificosHTML += `
+            <div class="detalle-fila">
+                <span class="detalle-label">${campo.replace(/_/g, " ")}</span>
+                <span class="detalle-valor">${datos[campo]}</span>
             </div>
         `;
     }
 
-    html += `</div>`;
-
-    // Documento adjunto si existe
-    if (tramite.documento_respaldo) {
-        html += `
-            <div class="detalle-bloque">
-                <h4>Documento adjunto</h4>
-                <div class="archivo-box">
+    // Construir documento adjunto si existe
+    const documentoHTML = tramite.documento_respaldo ? `
+        <div class="detalle-documento">
+            <div class="archivo-box">
+                <div class="archivo-info">
                     <i class="fas fa-file-pdf"></i>
                     <span>${tramite.documento_respaldo.split('/').pop()}</span>
-                    <a href="../${tramite.documento_respaldo}" download class="btn-descargar">
-                        Descargar PDF
-                    </a>
+                </div>
+                <a href="../${tramite.documento_respaldo}" download class="btn-descargar">
+                    <i class="fas fa-download"></i> Descargar
+                </a>
+            </div>
+        </div>
+    ` : `
+        <div class="detalle-documento">
+            <p class="sin-documento"><i class="fas fa-info-circle"></i> Sin documento adjunto</p>
+        </div>
+    `;
+
+    contenedor.innerHTML = `
+        <div class="detalle-header">
+            <div class="detalle-header-info">
+                <span class="detalle-id">#${tramite.id_tramite}</span>
+                <span class="badge bg-${getColorEstado(tramite.estado)} detalle-badge">${tramite.estado}</span>
+            </div>
+            <div class="detalle-header-meta">
+                <span><i class="fas fa-building"></i> ${tramite.departamento}</span>
+                <span><i class="fas fa-file-alt"></i> ${tramite.tipo_tramite}</span>
+            </div>
+        </div>
+
+        <div class="detalle-body">
+
+            <div class="detalle-seccion">
+                <h4 class="detalle-seccion-titulo">
+                    <i class="fas fa-user"></i> Información general
+                </h4>
+                <div class="detalle-grid">
+                    <div class="detalle-fila">
+                        <span class="detalle-label">Nombre</span>
+                        <span class="detalle-valor">${tramite.nombre_completo}</span>
+                    </div>
+                    <div class="detalle-fila">
+                        <span class="detalle-label">Ficha</span>
+                        <span class="detalle-valor">${tramite.numero_ficha}</span>
+                    </div>
+                    <div class="detalle-fila">
+                        <span class="detalle-label">Categoría</span>
+                        <span class="detalle-valor">${tramite.categoria}</span>
+                    </div>
+                    <div class="detalle-fila">
+                        <span class="detalle-label">Turno</span>
+                        <span class="detalle-valor">${tramite.turno}</span>
+                    </div>
+                    <div class="detalle-fila">
+                        <span class="detalle-label">Email</span>
+                        <span class="detalle-valor">${tramite.email}</span>
+                    </div>
+                    <div class="detalle-fila">
+                        <span class="detalle-label">Teléfono</span>
+                        <span class="detalle-valor">${tramite.telefono}</span>
+                    </div>
+                    <div class="detalle-fila">
+                        <span class="detalle-label">CURP</span>
+                        <span class="detalle-valor">${tramite.curp}</span>
+                    </div>
                 </div>
             </div>
-        `;
-    }
 
-    html += `</div>`;
-    contenedor.innerHTML = html;
-    document.getElementById("modalVerTramite").style.display = "block";
+            <div class="detalle-seccion">
+                <h4 class="detalle-seccion-titulo">
+                    <i class="fas fa-list-alt"></i> Datos específicos
+                </h4>
+                <div class="detalle-grid">
+                    ${datosEspecificosHTML}
+                </div>
+            </div>
+
+            <div class="detalle-seccion">
+                <h4 class="detalle-seccion-titulo">
+                    <i class="fas fa-paperclip"></i> Documento adjunto
+                </h4>
+                ${documentoHTML}
+            </div>
+
+        </div>
+    `;
+
+    // Mostrar modal con animación
+    const modal = document.getElementById("modalVerTramite");
+    modal.style.display = "block";
+
+    // Forzar reflow para que la animación funcione
+    modal.querySelector(".modal-content.modal-grande").classList.remove("modal-entrada");
+    void modal.querySelector(".modal-content.modal-grande").offsetWidth;
+    modal.querySelector(".modal-content.modal-grande").classList.add("modal-entrada");
 }
 
 // Cerrar modal de detalle
 document.getElementById("cerrarVerTramite").onclick = () => {
-    document.getElementById("modalVerTramite").style.display = "none";
+    const modal = document.getElementById("modalVerTramite");
+    const contenido = modal.querySelector(".modal-content.modal-grande");
+    contenido.classList.add("modal-salida");
+    setTimeout(() => {
+        modal.style.display = "none";
+        contenido.classList.remove("modal-salida");
+    }, 300);
 };
 
 // ===============================

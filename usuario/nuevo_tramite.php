@@ -122,7 +122,9 @@ $id_usuario   = $_SESSION['id_usuario'];
 <div class="modal" id="modalVerTramite">
     <div class="modal-content modal-grande">
         <span class="close" id="cerrarVerTramite">&times;</span>
-        <h3>Detalle del trámite</h3>
+        <div id="detalleTramite"></div>
+    </div>
+</div>
 
         <!-- Contenido inyectado dinámicamente con JS -->
         <div id="detalleTramite"></div>

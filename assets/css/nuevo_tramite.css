@@ -96,7 +96,7 @@ body {
     font-weight: 600;
 }
 
-/* Columna ID con color diferente */
+/* Columna ID */
 .tabla-tramites th:nth-child(1),
 .tabla-tramites td:nth-child(1) {
     text-align: center;
@@ -175,7 +175,7 @@ body {
     background: #004a8c;
 }
 
-/* Botón secundario (outline) */
+/* Botón secundario */
 .btn-secondary {
     background: transparent;
     color: #005baa;
@@ -298,6 +298,7 @@ body {
     padding: 25px;
     border-radius: 8px;
     position: relative;
+    overflow: hidden;
 }
 
 .modal-content h3 {
@@ -326,12 +327,28 @@ body {
 }
 
 /* Botón cerrar modal */
+/* Botón cerrar modal mejorado */
 .close {
     position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 22px;
+    right: 12px;
+    top: 8px;
+    font-size: 26px;
+    font-weight: bold;
     cursor: pointer;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+.close:hover {
+    background: rgba(139, 136, 136, 0.1);
+    transform: scale(1.1);
 }
 
 hr {
@@ -343,13 +360,10 @@ hr {
 /* ===============================
    FORMULARIOS DINÁMICOS
 ================================ */
-
-/* Contenedor del formulario dinámico */
 #formularioTramite {
     margin-top: 15px;
 }
 
-/* Grid de inputs generales */
 .form-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -357,7 +371,6 @@ hr {
     margin-top: 10px;
 }
 
-/* Sección de formulario */
 .form-section {
     margin-top: 15px;
 }
@@ -368,23 +381,15 @@ hr {
     color: #004080;
 }
 
-/* Selects de departamento y trámite en fila */
 .fila-selects {
     display: flex;
     gap: 15px;
     align-items: flex-start;
 }
 
-.fila-selects div {
-    flex: 1;
-}
+.fila-selects div { flex: 1; }
+.fila-selects select { width: 100% !important; max-width: 100% !important; }
 
-.fila-selects select {
-    width: 100% !important;
-    max-width: 100% !important;
-}
-
-/* Dos columnas iguales */
 .fila-doble {
     display: flex;
     gap: 15px;
@@ -395,7 +400,6 @@ hr {
 .fila-doble input { width: 100%; max-width: 100% !important; }
 .fila-doble select { width: 100% !important; max-width: 100% !important; }
 
-/* Fila especial para descuento */
 .fila-doble-descuento {
     display: flex;
     gap: 15px;
@@ -414,7 +418,6 @@ hr {
     width: 100% !important;
 }
 
-/* Animación de spans del sidebar al colapsar */
 .sidebar .menu a span {
     transition: opacity 0.2s ease, transform 0.2s ease;
 }
@@ -430,91 +433,203 @@ hr {
 
 /* Fondo con blur */
 #modalVerTramite {
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(6px);
+    background: rgba(0,0,0,0.45);
 }
 
-/* Grid de cards de detalle */
-.modal-grid {
-    display: grid;
+/* Animaciones de entrada y salida */
+@keyframes entradaModal {
+    from {
+        opacity: 0;
+        transform: translateY(-30px) scale(0.97);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes salidaModal {
+    from {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.97);
+    }
+}
+
+.modal-entrada {
+    animation: entradaModal 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.modal-salida {
+    animation: salidaModal 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* ===============================
+   HEADER DEL DETALLE
+================================ */
+.detalle-header {
+    background: linear-gradient(135deg, #002855, #2563eb);
+    padding: 20px 25px;
+    border-radius: 10px 10px 0 0;
+    color: #fff;
+    margin: -25px -25px 0 -25px;
+}
+
+.detalle-header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.detalle-id {
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.detalle-badge {
+    font-size: 13px;
+    padding: 5px 14px;
+    border-radius: 20px;
+}
+
+.detalle-header-meta {
+    display: flex;
+    gap: 20px;
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+.detalle-header-meta span {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* ===============================
+   BODY DEL DETALLE
+================================ */
+.detalle-body {
+    padding: 20px 0 0 0;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
 }
 
-/* Card de detalle */
-.card-detalle {
-    background: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+.detalle-seccion {
+    background: #f8faff;
+    border-radius: 10px;
+    padding: 18px 20px;
+    border: 1px solid #e8eef8;
 }
 
-.card-detalle h3 {
-    margin-bottom: 15px;
-    color: #0d3b66;
-    border-bottom: 2px solid #f1f1f1;
-    padding-bottom: 8px;
-}
-
-/* Items de detalle */
-.detalle-item {
-    margin-bottom: 8px;
-    font-size: 14px;
-}
-
-/* Badge de estado */
-.estado-contenedor {
-    margin-top: 15px;
-}
-
-.badge-estado {
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 13px;
+.detalle-seccion-titulo {
+    font-size: 15px;
     font-weight: 600;
+    color: #002855;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0eaff;
 }
 
-/* Caja de documento adjunto */
+.detalle-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+}
+
+.detalle-fila {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.detalle-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #6b7a99;
+    letter-spacing: 0.5px;
+}
+
+.detalle-valor {
+    font-size: 14px;
+    color: #1a1a2e;
+    font-weight: 500;
+}
+
+/* ===============================
+   DOCUMENTO ADJUNTO
+================================ */
+.detalle-documento {
+    margin-top: 5px;
+}
+
 .archivo-box {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: #f4f6f9;
-    padding: 15px;
+    background: #fff;
+    padding: 14px 18px;
     border-radius: 10px;
     border: 1px solid #e0e0e0;
-    margin-top: 10px;
 }
 
-.archivo-box i {
+.archivo-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Ícono del PDF en rojo */
+.archivo-info i {
     color: #e74c3c;
     font-size: 22px;
-    margin-right: 10px;
 }
 
-/* Botón descargar PDF */
+/* Ícono del botón descargar en blanco */
+.btn-descargar i {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.sin-documento {
+    color: #999;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+}
+
 .btn-descargar {
-    background: #0d6efd;
+    background: #ee1506;
     color: white;
-    padding: 8px 15px;
+    padding: 8px 16px;
     border-radius: 6px;
     text-decoration: none;
-    font-size: 14px;
-    transition: 0.3s;
-}
-
-.btn-descargar:hover {
-    background: #0b5ed7;
+    font-size: 13px;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
 }
 
 /* ===============================
    RESPONSIVE - TABLETS
 ================================ */
 @media (max-width: 992px) {
-
     .filtros-tabla {
         flex-direction: column;
         align-items: stretch;
     }
-
     .buscador {
         min-width: 100%;
     }
@@ -524,44 +639,17 @@ hr {
    RESPONSIVE - MÓVIL
 ================================ */
 @media (max-width: 768px) {
-
-    .tramite-section {
-        padding: 15px;
-    }
-
-    .tramites-contenedor {
-        padding: 15px;
-    }
-
-    .tabla-tramites {
-        font-size: 12px;
-    }
-
+    .tramite-section { padding: 15px; }
+    .tramites-contenedor { padding: 15px; }
+    .tabla-tramites { font-size: 12px; }
     .tabla-tramites th,
-    .tabla-tramites td {
-        padding: 8px 10px;
-    }
-
-    .btn-ver {
-        padding: 4px 8px;
-        font-size: 11px;
-    }
-
-    .filtros-tabla {
-        flex-direction: column;
-    }
-
-    .buscador {
-        min-width: 100%;
-    }
-
-    .modal-content {
-        width: 95%;
-        margin: 5% auto;
-        padding: 15px;
-    }
-
-    .form-grid {
-        grid-template-columns: 1fr;
-    }
+    .tabla-tramites td { padding: 8px 10px; }
+    .btn-ver { padding: 4px 8px; font-size: 11px; }
+    .filtros-tabla { flex-direction: column; }
+    .buscador { min-width: 100%; }
+    .modal-content { width: 95%; margin: 5% auto; padding: 15px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .detalle-grid { grid-template-columns: 1fr; }
+    .detalle-header { margin: -15px -15px 0 -15px; }
+    .detalle-header-meta { flex-direction: column; gap: 5px; }
 }
