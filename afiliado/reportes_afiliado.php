@@ -6,6 +6,7 @@ require_once("../config/db.php");
 $paginaActiva    = "reportes";
 $nombreAfiliado  = $_SESSION['nombre'];
 $id_departamento = $_SESSION['id_departamento'];
+$id_usuario = $_SESSION['id_usuario'];
 
 /* ===============================
    TRÁMITES POR TIPO

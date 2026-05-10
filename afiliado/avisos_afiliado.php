@@ -6,6 +6,7 @@ require_once("../config/db.php");
 $paginaActiva    = "avisos";
 $nombreAfiliado  = $_SESSION['nombre'];
 $id_departamento = $_SESSION['id_departamento'];
+$id_usuario = $_SESSION['id_usuario'];
 
 // ===============================
 // OBTENER NOMBRE DEL DEPARTAMENTO

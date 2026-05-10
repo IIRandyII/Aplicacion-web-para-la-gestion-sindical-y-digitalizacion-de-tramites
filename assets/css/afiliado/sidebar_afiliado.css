@@ -182,6 +182,31 @@ body {
 }
 
 /* ===============================
+   BADGE DE NOTIFICACIONES AFILIADO
+================================ */
+.icono-notificacion {
+    position: relative;
+    display: inline-block;
+}
+
+.badge-notificacion {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 11px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+/* ===============================
    RESPONSIVE - TABLETS
 ================================ */
 @media (max-width: 992px) {

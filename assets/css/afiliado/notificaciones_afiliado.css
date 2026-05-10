@@ -1,0 +1,154 @@
+/* ===============================
+   NOTIFICACIONES AFILIADO
+================================ */
+
+/* ===============================
+   SECCIÓN PRINCIPAL
+================================ */
+.notif-section {
+    padding: 30px;
+}
+
+/* ===============================
+   LISTA DE NOTIFICACIONES
+================================ */
+.notif-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+/* Card de notificación */
+.notif-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 22px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    border-left: 5px solid #002855;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.notif-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+/* Notificación no leída resaltada */
+.notif-card.no-leida {
+    border-left-color: #ffd000;
+    background: #fffdf0;
+}
+
+/* Header de la card */
+.notif-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.notif-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* Ícono de la notificación */
+.notif-icono {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #e8f0fe;
+    color: #002855;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* Título de la notificación */
+.notif-info h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #002855;
+    margin: 0 0 4px 0;
+}
+
+/* Fecha */
+.notif-fecha {
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Mensaje */
+.notif-mensaje {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+    word-break: break-word;
+}
+
+/* Botón ver trámite */
+.btn-ver-tramite {
+    background: #002855;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease;
+    white-space: nowrap;
+}
+
+.btn-ver-tramite:hover {
+    background: #004080;
+}
+
+/* ===============================
+   ESTADO VACÍO
+================================ */
+.notif-vacio {
+    text-align: center;
+    padding: 60px 20px;
+    color: #aaa;
+}
+
+.notif-vacio i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #ccd6e8;
+    display: block;
+}
+
+.notif-vacio p {
+    font-size: 16px;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+    .notif-section {
+        padding: 15px;
+    }
+
+    .notif-card-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .btn-ver-tramite {
+        align-self: flex-end;
+    }
+}

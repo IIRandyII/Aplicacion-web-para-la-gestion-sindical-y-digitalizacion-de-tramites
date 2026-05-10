@@ -6,6 +6,7 @@ require_once("../config/db.php");
 $paginaActiva    = "inicio";
 $nombreAfiliado  = $_SESSION['nombre'];
 $id_departamento = $_SESSION['id_departamento'];
+$id_usuario      = $_SESSION['id_usuario'];
 ?>
 <!DOCTYPE html>
 <html lang="es">

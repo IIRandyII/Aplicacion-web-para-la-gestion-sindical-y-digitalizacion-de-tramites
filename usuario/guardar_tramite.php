@@ -124,17 +124,49 @@ $stmt->bind_param(
 
 if ($stmt->execute()) {
 
-    // Obtener nombre del departamento para retornarlo al JS
+    $id_tramite_nuevo = $stmt->insert_id;
+
+    // Obtener nombre del departamento
     $stmtDept = $conn->prepare("SELECT nombre FROM departamentos WHERE id_departamento = ?");
     $stmtDept->bind_param("i", $id_departamento);
     $stmtDept->execute();
     $deptData           = $stmtDept->get_result()->fetch_assoc();
     $nombreDepartamento = $deptData['nombre'];
 
+    // ===============================
+    // NOTIFICACIÓN AL AFILIADO
+    // Se busca el afiliado del departamento
+    // y se le envía una notificación
+    // en la tabla notificaciones_afiliado
+    // ===============================
+    $stmtAfiliado = $conn->prepare("
+        SELECT id_usuario
+        FROM usuarios
+        WHERE id_departamento = ? AND rol = 'afiliado'
+    ");
+    $stmtAfiliado->bind_param("i", $id_departamento);
+    $stmtAfiliado->execute();
+    $resultAfiliado = $stmtAfiliado->get_result();
+
+    // Insertar notificación para cada afiliado del departamento
+    while ($afiliado = $resultAfiliado->fetch_assoc()) {
+
+        $id_afiliado  = $afiliado['id_usuario'];
+        $tituloNotif  = "Nuevo trámite recibido";
+        $mensajeNotif = "Se ha recibido un nuevo trámite de \"$tipo_tramite\" del trabajador $nombre. Por favor revísalo a la brevedad.";
+
+        $stmtNotif = $conn->prepare("
+            INSERT INTO notificaciones_afiliado (id_afiliado, id_tramite, titulo, mensaje, leida, fecha)
+            VALUES (?, ?, ?, ?, 0, NOW())
+        ");
+        $stmtNotif->bind_param("iiss", $id_afiliado, $id_tramite_nuevo, $tituloNotif, $mensajeNotif);
+        $stmtNotif->execute();
+    }
+
     // Respuesta exitosa con datos del trámite creado
     echo json_encode([
         "success"      => true,
-        "id_tramite"   => $stmt->insert_id,
+        "id_tramite"   => $id_tramite_nuevo,
         "departamento" => $nombreDepartamento,
         "tramite"      => $tipo_tramite,
         "nombre"       => $nombre,
