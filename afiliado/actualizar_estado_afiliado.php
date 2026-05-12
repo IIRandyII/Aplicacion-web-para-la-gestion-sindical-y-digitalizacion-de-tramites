@@ -69,6 +69,19 @@ $stmt->bind_param("sii", $nuevoEstado, $id, $id_departamento);
 if ($stmt->execute() && $stmt->affected_rows > 0) {
 
     // ===============================
+    // REGISTRAR EN HISTORIAL
+    // Se guarda el cambio de estado
+    // con el afiliado que lo realizó
+    // ===============================
+    $stmtHistorial = $conn->prepare("
+        INSERT INTO historial_tramites
+        (id_tramite, id_afiliado, estado_anterior, estado_nuevo, fecha_cambio)
+        VALUES (?, ?, ?, ?, NOW())
+    ");
+    $stmtHistorial->bind_param("iiss", $id, $id_afiliado, $estadoAnterior, $nuevoEstado);
+    $stmtHistorial->execute();
+
+    // ===============================
     // GENERAR MENSAJE DE NOTIFICACIÓN
     // El mensaje varía según el
     // nuevo estado del trámite

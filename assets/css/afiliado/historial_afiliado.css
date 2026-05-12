@@ -1,0 +1,162 @@
+/* ===============================
+   HISTORIAL AFILIADO
+================================ */
+
+/* ===============================
+   SECCIÓN PRINCIPAL
+================================ */
+.historial-section {
+    padding: 30px;
+}
+
+/* ===============================
+   CONTENEDOR DE LA TABLA
+================================ */
+.historial-contenedor {
+    background: #fff;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.historial-contenedor h4 {
+    font-size: 20px;
+    color: #002855;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ===============================
+   TABLA DE HISTORIAL
+================================ */
+.tabla-historial {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Header */
+.tabla-historial thead {
+    background: linear-gradient(135deg, #002855, #1a4a8a);
+}
+
+.tabla-historial th {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 15px;
+    text-align: center;
+    border: none;
+}
+
+/* Celdas */
+.tabla-historial td {
+    padding: 12px 15px;
+    font-size: 13px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+/* Columnas alternadas */
+.tabla-historial td:nth-child(odd) {
+    background-color: #e8f2fc;
+}
+
+.tabla-historial td:nth-child(even) {
+    background-color: #f4f9ff;
+}
+
+/* Hover en filas */
+.tabla-historial tbody tr:hover td {
+    background-color: #b8d4f0 !important;
+}
+
+/* ===============================
+   CAMBIO DE ESTADO
+   Muestra estado anterior → nuevo
+================================ */
+.cambio-estado {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.cambio-estado i {
+    color: #002855;
+    font-size: 12px;
+}
+
+/* Badges de estado */
+.badge-estado {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.badge-estado.pendiente {
+    background: linear-gradient(135deg, #ffd000, #f5b800);
+    color: #000;
+}
+
+.badge-estado.en-revisión {
+    background: linear-gradient(135deg, #2563eb, #1a4fd8);
+    color: #fff;
+}
+
+.badge-estado.aprobado {
+    background: linear-gradient(135deg, #16a34a, #0f7a38);
+    color: #fff;
+}
+
+.badge-estado.rechazado {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: #fff;
+}
+
+/* ===============================
+   ESTADO VACÍO
+================================ */
+.historial-vacio {
+    text-align: center;
+    padding: 60px 20px;
+    color: #aaa;
+}
+
+.historial-vacio i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #ccd6e8;
+    display: block;
+}
+
+.historial-vacio p {
+    font-size: 16px;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+    .historial-section {
+        padding: 15px;
+    }
+
+    .tabla-historial th,
+    .tabla-historial td {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+
+    .cambio-estado {
+        flex-direction: column;
+        gap: 4px;
+    }
+}
