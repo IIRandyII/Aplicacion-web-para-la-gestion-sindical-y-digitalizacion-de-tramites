@@ -4,20 +4,14 @@ require_once __DIR__ . "/../config/db.php";
 
 // ===============================
 // VALIDAR PARÁMETRO ID
-// Se verifica que el ID sea
-// numérico antes de consultar
 // ===============================
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     echo "<div class='alert alert-danger'>ID inválido</div>";
     exit();
 }
 
-$id = intval($_GET['id']);
-
-// ===============================
-// OBTENER TRÁMITE
-// ===============================
-$sql  = "SELECT * FROM tramites WHERE id_tramite = ?";
+$id   = intval($_GET['id']);
+$sql  = "SELECT t.*, d.nombre AS departamento FROM tramites t JOIN departamentos d ON t.id_departamento = d.id_departamento WHERE t.id_tramite = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -30,11 +24,6 @@ if ($result->num_rows === 0) {
 
 $tramite = $result->fetch_assoc();
 
-// ===============================
-// HELPER: COLOR POR ESTADO
-// Retorna la clase Bootstrap
-// correspondiente al estado
-// ===============================
 function getColorEstado($estado) {
     switch ($estado) {
         case "Pendiente":   return "warning";
@@ -44,100 +33,88 @@ function getColorEstado($estado) {
         default:            return "secondary";
     }
 }
+
+$datos = json_decode($tramite['datos_especificos'] ?? '{}', true);
+
+$datosEspecificosHTML = "";
+foreach ($datos as $campo => $valor) {
+    $datosEspecificosHTML .= "
+        <div class='detalle-fila'>
+            <span class='detalle-label'>{$campo}</span>
+            <span class='detalle-valor'>" . htmlspecialchars($valor) . "</span>
+        </div>
+    ";
+}
+
+$documentoHTML = !empty($tramite['documento_respaldo']) ? "
+    <div class='detalle-documento'>
+        <div class='archivo-box'>
+            <div class='archivo-info'>
+                <i class='fas fa-file-pdf'></i>
+                <span>" . basename($tramite['documento_respaldo']) . "</span>
+            </div>
+            <a href='../" . htmlspecialchars($tramite['documento_respaldo']) . "' download class='btn-descargar'>
+                <i class='fas fa-download'></i> Descargar
+            </a>
+        </div>
+    </div>
+" : "<div class='detalle-documento'><p class='sin-documento'><i class='fas fa-info-circle'></i> Sin documento adjunto</p></div>";
 ?>
 
-<!-- ===============================
-     INFORMACIÓN GENERAL Y ESPECÍFICA
-================================ -->
-<div class="row">
-
-    <!-- DATOS GENERALES -->
-    <div class="col-md-6">
-        <h5 class="mb-3">Información general</h5>
-        <p><strong>ID:</strong> <?= $tramite['id_tramite'] ?></p>
-        <p><strong>Nombre:</strong> <?= htmlspecialchars($tramite['nombre_completo']) ?></p>
-        <p><strong>Trámite:</strong> <?= htmlspecialchars($tramite['tipo_tramite']) ?></p>
-        <p><strong>Email:</strong> <?= htmlspecialchars($tramite['email']) ?></p>
-        <p><strong>Teléfono:</strong> <?= htmlspecialchars($tramite['telefono']) ?></p>
-        <p><strong>CURP:</strong> <?= htmlspecialchars($tramite['curp']) ?></p>
-        <p>
-            <strong>Estado:</strong>
-            <span class="badge bg-<?= getColorEstado($tramite['estado']) ?>">
-                <?= htmlspecialchars($tramite['estado']) ?>
-            </span>
-        </p>
+<!-- HEADER -->
+<div class="detalle-header">
+    <div class="detalle-header-info">
+        <span class="detalle-id">#<?= $tramite['id_tramite'] ?></span>
+        <span class="badge bg-<?= getColorEstado($tramite['estado']) ?> detalle-badge"><?= $tramite['estado'] ?></span>
     </div>
-
-    <!-- DATOS ESPECÍFICOS DEL TRÁMITE -->
-    <div class="col-md-6">
-        <h5 class="mb-3">Datos específicos</h5>
-
-        <?php
-        // Decodificar JSON de datos específicos
-        $datos = json_decode($tramite['datos_especificos'] ?? '{}', true);
-
-        if (!empty($datos) && is_array($datos)) {
-            foreach ($datos as $campo => $valor) {
-                echo "<p><strong>"
-                    . htmlspecialchars(ucfirst(str_replace('_', ' ', $campo)))
-                    . ":</strong> "
-                    . htmlspecialchars($valor)
-                    . "</p>";
-            }
-        } else {
-            echo "<p>No hay datos específicos.</p>";
-        }
-        ?>
+    <div class="detalle-header-meta">
+        <span><i class="fas fa-building"></i> <?= htmlspecialchars($tramite['departamento']) ?></span>
+        <span><i class="fas fa-file-alt"></i> <?= htmlspecialchars($tramite['tipo_tramite']) ?></span>
     </div>
-
 </div>
 
-<hr>
+<!-- BODY -->
+<div class="detalle-body" style="padding: 20px;">
 
-<!-- ===============================
-     CAMBIAR ESTADO DEL TRÁMITE
-================================ -->
-<h5>Cambiar estado</h5>
-
-<p>
-    <strong>Estado actual:</strong>
-    <span class="badge bg-<?= getColorEstado($tramite['estado']) ?>">
-        <?= htmlspecialchars($tramite['estado']) ?>
-    </span>
-</p>
-
-<!-- Select con el estado actual preseleccionado -->
-<select id="nuevoEstado" class="form-select mb-3">
-    <option value="En revisión" <?= $tramite['estado'] === 'En revisión' ? 'selected' : '' ?>>En revisión</option>
-    <option value="Aprobado"    <?= $tramite['estado'] === 'Aprobado'    ? 'selected' : '' ?>>Aprobado</option>
-    <option value="Rechazado"   <?= $tramite['estado'] === 'Rechazado'   ? 'selected' : '' ?>>Rechazado</option>
-</select>
-
-<button class="btn btn-primary" onclick="actualizarEstado(<?= $tramite['id_tramite'] ?>)">
-    Guardar cambios
-</button>
-
-<hr>
-
-<!-- ===============================
-     DOCUMENTO ADJUNTO
-================================ -->
-<h5 class="mt-3">Documento adjunto</h5>
-
-<?php if (!empty($tramite['documento_respaldo'])): ?>
-
-    <!-- Botón para descargar el documento -->
-    <a href="../<?= htmlspecialchars($tramite['documento_respaldo']) ?>"
-       download
-       class="btn btn-success">
-        <i class="fa-solid fa-download"></i> Descargar documento
-    </a>
-
-<?php else: ?>
-
-    <!-- Sin documento adjunto -->
-    <div class="alert alert-warning">
-        Este trámite no tiene documento adjunto.
+    <!-- INFORMACIÓN GENERAL -->
+    <div class="detalle-seccion">
+        <h4 class="detalle-seccion-titulo"><i class="fas fa-user"></i> Información general</h4>
+        <div class="detalle-grid">
+            <div class="detalle-fila"><span class="detalle-label">Nombre</span><span class="detalle-valor"><?= htmlspecialchars($tramite['nombre_completo']) ?></span></div>
+            <div class="detalle-fila"><span class="detalle-label">Ficha</span><span class="detalle-valor"><?= htmlspecialchars($tramite['numero_ficha']) ?></span></div>
+            <div class="detalle-fila"><span class="detalle-label">Categoría</span><span class="detalle-valor"><?= htmlspecialchars($tramite['categoria']) ?></span></div>
+            <div class="detalle-fila"><span class="detalle-label">Turno</span><span class="detalle-valor"><?= htmlspecialchars($tramite['turno']) ?></span></div>
+            <div class="detalle-fila"><span class="detalle-label">Email</span><span class="detalle-valor"><?= htmlspecialchars($tramite['email']) ?></span></div>
+            <div class="detalle-fila"><span class="detalle-label">Teléfono</span><span class="detalle-valor"><?= htmlspecialchars($tramite['telefono']) ?></span></div>
+            <div class="detalle-fila"><span class="detalle-label">CURP</span><span class="detalle-valor"><?= htmlspecialchars($tramite['curp']) ?></span></div>
+        </div>
     </div>
 
-<?php endif; ?>
+    <!-- DATOS ESPECÍFICOS -->
+    <div class="detalle-seccion">
+        <h4 class="detalle-seccion-titulo"><i class="fas fa-list-alt"></i> Datos específicos</h4>
+        <div class="detalle-grid"><?= $datosEspecificosHTML ?></div>
+    </div>
+
+    <!-- DOCUMENTO -->
+    <div class="detalle-seccion">
+        <h4 class="detalle-seccion-titulo"><i class="fas fa-paperclip"></i> Documento adjunto</h4>
+        <?= $documentoHTML ?>
+    </div>
+
+    <!-- CAMBIAR ESTADO -->
+    <?php if ($tramite['archivado'] == 0): ?>
+    <div class="detalle-seccion">
+        <h4 class="detalle-seccion-titulo"><i class="fas fa-exchange-alt"></i> Cambiar estado</h4>
+        <select id="nuevoEstado" class="form-select mb-3">
+            <option value="En revisión" <?= $tramite['estado'] === 'En revisión' ? 'selected' : '' ?>>En revisión</option>
+            <option value="Aprobado"    <?= $tramite['estado'] === 'Aprobado'    ? 'selected' : '' ?>>Aprobado</option>
+            <option value="Rechazado"   <?= $tramite['estado'] === 'Rechazado'   ? 'selected' : '' ?>>Rechazado</option>
+        </select>
+        <button class="btn btn-primary" onclick="actualizarEstado(<?= $tramite['id_tramite'] ?>)">
+            <i class="fas fa-save"></i> Guardar cambios
+        </button>
+    </div>
+    <?php endif; ?>
+
+</div>

@@ -61,9 +61,9 @@ function cargarTramites(estado, elementoCard = null) {
                         </td>
                         <td>${tramite.fecha_creacion}</td>
                         <td>
-                            <button class="btn btn-sm btn-outline-primary" 
+                            <button class="btn-ver-afiliado" 
                                 onclick="verTramite(${tramite.id_tramite})">
-                                <i class="fa-solid fa-eye"></i> Ver más
+                                <i class="fa-solid fa-eye"></i> Ver
                             </button>
                         </td>
                     </tr>
@@ -98,24 +98,21 @@ function getColorEstado(estado) {
 
 function verTramite(id) {
     fetch("ver_tramite_afiliado.php?id=" + id)
-        .then(res => res.text()) // 👈 CAMBIAR A text()
+        .then(res => res.text())
         .then(html => {
-
-            document.getElementById("contenidoModal").innerHTML = html;
-
-            const modal = new bootstrap.Modal(document.getElementById("modalTramite"));
-            modal.show();
-        })
-        .catch(() => {
-            document.getElementById("contenidoModal").innerHTML = `
-                <div class="alert alert-danger">
-                    Error de conexión con el servidor.
-                </div>
-            `;
-            const modal = new bootstrap.Modal(document.getElementById("modalTramite"));
-            modal.show();
+            document.getElementById("contenidoModalAfiliado").innerHTML = html;
+            document.getElementById("modalTramiteAfiliado").style.display = "block";
         });
 }
+
+document.getElementById("cerrarModalAfiliado").onclick = () => {
+    document.getElementById("modalTramiteAfiliado").style.display = "none";
+};
+
+window.addEventListener("click", (e) => {
+    const modal = document.getElementById("modalTramiteAfiliado");
+    if (e.target === modal) modal.style.display = "none";
+});
 
 function actualizarEstado(id) {
 
