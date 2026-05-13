@@ -5,48 +5,51 @@ require_once("../config/db.php");
 header("Content-Type: application/json");
 
 $id_afiliado = $_SESSION['id_usuario'];
-$estado = $_GET['estado'] ?? 'Todos';
-$buscar = $_GET['buscar'] ?? '';
-$fecha = $_GET['fecha'] ?? 'Todos';
+$estado      = $_GET['estado'] ?? 'Todos';
+$buscar      = $_GET['buscar'] ?? '';
+$fecha       = $_GET['fecha']  ?? 'Todos';
 
-/* Obtener departamento del afiliado */
+// Obtener departamento del afiliado
 $stmt = $conn->prepare("SELECT id_departamento FROM usuarios WHERE id_usuario = ?");
 $stmt->bind_param("i", $id_afiliado);
 $stmt->execute();
-$result = $stmt->get_result();
-$usuario = $result->fetch_assoc();
+$usuario         = $stmt->get_result()->fetch_assoc();
 $id_departamento = $usuario['id_departamento'];
 
-/* Construcción dinámica */
-$sql = "SELECT id_tramite, nombre_completo, tipo_tramite, estado, fecha_creacion
-        FROM tramites
-        WHERE id_departamento = ?";
+// ===============================
+// CONSTRUCCIÓN DINÁMICA DE QUERY
+// Solo muestra trámites NO archivados
+// archivado = 0 significa activo
+// ===============================
+$sql    = "SELECT id_tramite, nombre_completo, tipo_tramite, estado, fecha_creacion
+           FROM tramites
+           WHERE id_departamento = ? AND archivado = 0";
 
 $params = [$id_departamento];
-$types = "i";
+$types  = "i";
 
-/* Filtro por estado */
+// Filtro por estado
 if ($estado !== "Todos") {
-    $sql .= " AND estado = ?";
+    $sql     .= " AND estado = ?";
     $params[] = $estado;
-    $types .= "s";
+    $types   .= "s";
 }
 
-/* Filtro de búsqueda */
+// Filtro de búsqueda
 if (!empty($buscar)) {
     $sql .= " AND (
         nombre_completo LIKE ? OR
-        tipo_tramite LIKE ? OR
-        id_tramite LIKE ?
+        tipo_tramite    LIKE ? OR
+        id_tramite      LIKE ?
     )";
-    $like = "%$buscar%";
+    $like     = "%$buscar%";
     $params[] = $like;
     $params[] = $like;
     $params[] = $like;
-    $types .= "sss";
+    $types   .= "sss";
 }
 
-/* Filtro por fecha */
+// Filtro por fecha
 switch ($fecha) {
     case "Hoy":
         $sql .= " AND DATE(fecha_creacion) = CURDATE()";
@@ -56,7 +59,7 @@ switch ($fecha) {
         break;
     case "Mes":
         $sql .= " AND MONTH(fecha_creacion) = MONTH(CURDATE())
-                  AND YEAR(fecha_creacion) = YEAR(CURDATE())";
+                  AND YEAR(fecha_creacion)  = YEAR(CURDATE())";
         break;
     case "Anio":
         $sql .= " AND YEAR(fecha_creacion) = YEAR(CURDATE())";
@@ -68,7 +71,6 @@ $sql .= " ORDER BY fecha_creacion DESC";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param($types, ...$params);
 $stmt->execute();
-$result = $stmt->get_result();
 
-echo json_encode($result->fetch_all(MYSQLI_ASSOC));
+echo json_encode($stmt->get_result()->fetch_all(MYSQLI_ASSOC));
 exit;

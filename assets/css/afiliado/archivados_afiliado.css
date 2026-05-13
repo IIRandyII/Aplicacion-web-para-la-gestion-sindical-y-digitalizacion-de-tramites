@@ -1,0 +1,215 @@
+/* ===============================
+   ARCHIVADOS AFILIADO
+================================ */
+
+/* ===============================
+   SECCIÓN PRINCIPAL
+================================ */
+.archivados-section {
+    padding: 30px;
+}
+
+/* ===============================
+   CONTENEDOR
+================================ */
+.archivados-contenedor {
+    background: #fff;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.archivados-contenedor h4 {
+    font-size: 20px;
+    color: #002855;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ===============================
+   FILTROS
+================================ */
+.filtros-archivados {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.buscador {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+}
+
+.buscador i {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 16px;
+}
+
+.buscador input {
+    width: 100%;
+    padding: 10px 12px 10px 40px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.buscador input:focus {
+    outline: none;
+    border-color: #002855;
+    box-shadow: 0 0 0 3px rgba(0,40,85,0.1);
+}
+
+#filtroEstado {
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    cursor: pointer;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+
+#filtroEstado:focus {
+    outline: none;
+    border-color: #002855;
+}
+
+/* ===============================
+   TABLA DE ARCHIVADOS
+================================ */
+.tabla-archivados {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Header */
+.tabla-archivados thead {
+    background: linear-gradient(135deg, #002855, #1a4a8a);
+}
+
+.tabla-archivados th {
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 14px 15px;
+    text-align: center;
+    border: none;
+}
+
+/* Celdas */
+.tabla-archivados td {
+    padding: 12px 15px;
+    font-size: 13px;
+    text-align: center;
+    border-bottom: 1px solid #f0f0f0;
+    color: #333;
+}
+
+/* Columnas alternadas */
+.tabla-archivados td:nth-child(odd) {
+    background-color: #e8f2fc;
+}
+
+.tabla-archivados td:nth-child(even) {
+    background-color: #f4f9ff;
+}
+
+/* Hover */
+.tabla-archivados tbody tr:hover td {
+    background-color: #b8d4f0 !important;
+}
+
+/* ===============================
+   BADGES DE ESTADO
+================================ */
+.badge-estado {
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-estado.aprobado {
+    background: linear-gradient(135deg, #16a34a, #0f7a38);
+    color: #fff;
+}
+
+.badge-estado.rechazado {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: #fff;
+}
+
+/* ===============================
+   BOTÓN VER
+================================ */
+.btn-ver-arch {
+    background: #002855;
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background 0.2s ease;
+}
+
+.btn-ver-arch:hover {
+    background: #004080;
+}
+
+/* ===============================
+   ESTADO VACÍO
+================================ */
+.archivados-vacio {
+    text-align: center;
+    padding: 60px 20px;
+    color: #aaa;
+}
+
+.archivados-vacio i {
+    font-size: 48px;
+    margin-bottom: 15px;
+    color: #ccd6e8;
+    display: block;
+}
+
+.archivados-vacio p {
+    font-size: 16px;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 768px) {
+    .archivados-section {
+        padding: 15px;
+    }
+
+    .filtros-archivados {
+        flex-direction: column;
+    }
+
+    .tabla-archivados th,
+    .tabla-archivados td {
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+}

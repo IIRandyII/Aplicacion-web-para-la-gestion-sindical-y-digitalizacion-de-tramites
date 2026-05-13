@@ -38,6 +38,10 @@ $totalNotifAfiliado = $stmtNotifAfiliado->get_result()->fetch_assoc()['total'];
             <i class="fa-solid fa-clock-rotate-left"></i>
             <span>Historial</span>
         </a>
+        <a href="archivados_afiliado.php" class="<?= $paginaActiva === 'archivados' ? 'active' : '' ?>">
+            <i class="fa-solid fa-box-archive"></i>
+            <span>Archivados</span>
+        </a>
                 
         <a href="notificaciones_afiliado.php" class="<?= $paginaActiva === 'notificaciones' ? 'active' : '' ?>">
             <span class="icono-notificacion">

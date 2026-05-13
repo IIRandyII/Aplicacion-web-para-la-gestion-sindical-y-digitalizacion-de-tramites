@@ -9,9 +9,8 @@ $id_usuario = $_SESSION['id_usuario'];
 
 // ===============================
 // OBTENER TRÁMITES DEL USUARIO
-// Retorna todos los trámites con
-// el nombre del departamento
-// ordenados del más reciente al más antiguo
+// Excluye los trámites rechazados
+// ya que se archivan automáticamente
 // ===============================
 $sql = "SELECT 
             t.id_tramite,
@@ -24,15 +23,15 @@ $sql = "SELECT
             t.estado,
             t.fecha_creacion
         FROM tramites t
-        JOIN departamentos d 
+        JOIN departamentos d
             ON t.id_departamento = d.id_departamento
         WHERE t.id_usuario = ?
+        AND t.estado != 'Rechazado'
         ORDER BY t.id_tramite DESC";
 
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id_usuario);
 $stmt->execute();
 
-// Retornar todos los resultados como JSON
 echo json_encode($stmt->get_result()->fetch_all(MYSQLI_ASSOC));
 exit;

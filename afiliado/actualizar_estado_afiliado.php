@@ -58,13 +58,17 @@ if ($estadoAnterior === $nuevoEstado) {
 
 // ===============================
 // ACTUALIZAR ESTADO DEL TRÁMITE
+// Si es Aprobado o Rechazado
+// se archiva automáticamente
 // ===============================
+$archivado = ($nuevoEstado === 'Aprobado' || $nuevoEstado === 'Rechazado') ? 1 : 0;
+
 $stmt = $conn->prepare("
     UPDATE tramites
-    SET estado = ?
+    SET estado = ?, archivado = ?
     WHERE id_tramite = ? AND id_departamento = ?
 ");
-$stmt->bind_param("sii", $nuevoEstado, $id, $id_departamento);
+$stmt->bind_param("siii", $nuevoEstado, $archivado, $id, $id_departamento);
 
 if ($stmt->execute() && $stmt->affected_rows > 0) {
 
