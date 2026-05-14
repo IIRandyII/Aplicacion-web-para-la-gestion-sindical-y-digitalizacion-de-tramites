@@ -106,11 +106,27 @@ $documentoHTML = !empty($tramite['documento_respaldo']) ? "
     <?php if ($tramite['archivado'] == 0): ?>
     <div class="detalle-seccion">
         <h4 class="detalle-seccion-titulo"><i class="fas fa-exchange-alt"></i> Cambiar estado</h4>
-        <select id="nuevoEstado" class="form-select mb-3">
+
+        <!-- Select de estado -->
+        <label class="detalle-label mb-1">Nuevo estado</label>
+        <select id="nuevoEstado" class="form-select mb-3" onchange="validarComentario()">
             <option value="En revisión" <?= $tramite['estado'] === 'En revisión' ? 'selected' : '' ?>>En revisión</option>
             <option value="Aprobado"    <?= $tramite['estado'] === 'Aprobado'    ? 'selected' : '' ?>>Aprobado</option>
             <option value="Rechazado"   <?= $tramite['estado'] === 'Rechazado'   ? 'selected' : '' ?>>Rechazado</option>
         </select>
+
+        <!-- Campo de comentario -->
+        <div id="campoComentario">
+            <label class="detalle-label mb-1" id="labelComentario">
+                Comentario <span id="comentarioRequerido" style="color:#dc2626; display:none;">*obligatorio</span>
+            </label>
+            <textarea
+                id="comentarioEstado"
+                class="form-control mb-3"
+                rows="3"
+                placeholder="Escribe un comentario o justificación..."></textarea>
+        </div>
+
         <button class="btn btn-primary" onclick="actualizarEstado(<?= $tramite['id_tramite'] ?>)">
             <i class="fas fa-save"></i> Guardar cambios
         </button>
@@ -118,3 +134,20 @@ $documentoHTML = !empty($tramite['documento_respaldo']) ? "
     <?php endif; ?>
 
 </div>
+
+<script>
+// Mostrar asterisco de obligatorio si el estado es Rechazado
+function validarComentario() {
+    const estado    = document.getElementById("nuevoEstado").value;
+    const requerido = document.getElementById("comentarioRequerido");
+
+    if (estado === "Rechazado") {
+        requerido.style.display = "inline";
+    } else {
+        requerido.style.display = "none";
+    }
+}
+
+// Ejecutar al cargar para el estado actual
+validarComentario();
+</script>

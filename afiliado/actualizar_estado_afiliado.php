@@ -7,12 +7,11 @@ header("Content-Type: application/json");
 
 // ===============================
 // RECIBIR Y VALIDAR DATOS
-// Se recibe el ID y nuevo estado
-// desde el body en formato JSON
 // ===============================
 $data        = json_decode(file_get_contents("php://input"), true);
 $id          = intval($data['id']);
 $nuevoEstado = $data['estado'];
+$comentario  = trim($data['comentario'] ?? '');
 $id_afiliado = $_SESSION['id_usuario'];
 
 // ===============================
@@ -26,8 +25,7 @@ $id_departamento = $usuario['id_departamento'];
 
 // ===============================
 // OBTENER DATOS DEL TRÁMITE
-// Se valida que el trámite
-// pertenezca al departamento
+// Se valida que pertenezca al departamento
 // ===============================
 $stmt = $conn->prepare("
     SELECT estado, id_usuario, tipo_tramite
@@ -49,7 +47,6 @@ $tipo_tramite       = $tramite['tipo_tramite'];
 
 // ===============================
 // VERIFICAR QUE EL ESTADO CAMBIÓ
-// Si es el mismo no se hace nada
 // ===============================
 if ($estadoAnterior === $nuevoEstado) {
     echo json_encode(["success" => true]);
@@ -74,48 +71,57 @@ if ($stmt->execute() && $stmt->affected_rows > 0) {
 
     // ===============================
     // REGISTRAR EN HISTORIAL
-    // Se guarda el cambio de estado
-    // con el afiliado que lo realizó
+    // Incluye el comentario del afiliado
     // ===============================
     $stmtHistorial = $conn->prepare("
         INSERT INTO historial_tramites
-        (id_tramite, id_afiliado, estado_anterior, estado_nuevo, fecha_cambio)
-        VALUES (?, ?, ?, ?, NOW())
+        (id_tramite, id_afiliado, estado_anterior, estado_nuevo, comentario, fecha_cambio)
+        VALUES (?, ?, ?, ?, ?, NOW())
     ");
-    $stmtHistorial->bind_param("iiss", $id, $id_afiliado, $estadoAnterior, $nuevoEstado);
+    $stmtHistorial->bind_param("iisss", $id, $id_afiliado, $estadoAnterior, $nuevoEstado, $comentario);
     $stmtHistorial->execute();
 
     // ===============================
     // GENERAR MENSAJE DE NOTIFICACIÓN
-    // El mensaje varía según el
-    // nuevo estado del trámite
+    // El comentario se agrega al mensaje
+    // si fue proporcionado por el afiliado
     // ===============================
     switch ($nuevoEstado) {
 
         case "En revisión":
             $titulo  = "Su trámite se encuentra en revisión";
             $mensaje = "Le informamos que su trámite de \"$tipo_tramite\" ha pasado a estado 'En revisión'. Nuestro equipo se encuentra analizándolo.";
+            if (!empty($comentario)) {
+                $mensaje .= " Nota: $comentario";
+            }
             break;
 
         case "Aprobado":
             $titulo  = "Trámite aprobado";
             $mensaje = "Nos complace informarle que su trámite de \"$tipo_tramite\" ha sido aprobado exitosamente.";
+            if (!empty($comentario)) {
+                $mensaje .= " Nota: $comentario";
+            }
             break;
 
         case "Rechazado":
             $titulo  = "Trámite rechazado";
-            $mensaje = "Le informamos que su trámite de \"$tipo_tramite\" ha sido rechazado. Puede revisar los detalles o comunicarse con el departamento correspondiente.";
+            $mensaje = "Le informamos que su trámite de \"$tipo_tramite\" ha sido rechazado.";
+            if (!empty($comentario)) {
+                $mensaje .= " Motivo: $comentario";
+            }
             break;
 
         default:
             $titulo  = "Actualización de trámite";
             $mensaje = "El estado de su trámite de \"$tipo_tramite\" cambió de \"$estadoAnterior\" a \"$nuevoEstado\".";
+            if (!empty($comentario)) {
+                $mensaje .= " Nota: $comentario";
+            }
     }
 
     // ===============================
     // INSERTAR NOTIFICACIÓN AL USUARIO
-    // Se notifica al usuario creador
-    // del trámite sobre el cambio
     // ===============================
     $stmtNotif = $conn->prepare("
         INSERT INTO notificaciones

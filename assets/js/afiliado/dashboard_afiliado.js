@@ -116,7 +116,18 @@ window.addEventListener("click", (e) => {
 
 function actualizarEstado(id) {
 
-    const estado = document.getElementById("nuevoEstado").value;
+    const estado      = document.getElementById("nuevoEstado").value;
+    const comentario  = document.getElementById("comentarioEstado").value.trim();
+
+    // Validar comentario obligatorio si es Rechazado
+    if (estado === "Rechazado" && comentario === "") {
+        Swal.fire({
+            icon: "warning",
+            title: "Comentario requerido",
+            text: "Debes escribir una justificación al rechazar un trámite."
+        });
+        return;
+    }
 
     Swal.fire({
         title: '¿Guardar cambios?',
@@ -133,19 +144,13 @@ function actualizarEstado(id) {
 
             fetch("actualizar_estado_afiliado.php", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    id: id,
-                    estado: estado
-                })
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id, estado, comentario })
             })
             .then(res => res.json())
             .then(data => {
 
                 if (data.success) {
-
                     Swal.fire({
                         icon: 'success',
                         title: '¡Actualizado!',
@@ -153,31 +158,14 @@ function actualizarEstado(id) {
                         timer: 2000,
                         showConfirmButton: false
                     });
-
-                    setTimeout(() => {
-                        location.reload();
-                    }, 2000);
-
+                    setTimeout(() => location.reload(), 2000);
                 } else {
-
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'No se pudo actualizar el estado'
-                    });
-
+                    Swal.fire({ icon: 'error', title: 'Error', text: 'No se pudo actualizar el estado' });
                 }
-
             })
             .catch(() => {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: 'Ocurrió un problema con la conexión'
-                });
+                Swal.fire({ icon: 'error', title: 'Error', text: 'Ocurrió un problema con la conexión' });
             });
-
         }
-
     });
 }
