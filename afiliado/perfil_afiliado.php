@@ -104,7 +104,10 @@ $password_oculta = str_repeat('*', strlen($afiliado['password']));
                                 <div class="col-md-6 mb-3">
                                     <label>Nombre</label>
                                     <input type="text" name="nombre" class="form-control"
-                                           value="<?= $afiliado['nombre'] ?>" disabled>
+                                           value="<?= $afiliado['nombre'] ?>"
+                                           maxlength="100"
+                                           title="Solo letras y espacios"
+                                           disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
@@ -116,19 +119,32 @@ $password_oculta = str_repeat('*', strlen($afiliado['password']));
                                 <div class="col-md-6 mb-3">
                                     <label>CURP</label>
                                     <input type="text" name="curp" class="form-control"
-                                           value="<?= $afiliado['curp'] ?>" disabled>
+                                           value="<?= $afiliado['curp'] ?>"
+                                           maxlength="18"
+                                           minlength="18"
+                                           title="La CURP debe tener exactamente 18 caracteres"
+                                           style="text-transform:uppercase"
+                                           disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label>RFC</label>
                                     <input type="text" name="rfc" class="form-control"
-                                           value="<?= $afiliado['rfc'] ?>" disabled>
+                                           value="<?= $afiliado['rfc'] ?>"
+                                           maxlength="13"
+                                           minlength="12"
+                                           title="El RFC debe tener 12 o 13 caracteres"
+                                           style="text-transform:uppercase"
+                                           disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label>Fecha de nacimiento</label>
                                     <input type="date" name="fecha_nacimiento" class="form-control"
-                                           value="<?= $afiliado['fecha_nacimiento'] ?>" disabled>
+                                           value="<?= $afiliado['fecha_nacimiento'] ?>"
+                                           max="<?= date('Y-m-d', strtotime('-18 years')) ?>"
+                                           title="Debes ser mayor de 18 años"
+                                           disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
@@ -149,14 +165,20 @@ $password_oculta = str_repeat('*', strlen($afiliado['password']));
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label>Teléfono</label>
-                            <input type="text" name="telefono" class="form-control"
-                                   value="<?= $afiliado['telefono'] ?>" disabled>
+                            <input type="tel" name="telefono" class="form-control"
+                                   value="<?= $afiliado['telefono'] ?>"
+                                   maxlength="10"
+                                   pattern="[0-9]{10}"
+                                   title="El teléfono debe tener exactamente 10 dígitos"
+                                   disabled>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label>Correo electrónico</label>
                             <input type="email" name="email" class="form-control"
-                                   value="<?= $afiliado['email'] ?>" disabled>
+                                   value="<?= $afiliado['email'] ?>"
+                                   maxlength="100"
+                                   disabled>
                         </div>
                     </div>
 

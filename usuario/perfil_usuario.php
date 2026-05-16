@@ -71,23 +71,18 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
                         <div class="col-md-3 text-center">
 
                             <?php if (!empty($usuario['foto'])): ?>
-                                <!-- Foto de perfil existente -->
                                 <img src="../<?= $usuario['foto'] ?>"
                                      class="profile-pic mb-3"
                                      id="previewFoto">
                             <?php else: ?>
-                                <!-- Avatar con iniciales -->
                                 <div class="avatar-iniciales mb-3" id="avatarIniciales">
                                     <?= $iniciales ?>
                                 </div>
-                                <!-- Preview oculto hasta seleccionar foto -->
                                 <img src="" class="profile-pic mb-3 d-none" id="previewFoto">
                             <?php endif; ?>
 
-                            <!-- Input de archivo oculto -->
                             <input type="file" name="foto" id="inputFoto" hidden accept="image/*">
 
-                            <!-- Botón deshabilitado por defecto -->
                             <button type="button"
                                     class="upload-btn"
                                     id="btnCambiarFoto"
@@ -105,31 +100,51 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
                                 <div class="col-md-6 mb-3">
                                     <label>Nombre</label>
                                     <input type="text" name="nombre" class="form-control"
-                                           value="<?= $usuario['nombre'] ?>" disabled>
+                                           value="<?= $usuario['nombre'] ?>"
+                                           maxlength="100"
+                                           title="Solo letras y espacios"
+                                           disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label>Número de ficha</label>
                                     <input type="text" name="numero_ficha" class="form-control"
-                                           value="<?= $usuario['numero_ficha'] ?>" disabled>
+                                           value="<?= $usuario['numero_ficha'] ?>"
+                                           maxlength="10"
+                                           pattern="[0-9]{1,10}"
+                                           title="Solo números, máximo 10 dígitos"
+                                           disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label>CURP</label>
                                     <input type="text" name="curp" class="form-control"
-                                           value="<?= $usuario['curp'] ?>" disabled>
+                                           value="<?= $usuario['curp'] ?>"
+                                           maxlength="18"
+                                           minlength="18"
+                                           title="La CURP debe tener exactamente 18 caracteres"
+                                           style="text-transform:uppercase"
+                                           disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label>RFC</label>
                                     <input type="text" name="rfc" class="form-control"
-                                           value="<?= $usuario['rfc'] ?>" disabled>
+                                           value="<?= $usuario['rfc'] ?>"
+                                           maxlength="13"
+                                           minlength="12"
+                                           title="El RFC debe tener 12 o 13 caracteres"
+                                           style="text-transform:uppercase"
+                                           disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
                                     <label>Fecha de nacimiento</label>
                                     <input type="date" name="fecha_nacimiento" class="form-control"
-                                           value="<?= $usuario['fecha_nacimiento'] ?>" disabled>
+                                           value="<?= $usuario['fecha_nacimiento'] ?>"
+                                           max="<?= date('Y-m-d', strtotime('-18 years')) ?>"
+                                           title="Debes ser mayor de 18 años"
+                                           disabled>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
@@ -150,19 +165,26 @@ $password_oculta = str_repeat('*', strlen($usuario['password']));
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label>Teléfono</label>
-                            <input type="text" name="telefono" class="form-control"
-                                   value="<?= $usuario['telefono'] ?>" disabled>
+                            <input type="tel" name="telefono" class="form-control"
+                                   value="<?= $usuario['telefono'] ?>"
+                                   maxlength="10"
+                                   pattern="[0-9]{10}"
+                                   title="El teléfono debe tener exactamente 10 dígitos"
+                                   disabled>
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label>Correo electrónico</label>
                             <input type="email" name="email" class="form-control"
-                                   value="<?= $usuario['email'] ?>" disabled>
+                                   value="<?= $usuario['email'] ?>"
+                                   maxlength="100"
+                                   disabled>
                         </div>
 
                         <div class="col-md-12 mb-3">
                             <label>Dirección</label>
                             <textarea name="direccion" class="form-control"
+                                      maxlength="200"
                                       disabled><?= $usuario['direccion'] ?></textarea>
                         </div>
                     </div>

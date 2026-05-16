@@ -124,3 +124,29 @@ document.addEventListener("DOMContentLoaded", () => {
         window.history.replaceState({}, document.title, url.pathname);
     }
 });
+
+// ===============================
+// VALIDACIÓN DE INPUTS EN TIEMPO REAL
+// ===============================
+
+// Solo números en teléfono y ficha
+document.querySelectorAll('input[name="telefono"], input[name="numero_ficha"]').forEach(input => {
+    input.addEventListener("input", () => {
+        input.value = input.value.replace(/[^0-9]/g, '');
+    });
+});
+
+// Mayúsculas en CURP y RFC
+document.querySelectorAll('input[name="curp"], input[name="rfc"]').forEach(input => {
+    input.addEventListener("input", () => {
+        input.value = input.value.toUpperCase();
+    });
+});
+
+// Solo letras y espacios en nombre
+const inputNombre = document.querySelector('input[name="nombre"]');
+if (inputNombre) {
+    inputNombre.addEventListener("input", () => {
+        inputNombre.value = inputNombre.value.replace(/[^a-zA-ZáéíóúÁÉÍÓÚñÑ\s]/g, '');
+    });
+}
