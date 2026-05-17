@@ -136,6 +136,20 @@ body {
     width: 100%;
 }
 
+/* Mantener visible el icono de notificación al colapsar */
+.sidebar.active .menu a .icono-notificacion {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+/* Mantener visible el badge de notificaciones al colapsar */
+.sidebar.active .menu a .badge-notificacion {
+    opacity: 1;
+    transform: translateX(0);
+    display: flex;
+}
+
 /* ===============================
    MAIN / LAYOUT
 ================================ */
