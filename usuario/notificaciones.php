@@ -35,6 +35,7 @@ $stmtMarcar->execute();
 
     <!-- Estilos propios -->
     <link rel="stylesheet" href="../assets/css/sidebar_usuario.css">
+    <link rel="stylesheet" href="../assets/css/topbar_usuario.css">
     <link rel="stylesheet" href="../assets/css/notificaciones_usuario.css">
 
     <!-- Librerías externas -->

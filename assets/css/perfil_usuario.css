@@ -14,7 +14,7 @@ body {
 }
 
 /* ===============================
-   TOPBAR
+   TOPBAR  (no fijo, flujo normal)
 ================================ */
 .topbar {
     background: #fff;
@@ -25,11 +25,35 @@ body {
     border-bottom: 1px solid #ddd;
 }
 
+.topbar h2 {
+    font-size: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /* ===============================
    LAYOUT PRINCIPAL
 ================================ */
+.toggle-btn {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
 
-/* Contenido desplazado por el sidebar */
+.main {
+    margin-left: 260px;
+    padding: 0;
+    transition: margin-left 0.3s ease;
+    min-height: 100vh;
+}
+
+.sidebar.active ~ .main {
+    margin-left: 80px;
+}
+
 .content {
     margin-left: 260px;
     margin-top: 60px;
@@ -39,36 +63,15 @@ body {
     transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.toggle-btn {
-    background: none;
-    border: none;
-    font-size: 22px;
-    cursor: pointer;
-}
-
-/* Main con margen del sidebar */
-.main {
-    margin-left: 260px;
-    padding: 0px;
-    transition: 0.3s;
-}
-
-.sidebar.active ~ .main {
-    margin-left: 80px;
-}
-
 /* ===============================
    FORMULARIO DE PERFIL
 ================================ */
-
-/* Contenedor principal del formulario */
 .card-body {
     padding: 30px;
     background: #0463a7;
     border-radius: 5px;
 }
 
-/* Títulos de sección */
 h6 {
     padding: 10px;
     border-radius: 8px;
@@ -76,7 +79,6 @@ h6 {
     font-weight: bold;
 }
 
-/* Inputs y textareas */
 .form-control {
     height: 36px;
     font-size: 14px;
@@ -85,87 +87,116 @@ h6 {
 
 textarea.form-control {
     height: 70px;
+    resize: vertical;
 }
 
-/* Foco en inputs */
 .form-control:focus {
     border-color: #ffffff;
-    box-shadow: 0 0 0 2px rgba(204,0,0,0.15);
+    box-shadow: 0 0 0 2px rgba(204, 0, 0, 0.15);
+}
+
+label {
+    color: #e8f4ff;
+    font-size: 13px;
+    margin-bottom: 4px;
+    display: block;
 }
 
 /* ===============================
-   FOTO DE PERFIL
+   FOTO DE PERFIL  (tamaño reducido)
 ================================ */
 .img-thumbnail {
     border-radius: 50%;
 }
 
 .profile-pic {
-    width: 200px;
-    height: 200px;
+    width: 170px;
+    height: 170px;
     object-fit: cover;
     border-radius: 50%;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+    display: block;
+    margin: 0 auto;
 }
 
-/* Avatar con iniciales (cuando no hay foto) */
 .avatar-iniciales {
-    width: 200px;
-    height: 200px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     background: linear-gradient(135deg, #1e88e5, #42a5f5);
     color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 64px;
+    font-size: 36px;
     font-weight: bold;
     text-transform: uppercase;
-    margin: auto;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    margin: 0 auto;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
 }
 
 /* ===============================
    BOTONES
 ================================ */
-
-/* Botón para subir foto */
 .upload-btn {
     display: inline-block;
     background: #ffffff;
     color: #0463a7;
-    padding: 8px 14px;
+    padding: 6px 12px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
+    border: none;
+    margin-top: 8px;
 }
 
-/* Título de sección con línea inferior */
 .section-title {
     color: #ffffff;
     font-weight: 600;
-    margin-bottom: 20px;
-    border-bottom: 2px solid rgba(255,255,255,0.3);
+    margin-bottom: 16px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
     padding-bottom: 6px;
+    font-size: 16px;
+}
+
+/* Sin separador entre secciones */
+hr {
+    display: none;
+}
+
+/* Botón editar — verde */
+#btnEditar {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+    color: #fff !important;
+}
+
+#btnEditar:hover {
+    background-color: #218838 !important;
+    border-color: #1e7e34 !important;
 }
 
 /* Botón guardar */
-.text-end button {
-    background-color: green;
+#btnGuardar,
+.btn-guardar-perfil,
+.text-end button[type="submit"] {
+    background-color: #0463a7 !important;
+    border-color: #0463a7 !important;
+    color: #fff !important;
 }
 
-.text-end button:hover {
-    background-color: green;
+#btnGuardar:hover {
+    background-color: #034e87 !important;
+    border-color: #034e87 !important;
 }
 
 /* ===============================
    SWEETALERT PERSONALIZADO
-   Estilo para alertas del perfil
 ================================ */
 .swal-perfil {
     border-radius: 14px !important;
-    box-shadow: 0 10px 30px rgba(0,0,0,.12) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12) !important;
     padding: 12px 16px !important;
 }
 
@@ -182,70 +213,208 @@ textarea.form-control {
 }
 
 /* ===============================
-   RESPONSIVE - TABLETS
+   RESPONSIVE — TABLETS (<=992px)
 ================================ */
 @media (max-width: 992px) {
+
     .main {
         margin-left: 80px;
+    }
+
+    .sidebar.active ~ .main {
+        margin-left: 0;
+    }
+
+    /* Card con menos padding */
+    .card-body {
+        padding: 20px 18px;
+    }
+
+    /* Foto más compacta */
+    .profile-pic,
+    .avatar-iniciales {
+        width: 85px;
+        height: 85px;
+        font-size: 28px;
+    }
+
+    /* Botón cambiar foto más compacto */
+    .upload-btn {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    /* Inputs y labels más compactos */
+    .form-control {
+        height: 32px;
+        font-size: 13px;
+    }
+
+    textarea.form-control {
+        height: 60px;
+    }
+
+    label {
+        font-size: 12px;
+        margin-bottom: 2px;
+    }
+
+    /* Campos en 2 columnas forzado (Bootstrap md no aplica en este rango con col-sm) */
+    .col-12.col-sm-6 {
+        flex: 0 0 50% !important;
+        max-width: 50% !important;
+        width: 50% !important;
+    }
+
+    /* Dirección sigue siendo full width */
+    .col-12.col-sm-6:last-child,
+    .col-12.mb-3:not([class*="col-sm-6"]) {
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* Reducir margen entre campos */
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    /* Título de sección */
+    .section-title {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    /* Columna avatar más estrecha para dejar más espacio a los campos */
+    .col-12.col-md-3 {
+        flex: 0 0 22% !important;
+        max-width: 22% !important;
+        width: 22% !important;
+    }
+
+    .col-12.col-md-9 {
+        flex: 0 0 78% !important;
+        max-width: 78% !important;
+        width: 78% !important;
     }
 }
 
 /* ===============================
-   RESPONSIVE - MÓVIL
+   RESPONSIVE — MOVIL (<=768px)
 ================================ */
 @media (max-width: 768px) {
 
-    /* Main ocupa todo el ancho */
     .main {
-        margin-left: 0;
+        margin-left: 0 !important;
     }
 
-    /* Topbar */
+    .container {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
     .topbar {
         justify-content: space-between;
+        padding: 12px 16px;
     }
 
-    /* Avatar más pequeño */
+    .card-body {
+        padding: 20px 16px;
+    }
+
+    .col-md-3 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+
     .profile-pic,
     .avatar-iniciales {
-        width: 120px;
-        height: 120px;
-        font-size: 40px;
-    }
-
-    /* Formulario en columna */
-    .row {
-        flex-direction: column;
+        width: 90px;
+        height: 90px;
+        font-size: 30px;
     }
 
     .col-md-6,
     .col-md-3,
     .col-md-9,
-    .col-md-12 {
-        width: 100%;
+    .col-md-12,
+    .col-6 {
+        width: 100% !important;
+        flex: 0 0 100% !important;
+        max-width: 100% !important;
     }
 
-    /* Inputs */
     .form-control {
-        font-size: 13px;
+        font-size: 14px;
+        height: 40px;
     }
 
-    /* Botones centrados */
+    textarea.form-control {
+        height: 80px;
+    }
+
+    .section-title {
+        font-size: 15px;
+    }
+
     .text-end {
         text-align: center !important;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .text-end .btn {
+        width: 100%;
+        max-width: 280px;
+    }
+
+    .container.mt-4 {
+        margin-top: 16px !important;
     }
 }
 
 /* ===============================
-   RESPONSIVE - EXTRA PEQUEÑOS
+   RESPONSIVE — EXTRA PEQUEÑOS (<=480px)
 ================================ */
 @media (max-width: 480px) {
 
     .topbar h2 {
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .card-body {
-        padding: 15px;
+        padding: 16px 12px;
+    }
+
+    .profile-pic,
+    .avatar-iniciales {
+        width: 80px;
+        height: 80px;
+        font-size: 26px;
+    }
+
+    .upload-btn {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .form-control {
+        font-size: 13px;
+    }
+
+    label {
+        font-size: 12px;
+    }
+
+    .section-title {
+        font-size: 14px;
+    }
+
+    .btn {
+        font-size: 14px;
     }
 }
