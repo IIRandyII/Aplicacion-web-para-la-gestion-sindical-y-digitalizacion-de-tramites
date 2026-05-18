@@ -15,6 +15,7 @@ $stmtAvisos = $conn->prepare("
     SELECT a.titulo, a.mensaje, a.fecha_creacion, d.nombre AS departamento
     FROM avisos a
     JOIN departamentos d ON a.id_departamento = d.id_departamento
+    WHERE a.fecha_creacion >= NOW() - INTERVAL 5 DAY
     ORDER BY a.fecha_creacion DESC
     LIMIT 6
 ");

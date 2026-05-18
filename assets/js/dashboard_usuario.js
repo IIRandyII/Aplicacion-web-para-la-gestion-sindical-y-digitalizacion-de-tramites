@@ -16,11 +16,8 @@ document.querySelectorAll(".info-card").forEach(card => {
 // EFECTO CONTADOR ANIMADO
 // El número sube progresivamente
 // con una curva de desaceleración
-// para un efecto más limpio y visual
 // ===============================
 function animarContador(elemento, valorFinal, duracion = 800) {
-
-    // Si el valor es 0 no hay nada que animar
     if (valorFinal === 0) {
         elemento.textContent = 0;
         return;
@@ -30,19 +27,10 @@ function animarContador(elemento, valorFinal, duracion = 800) {
     let startTime = null;
 
     function paso(timestamp) {
-
         if (!startTime) startTime = timestamp;
-
-        // Progreso entre 0 y 1
         const progreso = Math.min((timestamp - startTime) / duracion, 1);
-
-        // Curva ease-out: desacelera al final para efecto suave
-        const easeOut = 1 - Math.pow(1 - progreso, 3);
-
-        // Calcular número actual
+        const easeOut  = 1 - Math.pow(1 - progreso, 3);
         elemento.textContent = Math.floor(easeOut * valorFinal);
-
-        // Continuar animación hasta llegar al final
         if (progreso < 1) {
             requestAnimationFrame(paso);
         } else {
@@ -52,6 +40,7 @@ function animarContador(elemento, valorFinal, duracion = 800) {
 
     requestAnimationFrame(paso);
 }
+
 // ===============================
 // CONTEO DINÁMICO
 // ===============================
@@ -72,69 +61,121 @@ document.addEventListener("DOMContentLoaded", cargarConteo);
 
 // ===============================
 // CARRUSEL DE AVISOS
-// Automático cada 4 segundos
-// con navegación manual
+// Automático cada 4 segundos,
+// navegación manual y swipe táctil
 // ===============================
 document.addEventListener("DOMContentLoaded", () => {
 
-    const contenedor   = document.getElementById("carruselContenedor");
-    const btnPrev      = document.getElementById("btnPrev");
-    const btnNext      = document.getElementById("btnNext");
-    const indicadores  = document.getElementById("carruselIndicadores");
+    const contenedor  = document.getElementById("carruselContenedor");
+    const btnPrev     = document.getElementById("btnPrev");
+    const btnNext     = document.getElementById("btnNext");
+    const indicadores = document.getElementById("carruselIndicadores");
 
     if (!contenedor) return;
 
-    const items        = contenedor.querySelectorAll(".carrusel-item");
-    const totalItems   = items.length;
-    const itemsPorVista = window.innerWidth <= 768 ? 1 : window.innerWidth <= 992 ? 2 : 3;
-    let   indiceActual = 0;
-    let   intervalo;
+    const items      = contenedor.querySelectorAll(".carrusel-item");
+    const totalItems = items.length;
+    let indiceActual = 0;
+    let intervalo;
 
-    // Crear indicadores de puntos
-    const totalPuntos = Math.ceil(totalItems / itemsPorVista);
-    for (let i = 0; i < totalPuntos; i++) {
-        const punto = document.createElement("div");
-        punto.classList.add("carrusel-punto");
-        if (i === 0) punto.classList.add("activo");
-        punto.addEventListener("click", () => irA(i));
-        indicadores.appendChild(punto);
+    // -----------------------------------------------
+    // Calcula cuántos items caben según el ancho actual
+    // -----------------------------------------------
+    function calcularItemsPorVista() {
+        if (window.innerWidth <= 768)  return 1;
+        if (window.innerWidth <= 1199) return 2;
+        return 3;
     }
 
-    // Mover carrusel a un índice
-    function irA(indice) {
-        indiceActual = indice;
-        const anchoItem = items[0].offsetWidth + 20;
-        contenedor.scrollLeft = anchoItem * itemsPorVista * indice;
+    let itemsPorVista = calcularItemsPorVista();
+    let totalPuntos   = Math.ceil(totalItems / itemsPorVista);
 
-        // Actualizar puntos
+    // -----------------------------------------------
+    // Crear / recrear indicadores de puntos
+    // -----------------------------------------------
+    function crearIndicadores() {
+        indicadores.innerHTML = "";
+        totalPuntos = Math.ceil(totalItems / itemsPorVista);
+
+        for (let i = 0; i < totalPuntos; i++) {
+            const punto = document.createElement("div");
+            punto.classList.add("carrusel-punto");
+            if (i === indiceActual) punto.classList.add("activo");
+            punto.addEventListener("click", () => {
+                irA(i);
+                reiniciarIntervalo();
+            });
+            indicadores.appendChild(punto);
+        }
+    }
+
+    // -----------------------------------------------
+    // Mover carrusel a un índice
+    // -----------------------------------------------
+    function irA(indice) {
+        indiceActual = Math.max(0, Math.min(indice, totalPuntos - 1));
+
+        // gap de 16px igual que en CSS
+        const anchoItem = items[0].offsetWidth + 16;
+        contenedor.scrollLeft = anchoItem * itemsPorVista * indiceActual;
+
         document.querySelectorAll(".carrusel-punto").forEach((p, i) => {
-            p.classList.toggle("activo", i === indice);
+            p.classList.toggle("activo", i === indiceActual);
         });
     }
 
-    // Siguiente
     function siguiente() {
-        const siguienteIndice = (indiceActual + 1) % totalPuntos;
-        irA(siguienteIndice);
+        irA((indiceActual + 1) % totalPuntos);
     }
 
-    // Anterior
     function anterior() {
-        const anteriorIndice = (indiceActual - 1 + totalPuntos) % totalPuntos;
-        irA(anteriorIndice);
+        irA((indiceActual - 1 + totalPuntos) % totalPuntos);
     }
 
-    btnNext.addEventListener("click", () => {
-        siguiente();
-        reiniciarIntervalo();
-    });
+    // -----------------------------------------------
+    // Botones prev / next (visibles en tablet/desktop)
+    // -----------------------------------------------
+    if (btnNext) {
+        btnNext.addEventListener("click", () => {
+            siguiente();
+            reiniciarIntervalo();
+        });
+    }
 
-    btnPrev.addEventListener("click", () => {
-        anterior();
-        reiniciarIntervalo();
-    });
+    if (btnPrev) {
+        btnPrev.addEventListener("click", () => {
+            anterior();
+            reiniciarIntervalo();
+        });
+    }
 
+    // -----------------------------------------------
+    // Swipe táctil para móvil
+    // -----------------------------------------------
+    let touchStartX = 0;
+    let touchEndX   = 0;
+
+    contenedor.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    contenedor.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > 50) { // umbral mínimo de 50px
+            if (diff > 0) {
+                siguiente();
+            } else {
+                anterior();
+            }
+            reiniciarIntervalo();
+        }
+    }, { passive: true });
+
+    // -----------------------------------------------
     // Autoplay cada 4 segundos
+    // -----------------------------------------------
     function iniciarIntervalo() {
         intervalo = setInterval(siguiente, 4000);
     }
@@ -144,6 +185,26 @@ document.addEventListener("DOMContentLoaded", () => {
         iniciarIntervalo();
     }
 
+    // -----------------------------------------------
+    // Recalcular al cambiar tamaño de ventana
+    // -----------------------------------------------
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            const nuevosItemsPorVista = calcularItemsPorVista();
+            if (nuevosItemsPorVista !== itemsPorVista) {
+                itemsPorVista = nuevosItemsPorVista;
+                indiceActual  = 0;   // resetear al inicio
+                crearIndicadores();
+                irA(0);
+            }
+        }, 200); // debounce de 200ms
+    });
+
+    // Init
+    crearIndicadores();
+    irA(0);
     iniciarIntervalo();
 });
 
