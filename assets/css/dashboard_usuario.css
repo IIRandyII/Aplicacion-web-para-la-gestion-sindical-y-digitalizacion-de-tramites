@@ -69,6 +69,7 @@ body {
 .info-card.tramites {
     background: #ffffff;
     color: #111827;
+    border: 2px solid #bbbdc2;
 }
 
 .info-card.tramites .icon {
