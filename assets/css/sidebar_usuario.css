@@ -38,6 +38,8 @@ body::-webkit-scrollbar {
     transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 100;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;   /* logo + menu en columna */
 }
 
 .sidebar.active {
@@ -56,6 +58,7 @@ body::-webkit-scrollbar {
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .sidebar .logo img {
@@ -81,9 +84,14 @@ body::-webkit-scrollbar {
 
 /* ===============================
    MENÚ DE NAVEGACIÓN
+   flex-direction column para que
+   logout quede justo debajo de
+   notificaciones sin position:absolute
 ================================ */
 .sidebar .menu {
     margin-top: 30px;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar .menu a {
@@ -96,6 +104,19 @@ body::-webkit-scrollbar {
     transition: background 0.3s ease, color 0.3s ease;
     white-space: nowrap;
     overflow: hidden;
+}
+
+/* ===============================
+   ICONOS CENTRADOS AL COLAPSAR
+   Cuando el sidebar está colapsado
+   (80px) centramos el icono con
+   justify-content y quitamos gap
+================================ */
+.sidebar.active .menu a,
+.sidebar.active a.logout {
+    justify-content: center;
+    padding: 14px 0;
+    gap: 0;
 }
 
 /* Ícono del menú */
@@ -116,11 +137,14 @@ body::-webkit-scrollbar {
     white-space: nowrap;
 }
 
-.sidebar.active .menu a span {
+.sidebar.active .menu a span:not(.icono-notificacion):not(.badge-notificacion),
+.sidebar.active a.logout span {
     opacity: 0;
     transform: translateX(-10px);
     transition-delay: 0s;
     pointer-events: none;
+    width: 0;
+    overflow: hidden;
 }
 
 /* Hover y link activo */
@@ -135,25 +159,22 @@ body::-webkit-scrollbar {
     transform: scale(1.15);
 }
 
-/* Cerrar sesión al fondo */
 .sidebar .logout {
-    position: absolute;
-    bottom: 20px;
+    position: static;
     width: 100%;
-}
 
-/* Mantener visible el icono de notificación al colapsar */
-.sidebar.active .menu a .icono-notificacion {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-}
-
-/* Mantener visible el badge de notificaciones al colapsar */
-.sidebar.active .menu a .badge-notificacion {
-    opacity: 1;
-    transform: translateX(0);
     display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 14px 20px;
+
+    color: #cfd8e3;
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* ===============================
@@ -204,10 +225,6 @@ body::-webkit-scrollbar {
     color: #002855;
 }
 
-/* Contenedor de foto y nombre
-   flex-direction: row-reverse invierte
-   el orden para que la foto quede
-   a la izquierda y el nombre a la derecha */
 .topbar-usuario {
     display: flex;
     align-items: center;
@@ -252,7 +269,9 @@ body::-webkit-scrollbar {
 ================================ */
 .icono-notificacion {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .badge-notificacion {
@@ -272,32 +291,47 @@ body::-webkit-scrollbar {
     font-weight: bold;
 }
 
+/* Mantener visible el badge al colapsar */
+.sidebar.active .menu a .badge-notificacion {
+    opacity: 1;
+    display: flex;
+}
+
 /* ===============================
-   RESPONSIVE - TABLETS
+   RESPONSIVE — TABLETS
+   (769px - 992px)
 ================================ */
 @media (max-width: 992px) {
     .sidebar {
         width: 80px;
     }
 
+    /* Colapsar texto en tablet igual que sidebar.active */
     .sidebar .logo span,
     .sidebar .menu a span {
         opacity: 0;
         transform: translateX(-10px);
     }
 
+    .sidebar .menu a,
+    .sidebar a.logout {
+        justify-content: center;
+        padding: 14px 0;
+        gap: 0;
+    }
+
     .main {
         margin-left: 80px;
     }
 
-    /* Ocultar nombre en tablets para ahorrar espacio */
     .topbar-nombre {
         display: none;
     }
 }
 
 /* ===============================
-   RESPONSIVE - MÓVIL
+   RESPONSIVE — MÓVIL
+   (≤ 768px)
 ================================ */
 @media (max-width: 768px) {
 
@@ -311,16 +345,29 @@ body::-webkit-scrollbar {
         transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
+    /* Al abrir en móvil restaurar layout expandido */
     .sidebar.active {
         left: 0;
         width: 260px;
     }
 
-    /* Restaurar spans en móvil */
+    /* Restaurar alineación normal en móvil con sidebar abierto */
+    .sidebar.active .menu a,
+    .sidebar.active a.logout {
+        justify-content: flex-start;
+        padding: 14px 20px;
+        gap: 15px;
+    }
+
+    /* Restaurar spans visibles en móvil */
     .sidebar.active .menu a span,
+    .sidebar.active .menu a span:not(.icono-notificacion):not(.badge-notificacion),
+    .sidebar.active a.logout span,
     .sidebar.active .logo span {
         opacity: 1;
         transform: translateX(0);
+        width: auto;
+        overflow: visible;
     }
 
     .main {
