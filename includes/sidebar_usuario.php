@@ -36,15 +36,15 @@ $totalNoLeidas = $rowNotif['total'];
             <i class="fa-solid fa-file-circle-plus"></i><span>Nuevo trámite</span>
         </a>
         <a href="notificaciones.php" class="<?= $paginaActiva === 'notificaciones' ? 'active' : '' ?>">
-            <span class="icono-notificacion">
-                <i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-bell">
                 <?php if ($totalNoLeidas > 0): ?>
                     <span class="badge-notificacion"><?= $totalNoLeidas ?></span>
                 <?php endif; ?>
-            </span>
+            </i>
             <span>Notificaciones</span>
         </a>
-        <a href="../sesion/logout.php" class="logout">
+
+        <a href="../sesion/logout.php" class="logout-link">
             <i class="fa-solid fa-right-from-bracket"></i><span>Cerrar sesión</span>
         </a>
     </nav>

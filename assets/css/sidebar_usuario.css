@@ -39,7 +39,7 @@ body::-webkit-scrollbar {
     z-index: 100;
     overflow: hidden;
     display: flex;
-    flex-direction: column;   /* logo + menu en columna */
+    flex-direction: column;
 }
 
 .sidebar.active {
@@ -68,7 +68,6 @@ body::-webkit-scrollbar {
     flex-shrink: 0;
 }
 
-/* Texto del logo se desvanece al colapsar */
 .sidebar .logo span {
     transition: opacity 0.2s ease, transform 0.2s ease;
     transition-delay: 0.1s;
@@ -84,14 +83,12 @@ body::-webkit-scrollbar {
 
 /* ===============================
    MENÚ DE NAVEGACIÓN
-   flex-direction column para que
-   logout quede justo debajo de
-   notificaciones sin position:absolute
 ================================ */
 .sidebar .menu {
     margin-top: 30px;
     display: flex;
     flex-direction: column;
+    flex: 1;              /* ocupa todo el espacio disponible */
 }
 
 .sidebar .menu a {
@@ -108,12 +105,8 @@ body::-webkit-scrollbar {
 
 /* ===============================
    ICONOS CENTRADOS AL COLAPSAR
-   Cuando el sidebar está colapsado
-   (80px) centramos el icono con
-   justify-content y quitamos gap
 ================================ */
-.sidebar.active .menu a,
-.sidebar.active a.logout {
+.sidebar.active .menu a {
     justify-content: center;
     padding: 14px 0;
     gap: 0;
@@ -126,6 +119,7 @@ body::-webkit-scrollbar {
     text-align: center;
     flex-shrink: 0;
     transition: transform 0.3s ease;
+    position: relative;   /* necesario para el badge */
 }
 
 /* Texto del menú se desvanece al colapsar */
@@ -137,8 +131,7 @@ body::-webkit-scrollbar {
     white-space: nowrap;
 }
 
-.sidebar.active .menu a span:not(.icono-notificacion):not(.badge-notificacion),
-.sidebar.active a.logout span {
+.sidebar.active .menu a span {
     opacity: 0;
     transform: translateX(-10px);
     transition-delay: 0s;
@@ -154,27 +147,19 @@ body::-webkit-scrollbar {
     color: #fff;
 }
 
-/* Efecto hover en el ícono */
 .sidebar .menu a:hover i {
     transform: scale(1.15);
 }
 
-.sidebar .logout {
-    position: static;
-    width: 100%;
+/* ===============================
+   LOGOUT — dentro del nav,
+   empujado al fondo con margin-top:auto
+================================ */
 
-    display: flex;
-    align-items: center;
-    gap: 15px;
 
-    padding: 14px 20px;
-
-    color: #cfd8e3;
-    text-decoration: none;
-    white-space: nowrap;
-    overflow: hidden;
-
-    transition: background 0.3s ease, color 0.3s ease;
+.sidebar .menu a.logout-link:hover {
+    background: #6c1a1a;
+    color: #fff;
 }
 
 /* ===============================
@@ -192,14 +177,9 @@ body::-webkit-scrollbar {
 
 /* ===============================
    BADGE DE NOTIFICACIONES
+   Ahora va dentro del <i>,
+   posicionado relativo a él
 ================================ */
-.icono-notificacion {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .badge-notificacion {
     position: absolute;
     top: -6px;
@@ -215,12 +195,12 @@ body::-webkit-scrollbar {
     align-items: center;
     justify-content: center;
     font-weight: bold;
-}
-
-/* Mantener visible el badge al colapsar */
-.sidebar.active .menu a .badge-notificacion {
-    opacity: 1;
-    display: flex;
+    /* el badge NO hereda la transición de opacity del span padre */
+    opacity: 1 !important;
+    width: auto !important;
+    overflow: visible !important;
+    pointer-events: none;
+    transition: none;
 }
 
 /* ===============================
@@ -232,15 +212,13 @@ body::-webkit-scrollbar {
         width: 80px;
     }
 
-    /* Colapsar texto en tablet igual que sidebar.active */
     .sidebar .logo span,
     .sidebar .menu a span {
         opacity: 0;
         transform: translateX(-10px);
     }
 
-    .sidebar .menu a,
-    .sidebar a.logout {
+    .sidebar .menu a {
         justify-content: center;
         padding: 14px 0;
         gap: 0;
@@ -261,7 +239,6 @@ body::-webkit-scrollbar {
 ================================ */
 @media (max-width: 768px) {
 
-    /* Sidebar oculto fuera de pantalla */
     .sidebar {
         position: fixed;
         left: -260px;
@@ -271,24 +248,18 @@ body::-webkit-scrollbar {
         transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    /* Al abrir en móvil restaurar layout expandido */
     .sidebar.active {
         left: 0;
         width: 260px;
     }
 
-    /* Restaurar alineación normal en móvil con sidebar abierto */
-    .sidebar.active .menu a,
-    .sidebar.active a.logout {
+    .sidebar.active .menu a {
         justify-content: flex-start;
         padding: 14px 20px;
         gap: 15px;
     }
 
-    /* Restaurar spans visibles en móvil */
     .sidebar.active .menu a span,
-    .sidebar.active .menu a span:not(.icono-notificacion):not(.badge-notificacion),
-    .sidebar.active a.logout span,
     .sidebar.active .logo span {
         opacity: 1;
         transform: translateX(0);
@@ -304,12 +275,10 @@ body::-webkit-scrollbar {
         margin-left: 0;
     }
 
-    /* Título más pequeño en móvil */
     .topbar-titulo {
         font-size: 16px;
     }
 
-    /* Overlay con transición suave */
     .overlay {
         position: fixed;
         top: 0;
