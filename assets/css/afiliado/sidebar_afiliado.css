@@ -155,7 +155,6 @@ body {
    empujado al fondo con margin-top:auto
 ================================ */
 .sidebar .menu a.logout {
-    margin-top: auto;
     color: #cfd8e3;
 }
 
