@@ -1,12 +1,8 @@
 <?php
 /* ===============================
    SIDEBAR AFILIADO
-   Incluir en cada página así:
-   $paginaActiva = "inicio";
-   include "../includes/sidebar_afiliado.php";
 ================================ */
 
-// Contar notificaciones no leídas del afiliado
 $stmtNotifAfiliado = $conn->prepare("
     SELECT COUNT(*) AS total
     FROM notificaciones_afiliado
@@ -38,18 +34,18 @@ $totalNotifAfiliado = $stmtNotifAfiliado->get_result()->fetch_assoc()['total'];
             <i class="fa-solid fa-clock-rotate-left"></i>
             <span>Historial</span>
         </a>
+
         <a href="archivados_afiliado.php" class="<?= $paginaActiva === 'archivados' ? 'active' : '' ?>">
             <i class="fa-solid fa-box-archive"></i>
             <span>Archivados</span>
         </a>
-                
+
         <a href="notificaciones_afiliado.php" class="<?= $paginaActiva === 'notificaciones' ? 'active' : '' ?>">
-            <span class="icono-notificacion">
-                <i class="fa-solid fa-bell"></i>
+            <i class="fa-solid fa-bell">
                 <?php if ($totalNotifAfiliado > 0): ?>
                     <span class="badge-notificacion"><?= $totalNotifAfiliado ?></span>
                 <?php endif; ?>
-            </span>
+            </i>
             <span>Notificaciones</span>
         </a>
 

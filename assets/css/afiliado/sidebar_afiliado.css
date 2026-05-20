@@ -1,7 +1,5 @@
 /* ===============================
    SIDEBAR AFILIADO
-   CSS compartido para todas las
-   páginas del rol afiliado
 ================================ */
 
 /* ===============================
@@ -33,6 +31,8 @@ body {
     transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 100;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar.active {
@@ -51,6 +51,7 @@ body {
     font-weight: bold;
     white-space: nowrap;
     overflow: hidden;
+    flex-shrink: 0;
 }
 
 .sidebar .logo img {
@@ -60,7 +61,12 @@ body {
     flex-shrink: 0;
 }
 
-/* Texto del logo se desvanece al colapsar */
+/* Centrar logo al colapsar */
+.sidebar.active .logo {
+    justify-content: center;
+    padding: 20px 0;
+}
+
 .sidebar .logo span {
     transition: opacity 0.2s ease, transform 0.2s ease;
     transition-delay: 0.1s;
@@ -72,6 +78,8 @@ body {
     opacity: 0;
     transform: translateX(-10px);
     transition-delay: 0s;
+    width: 0;
+    overflow: hidden;
 }
 
 /* ===============================
@@ -79,6 +87,9 @@ body {
 ================================ */
 .sidebar .menu {
     margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
 
 .sidebar .menu a {
@@ -93,6 +104,13 @@ body {
     overflow: hidden;
 }
 
+/* Iconos centrados al colapsar */
+.sidebar.active .menu a {
+    justify-content: center;
+    padding: 14px 0;
+    gap: 0;
+}
+
 /* Ícono del menú */
 .sidebar .menu a i {
     font-size: 18px;
@@ -100,6 +118,7 @@ body {
     text-align: center;
     flex-shrink: 0;
     transition: transform 0.3s ease;
+    position: relative;
 }
 
 /* Texto del menú se desvanece al colapsar */
@@ -108,6 +127,7 @@ body {
     transition-delay: 0.1s;
     opacity: 1;
     transform: translateX(0);
+    white-space: nowrap;
 }
 
 .sidebar.active .menu a span {
@@ -115,6 +135,8 @@ body {
     transform: translateX(-10px);
     transition-delay: 0s;
     pointer-events: none;
+    width: 0;
+    overflow: hidden;
 }
 
 /* Hover y link activo */
@@ -124,30 +146,47 @@ body {
     color: #fff;
 }
 
-/* Efecto hover en el ícono */
 .sidebar .menu a:hover i {
     transform: scale(1.15);
 }
 
-/* Cerrar sesión al fondo */
-.sidebar .logout {
+/* ===============================
+   LOGOUT — dentro del nav,
+   empujado al fondo con margin-top:auto
+================================ */
+.sidebar .menu a.logout {
+    margin-top: auto;
+    color: #cfd8e3;
+}
+
+.sidebar .menu a.logout:hover {
+    background: #6c1a1a;
+    color: #fff;
+}
+
+/* ===============================
+   BADGE DE NOTIFICACIONES
+================================ */
+.badge-notificacion {
     position: absolute;
-    bottom: 20px;
-    width: 100%;
-}
-
-/* Mantener visible el icono de notificación al colapsar */
-.sidebar.active .menu a .icono-notificacion {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-}
-
-/* Mantener visible el badge de notificaciones al colapsar */
-.sidebar.active .menu a .badge-notificacion {
-    opacity: 1;
-    transform: translateX(0);
+    top: -6px;
+    right: -8px;
+    background-color: #dc3545;
+    color: white;
+    font-size: 11px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 50%;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    opacity: 1 !important;
+    width: auto !important;
+    overflow: visible !important;
+    pointer-events: none;
+    transition: none;
 }
 
 /* ===============================
@@ -182,7 +221,6 @@ body {
     color: #002855;
 }
 
-/* Botón hamburguesa */
 .toggle-btn {
     background: none;
     border: none;
@@ -193,31 +231,6 @@ body {
 
 .toggle-btn.rotado {
     transform: rotate(90deg);
-}
-
-/* ===============================
-   BADGE DE NOTIFICACIONES AFILIADO
-================================ */
-.icono-notificacion {
-    position: relative;
-    display: inline-block;
-}
-
-.badge-notificacion {
-    position: absolute;
-    top: -6px;
-    right: -8px;
-    background-color: #dc3545;
-    color: white;
-    font-size: 11px;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 5px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
 }
 
 /* ===============================
@@ -268,26 +281,43 @@ body {
 }
 
 /* ===============================
-   RESPONSIVE - TABLETS
+   RESPONSIVE — TABLETS (<=992px)
 ================================ */
 @media (max-width: 992px) {
     .sidebar {
         width: 80px;
     }
 
+    .sidebar .logo {
+        justify-content: center;
+        padding: 20px 0;
+    }
+
     .sidebar .logo span,
     .sidebar .menu a span {
         opacity: 0;
         transform: translateX(-10px);
+        width: 0;
+        overflow: hidden;
+    }
+
+    .sidebar .menu a {
+        justify-content: center;
+        padding: 14px 0;
+        gap: 0;
     }
 
     .main {
         margin-left: 80px;
     }
+
+    .topbar-nombre {
+        display: none;
+    }
 }
 
 /* ===============================
-   RESPONSIVE - MÓVIL
+   RESPONSIVE — MÓVIL (<=768px)
 ================================ */
 @media (max-width: 768px) {
 
@@ -305,11 +335,23 @@ body {
         width: 260px;
     }
 
-    /* Restaurar spans en móvil */
+    .sidebar.active .logo {
+        justify-content: flex-start;
+        padding: 20px;
+    }
+
+    .sidebar.active .menu a {
+        justify-content: flex-start;
+        padding: 14px 20px;
+        gap: 15px;
+    }
+
     .sidebar.active .menu a span,
     .sidebar.active .logo span {
         opacity: 1;
         transform: translateX(0);
+        width: auto;
+        overflow: visible;
     }
 
     .main {
@@ -320,7 +362,6 @@ body {
         margin-left: 0;
     }
 
-    /* Overlay con transición suave */
     .overlay {
         position: fixed;
         top: 0;
