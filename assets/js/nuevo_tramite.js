@@ -3,7 +3,7 @@
 // ===============================
 const modal        = document.getElementById("modalTramite");
 const btnAbrir     = document.getElementById("btnAbrirModal");
-const cerrar       = document.querySelector(".close");
+const cerrar       = document.querySelector("#modalTramite .close");
 const departamento = document.getElementById("departamento");
 const tipoTramite  = document.getElementById("tipoTramite");
 const formulario   = document.getElementById("formularioTramite");
@@ -15,18 +15,16 @@ const selectOrden  = document.getElementById("ordenFecha");
 // ===============================
 const FILAS_POR_PAGINA = 5;
 let paginaActual       = 1;
-let tramitesData       = []; // todos los trámites cargados del servidor
+let tramitesData       = [];
 
 function renderizarTabla() {
     const texto = inputBuscar.value.toLowerCase();
     const orden = selectOrden.value;
 
-    // Filtrar por texto
     let filtrados = tramitesData.filter(t =>
         JSON.stringify(t).toLowerCase().includes(texto)
     );
 
-    // Ordenar por fecha
     filtrados.sort((a, b) => {
         const fa = new Date(a.fecha_creacion);
         const fb = new Date(b.fecha_creacion);
@@ -51,12 +49,10 @@ function renderizarTabla() {
         });
     }
 
-    // Controles de paginación
     document.getElementById("infoPagina").textContent = `Página ${paginaActual} de ${totalPaginas}`;
     document.getElementById("btnAnterior").disabled   = paginaActual === 1;
     document.getElementById("btnSiguiente").disabled  = paginaActual === totalPaginas;
 
-    // Ocultar paginación si caben todos en una página
     document.getElementById("paginacion").style.display =
         total <= FILAS_POR_PAGINA ? "none" : "flex";
 }
@@ -201,16 +197,22 @@ function generarFormulario(datosGenerales, datosEspecificos) {
 
             <div id="paso1">
                 ${datosGenerales}
-                <button type="button" class="btn-primary mt-3" onclick="siguientePaso()">
-                    Siguiente
-                </button>
+                <div class="botones-paso">
+                    <button type="button" class="btn-primary" onclick="siguientePaso()">
+                        <i class="fa-solid fa-arrow-right"></i> Siguiente
+                    </button>
+                </div>
             </div>
 
             <div id="paso2" style="display:none;">
                 ${datosEspecificos}
-                <div class="mt-3">
-                    <button type="button" class="btn-secondary" onclick="regresarPaso()">Regresar</button>
-                    <button type="submit"  class="btn-primary">Enviar trámite</button>
+                <div class="botones-paso">
+                    <button type="button" class="btn-secondary" onclick="regresarPaso()">
+                        <i class="fa-solid fa-arrow-left"></i> Regresar
+                    </button>
+                    <button type="submit" class="btn-primary">
+                        <i class="fa-solid fa-paper-plane"></i> Enviar trámite
+                    </button>
                 </div>
             </div>
         </form>
@@ -245,7 +247,6 @@ document.addEventListener("submit", function (e) {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                // Agregar al array local y re-renderizar
                 tramitesData.unshift({
                     id_tramite:      data.id_tramite,
                     departamento:    data.departamento,

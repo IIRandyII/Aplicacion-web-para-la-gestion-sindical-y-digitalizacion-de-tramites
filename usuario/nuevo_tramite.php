@@ -95,28 +95,39 @@ $id_usuario   = $_SESSION['id_usuario'];
 <!-- MODAL: CREAR NUEVO TRÁMITE -->
 <div class="modal" id="modalTramite">
     <div class="modal-content">
-        <span class="close">&times;</span>
-        <h3>Nuevo trámite</h3>
 
-        <div class="fila-selects">
-            <div>
-                <label>Departamento</label>
-                <select id="departamento">
-                    <option value="">Seleccione</option>
-                    <option value="1">Secretaría de Actas</option>
-                    <option value="2">Tesorería</option>
-                    <option value="3">Secretaría de Ajustes</option>
-                </select>
-            </div>
-            <div>
-                <label>Trámite</label>
-                <select id="tipoTramite">
-                    <option value="">Seleccione</option>
-                </select>
-            </div>
+        <!-- HEADER -->
+        <div class="modal-header-custom">
+            <h3>
+                <i class="fa-solid fa-file-circle-plus"></i>
+                Nuevo trámite
+            </h3>
+            <span class="close">&times;</span>
         </div>
 
-        <div id="formularioTramite"></div>
+        <!-- BODY -->
+        <div class="modal-body-custom">
+            <div class="fila-selects">
+                <div>
+                    <label>Departamento</label>
+                    <select id="departamento">
+                        <option value="">Seleccione</option>
+                        <option value="1">Secretaría de Actas</option>
+                        <option value="2">Tesorería</option>
+                        <option value="3">Secretaría de Ajustes</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Trámite</label>
+                    <select id="tipoTramite">
+                        <option value="">Seleccione</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="formularioTramite"></div>
+        </div>
+
     </div>
 </div>
 
