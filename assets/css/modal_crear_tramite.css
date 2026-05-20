@@ -1,0 +1,427 @@
+/* ===============================
+   MODAL CREAR TRÁMITE
+   Archivo: modal_crear_tramite.css
+   Incluir en nuevo_tramite.php
+================================ */
+
+/* ===============================
+   OVERLAY
+================================ */
+#modalTramite {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+/* ===============================
+   CONTENEDOR DEL MODAL
+================================ */
+#modalTramite .modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 850px;
+    margin: 4vh auto;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+    animation: entradaModalCrear 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes entradaModalCrear {
+    from { opacity: 0; transform: translateY(-30px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)     scale(1);    }
+}
+
+/* ===============================
+   HEADER CON GRADIENTE
+================================ */
+#modalTramite .modal-header-custom {
+    background: linear-gradient(135deg, #002855, #1a4a8a);
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#modalTramite .modal-header-custom h3 {
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+#modalTramite .modal-header-custom h3 i {
+    font-size: 16px;
+    opacity: 0.85;
+}
+
+/* ===============================
+   BOTÓN CERRAR
+================================ */
+#modalTramite .close {
+    position: static;
+    color: #fff;
+    font-size: 22px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s ease, transform 0.2s ease;
+    flex-shrink: 0;
+}
+
+#modalTramite .close:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.1);
+}
+
+/* ===============================
+   CUERPO DEL MODAL
+================================ */
+#modalTramite .modal-body-custom {
+    padding: 25px;
+}
+
+/* ===============================
+   INDICADOR DE PASOS
+================================ */
+#modalTramite .pasos-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 24px;
+}
+
+#modalTramite .paso-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#modalTramite .paso-circulo {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #e0eaff;
+    color: #6b7a99;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+#modalTramite .paso-circulo.activo {
+    background: linear-gradient(135deg, #002855, #1a4a8a);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 40, 85, 0.3);
+}
+
+#modalTramite .paso-circulo.completado {
+    background: #16a34a;
+    color: #fff;
+}
+
+#modalTramite .paso-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7a99;
+    white-space: nowrap;
+}
+
+#modalTramite .paso-label.activo {
+    color: #002855;
+}
+
+#modalTramite .paso-linea {
+    width: 50px;
+    height: 2px;
+    background: #e0eaff;
+    margin: 0 8px;
+    transition: background 0.3s ease;
+}
+
+#modalTramite .paso-linea.completada {
+    background: #16a34a;
+}
+
+/* ===============================
+   SELECTS DE DEPARTAMENTO Y TRÁMITE
+================================ */
+#modalTramite .fila-selects {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+#modalTramite .fila-selects div { flex: 1; }
+
+#modalTramite .fila-selects label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #6b7a99;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+#modalTramite .fila-selects select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d0daea;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #f8faff;
+    color: #1a1a2e;
+    cursor: pointer;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7a99' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 32px;
+}
+
+#modalTramite .fila-selects select:focus {
+    outline: none;
+    border-color: #1a4a8a;
+    box-shadow: 0 0 0 3px rgba(26, 74, 138, 0.12);
+    background-color: #fff;
+}
+
+/* ===============================
+   SECCIÓN DE FORMULARIO
+================================ */
+#modalTramite .form-section {
+    background: #f8faff;
+    border-radius: 10px;
+    padding: 18px 20px;
+    border: 1px solid #e8eef8;
+    margin-top: 0;
+}
+
+#modalTramite .form-section h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #002855;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e0eaff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ===============================
+   INPUTS, SELECTS Y TEXTAREAS
+================================ */
+#modalTramite input[type="text"],
+#modalTramite input[type="email"],
+#modalTramite input[type="tel"],
+#modalTramite input[type="date"],
+#modalTramite input[type="number"],
+#modalTramite select,
+#modalTramite textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #d0daea;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    color: #1a1a2e;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    margin-top: 0;
+}
+
+#modalTramite input::placeholder,
+#modalTramite textarea::placeholder {
+    color: #a0aec0;
+}
+
+#modalTramite input:focus,
+#modalTramite select:focus,
+#modalTramite textarea:focus {
+    outline: none;
+    border-color: #1a4a8a;
+    box-shadow: 0 0 0 3px rgba(26, 74, 138, 0.12);
+    background: #fff;
+}
+
+#modalTramite textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+#modalTramite input[type="file"] {
+    padding: 8px 10px;
+    background: #f0f4ff;
+    border: 1.5px dashed #a0b4d6;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #4a5568;
+}
+
+#modalTramite input[type="file"]:hover {
+    border-color: #1a4a8a;
+    background: #e8eeff;
+}
+
+/* ===============================
+   LABELS DENTRO DEL FORMULARIO
+================================ */
+#modalTramite .form-section label,
+#modalTramite label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #6b7a99;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    margin-top: 12px;
+}
+
+/* ===============================
+   GRID DE CAMPOS
+================================ */
+#modalTramite .form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 0;
+}
+
+/* ===============================
+   FILA DOBLE
+================================ */
+#modalTramite .fila-doble {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+#modalTramite .fila-doble > div { flex: 1; }
+
+#modalTramite .fila-doble-descuento {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    margin-bottom: 12px;
+}
+
+#modalTramite .fila-doble-descuento > div {
+    width: 49%;
+    max-width: 49%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===============================
+   BOTONES DE PASO
+================================ */
+#modalTramite .botones-paso {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+    justify-content: flex-end;
+}
+
+#modalTramite .btn-primary {
+    background: linear-gradient(135deg, #002855, #1a4a8a);
+    color: #fff;
+    border: none;
+    padding: 11px 22px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: opacity 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 40, 85, 0.25);
+}
+
+#modalTramite .btn-primary:hover {
+    opacity: 0.9;
+    box-shadow: 0 6px 18px rgba(0, 40, 85, 0.35);
+}
+
+#modalTramite .btn-secondary {
+    background: transparent;
+    color: #002855;
+    border: 2px solid #002855;
+    padding: 9px 22px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#modalTramite .btn-secondary:hover {
+    background: #002855;
+    color: #fff;
+}
+
+/* ===============================
+   RESPONSIVE — MÓVIL (<=768px)
+================================ */
+@media (max-width: 768px) {
+    #modalTramite .modal-content {
+        width: 95%;
+        margin: 3vh auto;
+    }
+
+    #modalTramite .modal-body-custom {
+        padding: 15px;
+    }
+
+    #modalTramite .fila-selects,
+    #modalTramite .fila-doble,
+    #modalTramite .fila-doble-descuento {
+        flex-direction: column;
+    }
+
+    #modalTramite .fila-doble-descuento > div {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    #modalTramite .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #modalTramite .pasos-indicator {
+        gap: 0;
+    }
+
+    #modalTramite .paso-linea {
+        width: 30px;
+    }
+
+    #modalTramite .paso-label {
+        display: none;
+    }
+}

@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <button type="submit">Iniciar sesión</button>
     </form>
 
-    <a href="register.php">Registrarse</a>
+    <a href="register.php">¿Aun no tienes cuenta? Registrate</a>
 </div>
 
 <script src="../assets/js/alertas.js"></script>

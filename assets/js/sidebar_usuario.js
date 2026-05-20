@@ -34,7 +34,7 @@ overlay.addEventListener("click", () => {
 // Muestra un SweetAlert antes
 // de redirigir al logout
 // ===============================
-document.querySelector(".logout").addEventListener("click", (e) => {
+document.querySelector(".logout-link").addEventListener("click", (e) => {
     e.preventDefault();
 
     Swal.fire({
@@ -42,10 +42,17 @@ document.querySelector(".logout").addEventListener("click", (e) => {
         text: "¿Estás seguro que deseas salir del sistema?",
         icon: "question",
         showCancelButton: true,
-        confirmButtonText: "Sí, salir",
-        cancelButtonText: "Cancelar",
+        confirmButtonText: '<i class="fa-solid fa-right-from-bracket"></i> Sí, salir',
+        cancelButtonText: '<i class="fa-solid fa-xmark"></i> Cancelar',
         confirmButtonColor: "#C62828",
-        cancelButtonColor: "#003A8F"
+        cancelButtonColor: "#003A8F",
+        borderRadius: "12px",
+        customClass: {
+            popup:         'swal-popup-custom',
+            title:         'swal-title-custom',
+            confirmButton: 'swal-confirm-custom',
+            cancelButton:  'swal-cancel-custom',
+        }
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = "../sesion/logout.php";

@@ -18,6 +18,7 @@ $id_usuario   = $_SESSION['id_usuario'];
     <link rel="stylesheet" href="../assets/css/sidebar_usuario.css">
     <link rel="stylesheet" href="../assets/css/topbar_usuario.css">
     <link rel="stylesheet" href="../assets/css/nuevo_tramite.css">
+    <link rel="stylesheet" href="../assets/css/modal_crear_tramite.css">
 </head>
 <body>
 
