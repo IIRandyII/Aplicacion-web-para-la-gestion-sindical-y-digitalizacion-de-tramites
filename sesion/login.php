@@ -116,6 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <a href="register.php">¿Aun no tienes cuenta? Registrate</a>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/js/alertas.js"></script>
 </body>
 </html>

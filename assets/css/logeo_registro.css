@@ -148,20 +148,6 @@ body {
     animation: fadeIn 0.4s ease-in-out;
 }
 
-/* Alerta de error (correo incorrecto, campos vacíos, etc.) */
-.alert-error {
-    background: #fdecea;
-    color: var(--rojo);
-    border-left: 5px solid var(--rojo);
-}
-
-/* Alerta de éxito (registro completado) */
-.alert-success {
-    background: #e8f5e9;
-    color: var(--verde);
-    border-left: 5px solid var(--verde);
-}
-
 /* Clase que se agrega con JS para ocultar la alerta suavemente */
 .alert.ocultar {
     opacity: 0;
