@@ -2,16 +2,10 @@
 require_once("../includes/auth_afiliado.php");
 require_once("../config/db.php");
 
-// Variables de sesión y página activa
 $paginaActiva    = "archivados";
 $id_usuario      = $_SESSION['id_usuario'];
 $id_departamento = $_SESSION['id_departamento'];
 
-// ===============================
-// OBTENER TRÁMITES ARCHIVADOS
-// Solo los aprobados y rechazados
-// del departamento del afiliado
-// ===============================
 $stmt = $conn->prepare("
     SELECT 
         t.id_tramite,
@@ -34,25 +28,18 @@ $archivados = $stmt->get_result();
 <head>
     <meta charset="UTF-8">
     <title>Archivados | Sección 49</title>
-
-    <!-- Estilos propios -->
     <link rel="stylesheet" href="../assets/css/afiliado/sidebar_afiliado.css">
     <link rel="stylesheet" href="../assets/css/afiliado/archivados_afiliado.css">
-
-    <!-- Librerías externas -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <?php include "../includes/sidebar_afiliado.php"; ?>
 
-<!-- CONTENIDO PRINCIPAL -->
 <main class="main">
 
-    <!-- TOPBAR -->
     <?php
     $tituloTopbar = "Archivados";
     include "../includes/topbar_afiliado.php";
@@ -65,7 +52,6 @@ $archivados = $stmt->get_result();
 
             <?php if ($archivados->num_rows > 0): ?>
 
-                <!-- FILTROS -->
                 <div class="filtros-archivados">
                     <div class="buscador">
                         <i class="fa-solid fa-magnifying-glass"></i>
@@ -103,8 +89,7 @@ $archivados = $stmt->get_result();
                                     </td>
                                     <td><?= date("d/m/Y H:i", strtotime($t['fecha_creacion'])) ?></td>
                                     <td>
-                                        <button class="btn-ver-arch"
-                                            onclick="verTramite(<?= $t['id_tramite'] ?>)">
+                                        <button class="btn-ver-arch" onclick="verTramite(<?= $t['id_tramite'] ?>)">
                                             <i class="fa-solid fa-eye"></i> Ver
                                         </button>
                                     </td>
@@ -113,6 +98,9 @@ $archivados = $stmt->get_result();
                         </tbody>
                     </table>
                 </div>
+
+                <!-- PAGINACIÓN -->
+                <div class="paginacion" id="paginacion"></div>
 
             <?php else: ?>
 
@@ -127,7 +115,6 @@ $archivados = $stmt->get_result();
 
     </section>
 
-    <!-- MODAL VER TRÁMITE -->
     <div class="modal fade" id="modalTramite" tabindex="-1">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -147,46 +134,6 @@ $archivados = $stmt->get_result();
 <!-- SCRIPTS -->
 <script src="../assets/js/afiliado/sidebar_afiliado.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-
-// ===============================
-// VER DETALLE DEL TRÁMITE
-// ===============================
-function verTramite(id) {
-    fetch("ver_tramite_afiliado.php?id=" + id)
-        .then(res => res.text())
-        .then(html => {
-            document.getElementById("contenidoModal").innerHTML = html;
-            const modal = new bootstrap.Modal(document.getElementById("modalTramite"));
-            modal.show();
-        });
-}
-
-// ===============================
-// FILTROS DE BÚSQUEDA Y ESTADO
-// ===============================
-const inputBuscar  = document.getElementById("buscarArchivado");
-const selectEstado = document.getElementById("filtroEstado");
-
-function aplicarFiltros() {
-    const texto  = inputBuscar.value.toLowerCase();
-    const estado = selectEstado.value;
-    const filas  = document.querySelectorAll("#tablaArchivados tbody tr");
-
-    filas.forEach(fila => {
-        const contenido    = fila.textContent.toLowerCase();
-        const estadoFila   = fila.dataset.estado;
-        const coincideTexto  = contenido.includes(texto);
-        const coincideEstado = estado === "Todos" || estadoFila === estado;
-
-        fila.style.display = coincideTexto && coincideEstado ? "" : "none";
-    });
-}
-
-inputBuscar.addEventListener("input",  aplicarFiltros);
-selectEstado.addEventListener("change", aplicarFiltros);
-
-</script>
-
+<script src="../assets/js/afiliado/archivados_afiliado.js"></script>
 </body>
 </html>
