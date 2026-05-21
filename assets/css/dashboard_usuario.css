@@ -15,17 +15,14 @@ body {
 
 /* ===============================
    CARDS DEL DASHBOARD
-   Padding lateral en el contenedor
-   para que no choquen con los bordes
 ================================ */
 .cards-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    padding: 0 30px;         /* <-- evita que choquen con los bordes */
+    padding: 0 30px;
 }
 
-/* Card base */
 .info-card {
     position: relative;
     padding: 20px;
@@ -35,16 +32,14 @@ body {
     transition: all 0.3s ease;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     cursor: pointer;
-    min-width: 0;            /* evita desbordamiento en grid */
+    min-width: 0;
 }
 
-/* Efecto hover */
 .info-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 12px 25px rgba(0,0,0,0.15);
 }
 
-/* Icono grande de fondo (marca de agua) */
 .info-card .icon {
     position: absolute;
     right: 15px;
@@ -53,58 +48,20 @@ body {
     opacity: 0.18;
 }
 
-/* Textos de la card */
-.info-card h3 {
-    margin: 0;
-    font-size: 17px;
-}
+.info-card h3 { margin: 0; font-size: 17px; }
+.info-card p  { font-size: 30px; font-weight: bold; margin-top: 10px; }
 
-.info-card p {
-    font-size: 30px;
-    font-weight: bold;
-    margin-top: 10px;
-}
+.info-card.tramites  { background: #ffffff; color: #111827; border: 2px solid #bbbdc2; }
+.info-card.tramites .icon { color: #4a4a4b; }
 
-/* Card: Mis trámites (blanco neutro) */
-.info-card.tramites {
-    background: #ffffff;
-    color: #111827;
-    border: 2px solid #bbbdc2;
-}
+.info-card.pendientes { background: linear-gradient(135deg, #facc15, #eab308); color: white; }
+.info-card.pendientes .icon { color: #52525b; }
 
-.info-card.tramites .icon {
-    color: #4a4a4b;
-}
+.info-card.revision  { background: linear-gradient(135deg, #002855, #2563eb); color: white; }
+.info-card.revision .icon  { color: #dbeafe; }
 
-/* Card: Pendientes (amarillo mostaza) */
-.info-card.pendientes {
-    background: linear-gradient(135deg, #facc15, #eab308);
-    color: white;
-}
-
-.info-card.pendientes .icon {
-    color: #52525b;
-}
-
-/* Card: En revisión (azul) */
-.info-card.revision {
-    background: linear-gradient(135deg, #002855, #2563eb);
-    color: white;
-}
-
-.info-card.revision .icon {
-    color: #dbeafe;
-}
-
-/* Card: Aprobados (verde) */
-.info-card.aprobados {
-    background: linear-gradient(135deg, #0f740b, #16a34a);
-    color: white;
-}
-
-.info-card.aprobados .icon {
-    color: #dcfce7;
-}
+.info-card.aprobados { background: linear-gradient(135deg, #0f740b, #16a34a); color: white; }
+.info-card.aprobados .icon { color: #dcfce7; }
 
 /* ===============================
    SECCIÓN DE AVISOS IMPORTANTES
@@ -117,7 +74,6 @@ body {
     box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 
-/* Título de la sección */
 .avisos h3 {
     display: flex;
     align-items: center;
@@ -134,12 +90,12 @@ body {
     background: #f8faff;
     border-left: 4px solid #002855;
     padding: 18px 20px;
-    border-radius: 10px;
+    border-radius: 0 10px 10px 0;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    border-radius: 0 10px 10px 0;
+    cursor: pointer;
 }
 
 .aviso:hover {
@@ -147,7 +103,16 @@ body {
     box-shadow: 0 8px 20px rgba(0,40,85,0.1);
 }
 
-/* Badge del departamento */
+/* Fila superior: departamento + badge tipo */
+.aviso-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Badge departamento */
 .aviso-departamento {
     display: inline-flex;
     align-items: center;
@@ -163,7 +128,26 @@ body {
     width: fit-content;
 }
 
-/* Título del aviso */
+/* Badge tipo */
+.aviso-tipo-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.tipo-general     { background: #eff6ff; color: #2563eb; }
+.tipo-urgente     { background: #fef2f2; color: #dc2626; }
+.tipo-informativo { background: #f0fdf4; color: #16a34a; }
+
+/* Borde izquierdo y fondo según tipo */
+.aviso-tipo-general     { border-left-color: #1a6eb5; }
+.aviso-tipo-urgente     { border-left-color: #c0392b; background: #fff8f8; }
+.aviso-tipo-informativo { border-left-color: #1a9e75; background: #f8fffc; }
+
 .aviso h4 {
     margin: 0;
     font-size: 15px;
@@ -171,7 +155,6 @@ body {
     color: #002855;
 }
 
-/* Mensaje del aviso con corte de texto */
 .aviso p {
     font-size: 13px;
     color: #555;
@@ -185,7 +168,6 @@ body {
     word-break: break-word;
 }
 
-/* Fecha de publicación */
 .aviso .fecha {
     display: block;
     font-size: 11px;
@@ -194,18 +176,8 @@ body {
 }
 
 /* Estado vacío */
-.avisos-vacio {
-    text-align: center;
-    padding: 40px;
-    color: #aaa;
-}
-
-.avisos-vacio i {
-    font-size: 36px;
-    margin-bottom: 10px;
-    color: #ccd6e8;
-    display: block;
-}
+.avisos-vacio { text-align: center; padding: 40px; color: #aaa; }
+.avisos-vacio i { font-size: 36px; margin-bottom: 10px; color: #ccd6e8; display: block; }
 
 /* ===============================
    CARRUSEL DE AVISOS
@@ -220,21 +192,18 @@ body {
 .carrusel-contenedor {
     display: flex;
     gap: 16px;
-    overflow: hidden;          /* oculta items fuera de vista */
+    overflow: hidden;
     flex: 1;
-    min-width: 0;              /* evita que el flex child empuje el wrapper */
+    min-width: 0;
     scroll-behavior: smooth;
 }
 
-/* Desktop: exactamente 3 items visibles
-   width = (100% - 2 gaps de 16px) / 3
-   usando calc para precisión pixel-perfect  */
 .carrusel-item {
     width: calc((100% - 32px) / 3);
-    flex-shrink: 0;            /* no se encoge */
-    flex-grow: 0;              /* no se estira */
-    min-width: 0;              /* permite que overflow:hidden funcione */
-    overflow: hidden;          /* corta texto desbordado */
+    flex-shrink: 0;
+    flex-grow: 0;
+    min-width: 0;
+    overflow: hidden;
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-sizing: border-box;
@@ -245,7 +214,6 @@ body {
     box-shadow: 0 10px 25px rgba(0,40,85,0.15);
 }
 
-/* Botones de navegación */
 .carrusel-btn {
     background: #002855;
     color: #fff;
@@ -263,12 +231,8 @@ body {
     box-shadow: 0 4px 10px rgba(0,40,85,0.2);
 }
 
-.carrusel-btn:hover {
-    background: #004080;
-    transform: scale(1.1);
-}
+.carrusel-btn:hover { background: #004080; transform: scale(1.1); }
 
-/* Indicadores de puntos */
 .carrusel-indicadores {
     display: flex;
     justify-content: center;
@@ -285,10 +249,7 @@ body {
     transition: background 0.3s ease, transform 0.3s ease;
 }
 
-.carrusel-punto.activo {
-    background: #002855;
-    transform: scale(1.3);
-}
+.carrusel-punto.activo { background: #002855; transform: scale(1.3); }
 
 /* ===============================
    MODAL AVISO USUARIO
@@ -302,12 +263,10 @@ body {
     z-index: 1000;
     align-items: center;
     justify-content: center;
-    padding: 16px;           /* evita que el modal toque los bordes en móvil */
+    padding: 16px;
 }
 
-.modal-aviso-usuario.activo {
-    display: flex;
-}
+.modal-aviso-usuario.activo { display: flex; }
 
 .modal-aviso-usuario-content {
     background: #fff;
@@ -324,7 +283,6 @@ body {
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Header del modal */
 .modal-aviso-usuario-header {
     background: linear-gradient(135deg, #002855, #1a4a8a);
     padding: 18px 24px;
@@ -332,6 +290,23 @@ body {
     justify-content: space-between;
     align-items: center;
 }
+
+/* Meta: departamento + badge tipo en el header del modal */
+.modal-aviso-usuario-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.modal-aviso-usuario-meta .aviso-departamento {
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+}
+
+.modal-aviso-usuario-meta .tipo-general     { background: rgba(37,99,235,0.3);  color: #bfdbfe; }
+.modal-aviso-usuario-meta .tipo-urgente     { background: rgba(220,38,38,0.3);  color: #fecaca; }
+.modal-aviso-usuario-meta .tipo-informativo { background: rgba(22,163,74,0.3);  color: #bbf7d0; }
 
 .modal-aviso-usuario-cerrar {
     background: rgba(255,255,255,0.15);
@@ -348,11 +323,8 @@ body {
     transition: background 0.2s ease;
 }
 
-.modal-aviso-usuario-cerrar:hover {
-    background: rgba(255,255,255,0.3);
-}
+.modal-aviso-usuario-cerrar:hover { background: rgba(255,255,255,0.3); }
 
-/* Body del modal */
 .modal-aviso-usuario-body {
     padding: 24px;
     display: flex;
@@ -376,117 +348,33 @@ body {
 }
 
 /* ===============================
-   RESPONSIVE — TABLET GRANDE
-   (1024px - 1199px)
-   2 cards en fila, carrusel 2 items
+   RESPONSIVE
 ================================ */
 @media (max-width: 1199px) {
-    .cards-container {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 0 20px;
-        gap: 16px;
-    }
-
-    .avisos {
-        margin: 0 20px 30px;
-        padding: 20px;
-    }
-
-    /* 2 items visibles: (100% - 1 gap de 16px) / 2 */
-    .carrusel-item {
-        width: calc((100% - 16px) / 2);
-    }
+    .cards-container { grid-template-columns: repeat(2, 1fr); padding: 0 20px; gap: 16px; }
+    .avisos { margin: 0 20px 30px; padding: 20px; }
+    .carrusel-item { width: calc((100% - 16px) / 2); }
 }
 
-
-
-/* ===============================
-   RESPONSIVE — MÓVIL
-   (≤ 768px)
-   2 cards en fila, carrusel 1 item
-================================ */
 @media (max-width: 768px) {
-    .cards-container {
-        grid-template-columns: repeat(2, 1fr);
-        padding: 0 16px;
-        gap: 12px;
-    }
-
-    .info-card {
-        padding: 16px;
-        border-radius: 14px;
-    }
-
-    .info-card h3 {
-        font-size: 14px;
-    }
-
-    .info-card p {
-        font-size: 26px;
-    }
-
-    .info-card .icon {
-        font-size: 50px;
-    }
-
-    .avisos {
-        margin: 0 16px 24px;
-        padding: 18px;
-    }
-
-    .avisos h3 {
-        font-size: 17px;
-    }
-
-    /* 1 item exacto, sin botones — swipe táctil */
-    .carrusel-item {
-        width: 100%;
-    }
-
-    .carrusel-btn {
-        display: none;
-    }
+    .cards-container { grid-template-columns: repeat(2, 1fr); padding: 0 16px; gap: 12px; }
+    .info-card { padding: 16px; border-radius: 14px; }
+    .info-card h3 { font-size: 14px; }
+    .info-card p  { font-size: 26px; }
+    .info-card .icon { font-size: 50px; }
+    .avisos { margin: 0 16px 24px; padding: 18px; }
+    .avisos h3 { font-size: 17px; }
+    .carrusel-item { width: 100%; }
+    .carrusel-btn  { display: none; }
 }
 
-/* ===============================
-   RESPONSIVE — MÓVIL PEQUEÑO
-   (< 480px)
-================================ */
 @media (max-width: 480px) {
-    .cards-container {
-        grid-template-columns: 1fr 1fr;
-        padding: 0 12px;
-        gap: 10px;
-    }
-
-    .info-card {
-        padding: 14px;
-    }
-
-    .info-card h3 {
-        font-size: 13px;
-    }
-
-    .info-card p {
-        font-size: 22px;
-        margin-top: 6px;
-    }
-
-    .info-card .icon {
-        font-size: 42px;
-    }
-
-    .avisos {
-        margin: 0 12px 20px;
-        padding: 14px;
-    }
-
-    .modal-aviso-usuario-content {
-        width: 100%;
-        border-radius: 12px;
-    }
-
-    .modal-aviso-usuario-body {
-        padding: 18px;
-    }
+    .cards-container { grid-template-columns: 1fr 1fr; padding: 0 12px; gap: 10px; }
+    .info-card { padding: 14px; }
+    .info-card h3 { font-size: 13px; }
+    .info-card p  { font-size: 22px; margin-top: 6px; }
+    .info-card .icon { font-size: 42px; }
+    .avisos { margin: 0 12px 20px; padding: 14px; }
+    .modal-aviso-usuario-content { width: 100%; border-radius: 12px; }
+    .modal-aviso-usuario-body { padding: 18px; }
 }

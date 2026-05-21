@@ -13,27 +13,30 @@ $titulo          = trim($data['titulo']);
 $mensaje         = trim($data['mensaje']);
 $id_departamento = $_SESSION['id_departamento'];
 
+// Validar y sanitizar tipo
+$tiposPermitidos = ['general', 'urgente', 'informativo'];
+$tipo            = in_array($data['tipo'] ?? '', $tiposPermitidos) ? $data['tipo'] : 'general';
+
 // ===============================
 // CREAR O EDITAR AVISO
-// Si hay ID es edición, si no es creación
 // ===============================
 if ($id > 0) {
 
     // Actualizar aviso existente
     $stmt = $conn->prepare("
-        UPDATE avisos SET titulo = ?, mensaje = ?
+        UPDATE avisos SET titulo = ?, mensaje = ?, tipo = ?
         WHERE id_aviso = ? AND id_departamento = ?
     ");
-    $stmt->bind_param("ssii", $titulo, $mensaje, $id, $id_departamento);
+    $stmt->bind_param("sssii", $titulo, $mensaje, $tipo, $id, $id_departamento);
 
 } else {
 
     // Insertar nuevo aviso
     $stmt = $conn->prepare("
-        INSERT INTO avisos (id_departamento, titulo, mensaje)
-        VALUES (?, ?, ?)
+        INSERT INTO avisos (id_departamento, titulo, mensaje, tipo)
+        VALUES (?, ?, ?, ?)
     ");
-    $stmt->bind_param("iss", $id_departamento, $titulo, $mensaje);
+    $stmt->bind_param("isss", $id_departamento, $titulo, $mensaje, $tipo);
 }
 
 echo json_encode(["success" => $stmt->execute()]);

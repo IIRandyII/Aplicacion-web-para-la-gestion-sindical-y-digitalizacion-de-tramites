@@ -1,6 +1,5 @@
 /* ===============================
-   AVISOS AFILIADO
-   Estilos de la página de avisos
+   AVISOS AFILIADO — Diseño v3
 ================================ */
 
 /* ===============================
@@ -8,51 +7,203 @@
 ================================ */
 .topbar {
     background: #fff;
-    padding: 15px 20px;
+    padding: 0 24px;
+    height: 56px;
     display: flex;
     align-items: center;
-    gap: 15px;
-    border-bottom: 1px solid #ddd;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .toggle-btn {
     background: none;
     border: none;
-    font-size: 22px;
+    font-size: 20px;
     cursor: pointer;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+}
+
+.topbar-titulo {
+    font-size: 15px;
+    font-weight: 500;
+    color: #111827;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.topbar-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #0d2240;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 500;
 }
 
 /* ===============================
    SECCIÓN PRINCIPAL
 ================================ */
 .avisos-section {
-    padding: 30px;
+    padding: 24px;
+    background: #f3f4f6;
+    min-height: calc(100vh - 56px);
 }
 
-/* Botón nuevo aviso alineado a la derecha */
-.avisos-header {
+/* ===============================
+   TOOLBAR (búsqueda + botón nuevo)
+================================ */
+.avisos-toolbar {
     display: flex;
-    justify-content: flex-end;
-    margin-bottom: 25px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.avisos-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 7px 12px;
+    flex: 1;
+    max-width: 300px;
+}
+
+.avisos-search i {
+    color: #9ca3af;
+    font-size: 15px;
+}
+
+.avisos-search input {
+    border: none;
+    outline: none;
+    font-size: 13px;
+    color: #374151;
+    background: transparent;
+    width: 100%;
+}
+
+.avisos-search input::placeholder {
+    color: #9ca3af;
 }
 
 .btn-nuevo-aviso {
-    background: #002855;
+    background: #0d2240;
     color: #fff;
     border: none;
-    padding: 12px 22px;
+    padding: 9px 18px;
     border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 7px;
     transition: background 0.2s ease;
+    white-space: nowrap;
 }
 
 .btn-nuevo-aviso:hover {
-    background: #004080;
+    background: #1a3a5c;
+}
+
+/* ===============================
+   TARJETAS DE ESTADÍSTICAS
+================================ */
+.avisos-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 14px 16px;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.stat-val {
+    font-size: 22px;
+    font-weight: 600;
+    color: #111827;
+    line-height: 1.2;
+}
+
+.stat-sub {
+    font-size: 11px;
+    color: #9ca3af;
+    margin-top: 2px;
+}
+
+/* ===============================
+   ENCABEZADO DE SECCIÓN + FILTROS
+================================ */
+.avisos-section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.avisos-section-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.avisos-filtros {
+    display: flex;
+    gap: 4px;
+}
+
+.filtro-tab {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    color: #6b7280;
+    background: transparent;
+    transition: all 0.15s ease;
+}
+
+.filtro-tab:hover {
+    background: #f3f4f6;
+}
+
+.filtro-tab.activo {
+    background: #eff6ff;
+    color: #2563eb;
+    border-color: #bfdbfe;
 }
 
 /* ===============================
@@ -61,22 +212,29 @@
 .avisos-lista {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 10px;
 }
 
-/* Card individual de aviso */
+/* Card individual */
 .aviso-card {
     background: #fff;
+    border: 1px solid #e5e7eb;
     border-radius: 12px;
-    padding: 20px 24px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
-    border-left: 5px solid #002855;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 16px 18px;
+    border-left: 3px solid #1a6eb5;
+    transition: box-shadow 0.2s ease;
 }
 
 .aviso-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+}
+
+.aviso-card.urgente {
+    border-left-color: #c0392b;
+}
+
+.aviso-card.info {
+    border-left-color: #1a9e75;
 }
 
 /* Header de la card */
@@ -84,89 +242,147 @@
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 12px;
+    gap: 12px;
+}
+
+.aviso-info {
+    flex: 1;
+}
+
+/* Fila título + badge */
+.aviso-titulo-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
 }
 
 .aviso-info h4 {
-    font-size: 16px;
-    font-weight: 700;
-    color: #002855;
-    margin-bottom: 4px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
 }
 
-/* Fecha del aviso */
-.aviso-fecha {
-    font-size: 12px;
-    color: #888;
+/* Badges de categoría */
+.aviso-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 500;
+}
+
+.aviso-badge.general {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.aviso-badge.urgente {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.aviso-badge.informativo {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+/* Meta: fecha, hora, autor */
+.aviso-meta {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 12px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+}
+
+.aviso-meta span {
+    font-size: 12px;
+    color: #9ca3af;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.aviso-meta i {
+    font-size: 12px;
 }
 
 /* Mensaje del aviso */
 .aviso-mensaje {
-    font-size: 14px;
-    color: #444;
-    line-height: 1.6;
+    font-size: 13px;
+    color: #6b7280;
+    line-height: 1.5;
     margin: 0;
-    max-height: 100px;
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
-    word-break: break-all;
+    word-break: break-word;
 }
 
 /* Botones editar y eliminar */
 .aviso-acciones {
     display: flex;
-    gap: 8px;
+    gap: 6px;
+    flex-shrink: 0;
 }
 
 .btn-editar {
-    background: #e8f0fe;
-    color: #2563eb;
-    border: none;
-    padding: 7px 10px;
-    border-radius: 6px;
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background 0.15s ease;
+    color: #6b7280;
+    font-size: 14px;
 }
 
 .btn-editar:hover {
-    background: #bfcffa;
+    background: #e5e7eb;
 }
 
 .btn-eliminar {
-    background: #fdecea;
-    color: #dc2626;
-    border: none;
-    padding: 7px 10px;
-    border-radius: 6px;
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    border: 1px solid #fecaca;
+    background: #fef2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background 0.15s ease;
+    color: #dc2626;
+    font-size: 14px;
 }
 
 .btn-eliminar:hover {
-    background: #fca5a5;
+    background: #fecaca;
 }
 
 /* Estado vacío */
 .avisos-vacio {
     text-align: center;
     padding: 60px 20px;
-    color: #aaa;
+    color: #9ca3af;
 }
 
 .avisos-vacio i {
     font-size: 48px;
     margin-bottom: 15px;
-    color: #ccd6e8;
+    color: #d1d5db;
 }
 
 .avisos-vacio p {
-    font-size: 16px;
+    font-size: 15px;
 }
 
 /* ===============================
@@ -187,7 +403,6 @@
     display: flex;
 }
 
-/* Contenido del modal */
 .modal-aviso-content {
     background: #fff;
     width: 90%;
@@ -199,19 +414,12 @@
 }
 
 @keyframes entradaModal {
-    from {
-        opacity: 0;
-        transform: translateY(-20px) scale(0.97);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    from { opacity: 0; transform: translateY(-20px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* Header del modal */
 .modal-aviso-header {
-    background: linear-gradient(135deg, #002855, #1a4a8a);
+    background: linear-gradient(135deg, #0d2240, #1a4a8a);
     padding: 18px 24px;
     display: flex;
     justify-content: space-between;
@@ -220,12 +428,11 @@
 }
 
 .modal-aviso-header h3 {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 600;
     margin: 0;
 }
 
-/* Botón cerrar modal */
 .modal-aviso-cerrar {
     background: rgba(255,255,255,0.15);
     border: none;
@@ -245,7 +452,6 @@
     background: rgba(255,255,255,0.3);
 }
 
-/* Formulario */
 #formAviso {
     padding: 24px;
 }
@@ -256,23 +462,25 @@
 
 .form-grupo label {
     display: block;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    color: #444;
+    color: #374151;
     margin-bottom: 6px;
     text-transform: uppercase;
     letter-spacing: 0.4px;
 }
 
 .form-grupo input,
-.form-grupo textarea {
+.form-grupo textarea,
+.form-grupo select {
     width: 100%;
     padding: 10px 14px;
-    border: 1px solid #ddd;
+    border: 1px solid #e5e7eb;
     border-radius: 8px;
     font-size: 14px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
     outline: none;
+    color: #111827;
 }
 
 .form-grupo textarea {
@@ -280,13 +488,21 @@
     resize: vertical;
 }
 
-.form-grupo input:focus,
-.form-grupo textarea:focus {
-    border-color: #002855;
-    box-shadow: 0 0 0 3px rgba(0,40,85,0.1);
+.form-grupo select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    cursor: pointer;
 }
 
-/* Botones del formulario */
+.form-grupo input:focus,
+.form-grupo textarea:focus,
+.form-grupo select:focus {
+    border-color: #0d2240;
+    box-shadow: 0 0 0 3px rgba(13,34,64,0.1);
+}
+
 .form-acciones {
     display: flex;
     justify-content: flex-end;
@@ -295,22 +511,23 @@
 }
 
 .btn-cancelar {
-    background: #d60505;
-    color: #fafafa;
-    border: 1px solid #ddd;
+    background: #dc2626;
+    color: #fff;
+    border: none;
     padding: 10px 20px;
     border-radius: 8px;
     cursor: pointer;
     font-size: 14px;
+    font-weight: 500;
     transition: background 0.2s ease;
 }
 
 .btn-cancelar:hover {
-    background: #7a0707;
+    background: #b91c1c;
 }
 
 .btn-guardar {
-    background: #06a701;
+    background: #16a34a;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -325,7 +542,7 @@
 }
 
 .btn-guardar:hover {
-    background: #03570a;
+    background: #15803d;
 }
 
 /* ===============================
@@ -336,6 +553,14 @@
         padding: 15px;
     }
 
+    .avisos-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .avisos-stats .stat-card:last-child {
+        grid-column: span 2;
+    }
+
     .aviso-card-header {
         flex-direction: column;
         gap: 10px;
@@ -343,5 +568,14 @@
 
     .aviso-acciones {
         align-self: flex-end;
+    }
+
+    .avisos-toolbar {
+        flex-wrap: wrap;
+    }
+
+    .avisos-search {
+        max-width: 100%;
+        flex: 1 1 100%;
     }
 }

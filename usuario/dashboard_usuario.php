@@ -12,7 +12,7 @@ $id_usuario    = $_SESSION['id_usuario'];
 // DEPARTAMENTOS ordenados por fecha
 // ===============================
 $stmtAvisos = $conn->prepare("
-    SELECT a.titulo, a.mensaje, a.fecha_creacion, d.nombre AS departamento
+    SELECT a.titulo, a.mensaje, a.tipo, a.fecha_creacion, d.nombre AS departamento
     FROM avisos a
     JOIN departamentos d ON a.id_departamento = d.id_departamento
     WHERE a.fecha_creacion >= NOW() - INTERVAL 5 DAY
@@ -21,6 +21,13 @@ $stmtAvisos = $conn->prepare("
 ");
 $stmtAvisos->execute();
 $avisos = $stmtAvisos->get_result();
+
+// Mapa de tipo → etiqueta, clase CSS y color de borde
+$tipoConfig = [
+    'general'     => ['label' => 'General',     'clase' => 'general',     'borde' => '#1a6eb5'],
+    'urgente'     => ['label' => 'Urgente',      'clase' => 'urgente',     'borde' => '#c0392b'],
+    'informativo' => ['label' => 'Informativo',  'clase' => 'informativo', 'borde' => '#1a9e75'],
+];
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -76,79 +83,90 @@ $avisos = $stmtAvisos->get_result();
     <br><br>
 
     <!-- AVISOS IMPORTANTES -->
-<!-- AVISOS IMPORTANTES -->
-<section class="avisos">
-    <h3><i class="fa-solid fa-bullhorn"></i> Avisos importantes</h3>
+    <section class="avisos">
+        <h3><i class="fa-solid fa-bullhorn"></i> Avisos importantes</h3>
 
-    <?php if ($avisos->num_rows > 0):
-        $listaAvisos = $avisos->fetch_all(MYSQLI_ASSOC);
-    ?>
+        <?php if ($avisos->num_rows > 0):
+            $listaAvisos = $avisos->fetch_all(MYSQLI_ASSOC);
+        ?>
 
-    <!-- CARRUSEL -->
-    <div class="carrusel-wrapper">
-        <button class="carrusel-btn carrusel-prev" id="btnPrev">
-            <i class="fa-solid fa-chevron-left"></i>
-        </button>
+        <!-- CARRUSEL -->
+        <div class="carrusel-wrapper">
+            <button class="carrusel-btn carrusel-prev" id="btnPrev">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
 
-        <div class="carrusel-contenedor" id="carruselContenedor">
-            <?php foreach ($listaAvisos as $aviso): ?>
-                <div class="aviso carrusel-item" onclick="abrirModalAviso(
-                    '<?= addslashes(htmlspecialchars($aviso['titulo'])) ?>',
-                    '<?= addslashes(htmlspecialchars($aviso['mensaje'])) ?>',
-                    '<?= addslashes(htmlspecialchars($aviso['departamento'])) ?>',
-                    '<?= date("d/m/Y H:i", strtotime($aviso['fecha_creacion'])) ?>'
-                )">
-                    <span class="aviso-departamento">
-                        <i class="fa-solid fa-building"></i>
-                        <?= htmlspecialchars($aviso['departamento']) ?>
-                    </span>
-                    <h4><?= htmlspecialchars($aviso['titulo']) ?></h4>
-                    <p><?= htmlspecialchars($aviso['mensaje']) ?></p>
-                    <span class="fecha">
-                        Publicado: <?= date("d/m/Y H:i", strtotime($aviso['fecha_creacion'])) ?>
-                    </span>
-                </div>
-            <?php endforeach; ?>
-        </div>
-
-        <button class="carrusel-btn carrusel-next" id="btnNext">
-            <i class="fa-solid fa-chevron-right"></i>
-        </button>
-    </div>
-
-    <!-- INDICADORES -->
-    <div class="carrusel-indicadores" id="carruselIndicadores"></div>
-
-    <?php else: ?>
-        <div class="avisos-vacio">
-            <i class="fa-solid fa-bullhorn"></i>
-            <p>No hay avisos publicados por el momento.</p>
-        </div>
-    <?php endif; ?>
-
-</section>
-
-<!-- MODAL AVISO -->
-<div class="modal-aviso-usuario" id="modalAvisoUsuario">
-    <div class="modal-aviso-usuario-content">
-        <div class="modal-aviso-usuario-header">
-            <div class="modal-aviso-usuario-meta">
-                <span class="aviso-departamento" id="modalAvisoDept">
-                    <i class="fa-solid fa-building"></i>
-                    <span id="modalAvisoDeptNombre"></span>
-                </span>
+            <div class="carrusel-contenedor" id="carruselContenedor">
+                <?php foreach ($listaAvisos as $aviso):
+                    $tipo   = $aviso['tipo'] ?? 'general';
+                    $config = $tipoConfig[$tipo] ?? $tipoConfig['general'];
+                ?>
+                    <div class="aviso carrusel-item aviso-tipo-<?= $config['clase'] ?>"
+                         onclick="abrirModalAviso(
+                             '<?= addslashes(htmlspecialchars($aviso['titulo'])) ?>',
+                             '<?= addslashes(htmlspecialchars($aviso['mensaje'])) ?>',
+                             '<?= addslashes(htmlspecialchars($aviso['departamento'])) ?>',
+                             '<?= date("d/m/Y H:i", strtotime($aviso['fecha_creacion'])) ?>',
+                             '<?= $config['clase'] ?>',
+                             '<?= $config['label'] ?>'
+                         )">
+                        <div class="aviso-top-row">
+                            <span class="aviso-departamento">
+                                <i class="fa-solid fa-building"></i>
+                                <?= htmlspecialchars($aviso['departamento']) ?>
+                            </span>
+                            <span class="aviso-tipo-badge tipo-<?= $config['clase'] ?>">
+                                <?= $config['label'] ?>
+                            </span>
+                        </div>
+                        <h4><?= htmlspecialchars($aviso['titulo']) ?></h4>
+                        <p><?= htmlspecialchars($aviso['mensaje']) ?></p>
+                        <span class="fecha">
+                            Publicado: <?= date("d/m/Y H:i", strtotime($aviso['fecha_creacion'])) ?>
+                        </span>
+                    </div>
+                <?php endforeach; ?>
             </div>
-            <button class="modal-aviso-usuario-cerrar" id="cerrarModalAvisoUsuario">
-                <i class="fa-solid fa-xmark"></i>
+
+            <button class="carrusel-btn carrusel-next" id="btnNext">
+                <i class="fa-solid fa-chevron-right"></i>
             </button>
         </div>
-        <div class="modal-aviso-usuario-body">
-            <h3 id="modalAvisoTitulo"></h3>
-            <p id="modalAvisoMensaje"></p>
-            <span class="fecha" id="modalAvisoFecha"></span>
+
+        <!-- INDICADORES -->
+        <div class="carrusel-indicadores" id="carruselIndicadores"></div>
+
+        <?php else: ?>
+            <div class="avisos-vacio">
+                <i class="fa-solid fa-bullhorn"></i>
+                <p>No hay avisos publicados por el momento.</p>
+            </div>
+        <?php endif; ?>
+
+    </section>
+
+    <!-- MODAL AVISO -->
+    <div class="modal-aviso-usuario" id="modalAvisoUsuario">
+        <div class="modal-aviso-usuario-content">
+            <div class="modal-aviso-usuario-header">
+                <div class="modal-aviso-usuario-meta">
+                    <span class="aviso-departamento" id="modalAvisoDept">
+                        <i class="fa-solid fa-building"></i>
+                        <span id="modalAvisoDeptNombre"></span>
+                    </span>
+                    <span class="aviso-tipo-badge" id="modalAvisoTipoBadge"></span>
+                </div>
+                <button class="modal-aviso-usuario-cerrar" id="cerrarModalAvisoUsuario">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="modal-aviso-usuario-body">
+                <h3 id="modalAvisoTitulo"></h3>
+                <p id="modalAvisoMensaje"></p>
+                <span class="fecha" id="modalAvisoFecha"></span>
+            </div>
         </div>
     </div>
-</div>
 
 </main>
 

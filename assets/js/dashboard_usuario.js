@@ -210,12 +210,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ===============================
 // MODAL DE AVISO COMPLETO
+// Se agregaron tipo y tipoLabel
+// para mostrar el badge de tipo
 // ===============================
-function abrirModalAviso(titulo, mensaje, departamento, fecha) {
+function abrirModalAviso(titulo, mensaje, departamento, fecha, tipo, tipoLabel) {
     document.getElementById("modalAvisoDeptNombre").textContent = departamento;
     document.getElementById("modalAvisoTitulo").textContent     = titulo;
     document.getElementById("modalAvisoMensaje").textContent    = mensaje;
     document.getElementById("modalAvisoFecha").textContent      = "Publicado: " + fecha;
+
+    // Badge de tipo en el header del modal
+    const badge       = document.getElementById("modalAvisoTipoBadge");
+    badge.textContent = tipoLabel || "General";
+    badge.className   = "aviso-tipo-badge tipo-" + (tipo || "general");
 
     document.getElementById("modalAvisoUsuario").classList.add("activo");
 }

@@ -8,6 +8,7 @@ const btnCancelar  = document.getElementById("cancelarAviso");
 const modalTitulo  = document.getElementById("modalAvisoTitulo");
 const avisoId      = document.getElementById("avisoId");
 const avisoTitulo  = document.getElementById("avisoTitulo");
+const avisoTipo    = document.getElementById("avisoTipo");
 const avisoMensaje = document.getElementById("avisoMensaje");
 
 // Abrir modal para nuevo aviso
@@ -15,6 +16,7 @@ btnNuevo.addEventListener("click", () => {
     modalTitulo.textContent = "Nuevo aviso";
     avisoId.value      = "";
     avisoTitulo.value  = "";
+    avisoTipo.value    = "general";
     avisoMensaje.value = "";
     modal.classList.add("activo");
 });
@@ -27,26 +29,24 @@ function cerrarModal() {
 btnCerrar.addEventListener("click",   cerrarModal);
 btnCancelar.addEventListener("click", cerrarModal);
 
-// Cerrar al hacer click fuera del modal
 modal.addEventListener("click", (e) => {
     if (e.target === modal) cerrarModal();
 });
 
 // ===============================
 // EDITAR AVISO
-// Precarga los datos en el modal
 // ===============================
-function editarAviso(id, titulo, mensaje) {
+function editarAviso(id, titulo, mensaje, tipo) {
     modalTitulo.textContent = "Editar aviso";
     avisoId.value      = id;
     avisoTitulo.value  = titulo;
+    avisoTipo.value    = tipo || "general";
     avisoMensaje.value = mensaje;
     modal.classList.add("activo");
 }
 
 // ===============================
 // ELIMINAR AVISO
-// Confirmación con SweetAlert
 // ===============================
 function eliminarAviso(id) {
     Swal.fire({
@@ -91,6 +91,7 @@ document.getElementById("formAviso").addEventListener("submit", (e) => {
     const datos = {
         id:      avisoId.value,
         titulo:  avisoTitulo.value.trim(),
+        tipo:    avisoTipo.value,
         mensaje: avisoMensaje.value.trim()
     };
 
