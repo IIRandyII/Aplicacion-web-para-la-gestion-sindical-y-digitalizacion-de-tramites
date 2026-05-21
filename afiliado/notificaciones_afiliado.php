@@ -86,12 +86,6 @@ $stmtMarcar->execute();
                                     </span>
                                 </div>
                             </div>
-
-                            <!-- Botón ver trámite -->
-                            <button class="btn-ver-tramite"
-                                onclick="verTramite(<?= $notif['id_tramite'] ?>)">
-                                <i class="fa-solid fa-eye"></i> Ver trámite
-                            </button>
                         </div>
 
                         <p class="notif-mensaje"><?= htmlspecialchars($notif['mensaje']) ?></p>
@@ -111,47 +105,11 @@ $stmtMarcar->execute();
         <?php endif; ?>
 
     </section>
-
-    <!-- MODAL VER TRÁMITE -->
-    <div class="modal fade" id="modalTramite" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Detalles del trámite</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body" id="contenidoModal">
-                    Cargando...
-                </div>
-            </div>
-        </div>
-    </div>
-
 </main>
 
 <!-- SCRIPTS -->
  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="../assets/js/afiliado/sidebar_afiliado.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-// Abrir modal con detalle del trámite
-function verTramite(id) {
-    fetch("ver_tramite_afiliado.php?id=" + id)
-        .then(res => res.text())
-        .then(html => {
-            document.getElementById("contenidoModal").innerHTML = html;
-            const modal = new bootstrap.Modal(document.getElementById("modalTramite"));
-            modal.show();
-        })
-        .catch(() => {
-            document.getElementById("contenidoModal").innerHTML = `
-                <div class="alert alert-danger">Error de conexión.</div>
-            `;
-            const modal = new bootstrap.Modal(document.getElementById("modalTramite"));
-            modal.show();
-        });
-}
-</script>
-
 </body>
 </html>
