@@ -115,14 +115,11 @@ $archivados = $stmt->get_result();
 
     </section>
 
+    <!-- MODAL VER TRÁMITE -->
     <div class="modal fade" id="modalTramite" tabindex="-1">
         <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Detalles del trámite</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body" id="contenidoModal">
+            <div class="modal-content p-0 overflow-hidden">
+                <div class="modal-body p-0" id="contenidoModal">
                     Cargando...
                 </div>
             </div>
@@ -131,7 +128,6 @@ $archivados = $stmt->get_result();
 
 </main>
 
-<!-- SCRIPTS -->
 <script src="../assets/js/afiliado/sidebar_afiliado.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/afiliado/archivados_afiliado.js"></script>

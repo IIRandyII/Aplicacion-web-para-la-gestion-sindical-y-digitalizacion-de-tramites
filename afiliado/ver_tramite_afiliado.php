@@ -2,9 +2,6 @@
 require_once("../includes/auth_afiliado.php");
 require_once __DIR__ . "/../config/db.php";
 
-// ===============================
-// VALIDAR PARÁMETRO ID
-// ===============================
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     echo "<div class='alert alert-danger'>ID inválido</div>";
     exit();
@@ -63,6 +60,7 @@ $documentoHTML = !empty($tramite['documento_respaldo']) ? "
 
 <!-- HEADER -->
 <div class="detalle-header">
+    <button type="button" class="btn-close btn-close-white detalle-cerrar" data-bs-dismiss="modal"></button>
     <div class="detalle-header-info">
         <span class="detalle-id">#<?= $tramite['id_tramite'] ?></span>
         <span class="badge bg-<?= getColorEstado($tramite['estado']) ?> detalle-badge"><?= $tramite['estado'] ?></span>
@@ -102,52 +100,4 @@ $documentoHTML = !empty($tramite['documento_respaldo']) ? "
         <?= $documentoHTML ?>
     </div>
 
-    <!-- CAMBIAR ESTADO -->
-    <?php if ($tramite['archivado'] == 0): ?>
-    <div class="detalle-seccion">
-        <h4 class="detalle-seccion-titulo"><i class="fas fa-exchange-alt"></i> Cambiar estado</h4>
-
-        <!-- Select de estado -->
-        <label class="detalle-label mb-1">Nuevo estado</label>
-        <select id="nuevoEstado" class="form-select mb-3" onchange="validarComentario()">
-            <option value="En revisión" <?= $tramite['estado'] === 'En revisión' ? 'selected' : '' ?>>En revisión</option>
-            <option value="Aprobado"    <?= $tramite['estado'] === 'Aprobado'    ? 'selected' : '' ?>>Aprobado</option>
-            <option value="Rechazado"   <?= $tramite['estado'] === 'Rechazado'   ? 'selected' : '' ?>>Rechazado</option>
-        </select>
-
-        <!-- Campo de comentario -->
-        <div id="campoComentario">
-            <label class="detalle-label mb-1" id="labelComentario">
-                Comentario <span id="comentarioRequerido" style="color:#dc2626; display:none;">*obligatorio</span>
-            </label>
-            <textarea
-                id="comentarioEstado"
-                class="form-control mb-3"
-                rows="3"
-                placeholder="Escribe un comentario o justificación..."></textarea>
-        </div>
-
-        <button class="btn btn-primary" onclick="actualizarEstado(<?= $tramite['id_tramite'] ?>)">
-            <i class="fas fa-save"></i> Guardar cambios
-        </button>
-    </div>
-    <?php endif; ?>
-
 </div>
-
-<script>
-// Mostrar asterisco de obligatorio si el estado es Rechazado
-function validarComentario() {
-    const estado    = document.getElementById("nuevoEstado").value;
-    const requerido = document.getElementById("comentarioRequerido");
-
-    if (estado === "Rechazado") {
-        requerido.style.display = "inline";
-    } else {
-        requerido.style.display = "none";
-    }
-}
-
-// Ejecutar al cargar para el estado actual
-validarComentario();
-</script>
