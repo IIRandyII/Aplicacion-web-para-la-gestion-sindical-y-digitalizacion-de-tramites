@@ -120,7 +120,7 @@ function validarDescuento() {
 }
 
 // ===============================
-// MODAL: ABRIR / CERRAR
+// MODAL CREAR: ABRIR / CERRAR
 // ===============================
 function resetearFormularioCompleto() {
     departamento.value = "";
@@ -144,6 +144,8 @@ window.onclick = (e) => {
         modal.style.display = "none";
         resetearFormularioCompleto();
     }
+    const modalVer = document.getElementById("modalVerTramite");
+    if (e.target === modalVer) modalVer.style.display = "none";
 };
 
 // ===============================
@@ -381,7 +383,7 @@ function mostrarDetalleTramite(tramite) {
 
     const modalVer = document.getElementById("modalVerTramite");
     modalVer.style.display = "block";
-    const contenido = modalVer.querySelector(".modal-content.modal-grande");
+    const contenido = modalVer.querySelector(".modal-ver-content");
     contenido.classList.remove("modal-entrada");
     void contenido.offsetWidth;
     contenido.classList.add("modal-entrada");
@@ -389,7 +391,7 @@ function mostrarDetalleTramite(tramite) {
 
 document.getElementById("cerrarVerTramite").onclick = () => {
     const modalVer  = document.getElementById("modalVerTramite");
-    const contenido = modalVer.querySelector(".modal-content.modal-grande");
+    const contenido = modalVer.querySelector(".modal-ver-content");
     contenido.classList.add("modal-salida");
     setTimeout(() => {
         modalVer.style.display = "none";

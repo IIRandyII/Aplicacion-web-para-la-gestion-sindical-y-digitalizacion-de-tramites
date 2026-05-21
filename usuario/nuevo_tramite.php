@@ -132,9 +132,9 @@ $id_usuario   = $_SESSION['id_usuario'];
 </div>
 
 <!-- MODAL: VER DETALLE -->
-<div class="modal" id="modalVerTramite">
-    <div class="modal-content modal-grande">
-        <span class="close" id="cerrarVerTramite">&times;</span>
+<div class="modal-ver" id="modalVerTramite">
+    <div class="modal-ver-content">
+        <span class="modal-ver-cerrar" id="cerrarVerTramite">&times;</span>
         <div id="detalleTramite"></div>
     </div>
 </div>

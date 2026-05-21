@@ -30,7 +30,6 @@ body {
     padding: 30px;
 }
 
-/* Contenedor blanco */
 .tramites-contenedor {
     background: #fff;
     padding: 25px;
@@ -60,7 +59,6 @@ body {
     flex-shrink: 0;
 }
 
-/* Controles: buscador + select + botón */
 .tramites-controles {
     display: flex;
     align-items: center;
@@ -70,7 +68,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* Buscador */
 .buscador {
     position: relative;
     flex: 1;
@@ -102,7 +99,6 @@ body {
     box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
 }
 
-/* Select orden */
 #ordenFecha {
     padding: 9px 12px;
     border-radius: 6px;
@@ -120,7 +116,6 @@ body {
     box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
 }
 
-/* Botón crear trámite */
 .btn-crear {
     background: #005baa;
     color: #fff;
@@ -136,9 +131,7 @@ body {
     flex-shrink: 0;
 }
 
-.btn-crear:hover {
-    background: #004a8c;
-}
+.btn-crear:hover { background: #004a8c; }
 
 /* ===============================
    TABLA DE TRÁMITES
@@ -167,17 +160,8 @@ body {
     background: transparent !important;
 }
 
-.tabla-tramites td:nth-child(odd) {
-    background-color: #b8d4f0;
-    color: #000;
-    text-align: center;
-}
-
-.tabla-tramites td:nth-child(even) {
-    background-color: #dbeafe;
-    color: #000;
-    text-align: center;
-}
+.tabla-tramites td:nth-child(odd)  { background-color: #b8d4f0; color: #000; text-align: center; }
+.tabla-tramites td:nth-child(even) { background-color: #dbeafe; color: #000; text-align: center; }
 
 .tabla-tramites td {
     padding: 12px 15px;
@@ -222,14 +206,8 @@ body {
     transition: background 0.2s;
 }
 
-.pag-btn:hover:not(:disabled) {
-    background: #003f7a;
-}
-
-.pag-btn:disabled {
-    background: #c0cfe0;
-    cursor: not-allowed;
-}
+.pag-btn:hover:not(:disabled) { background: #003f7a; }
+.pag-btn:disabled { background: #c0cfe0; cursor: not-allowed; }
 
 #infoPagina {
     font-size: 14px;
@@ -267,10 +245,7 @@ body {
     transition: all 0.3s ease;
 }
 
-.btn-secondary:hover {
-    background: #005baa;
-    color: #fff;
-}
+.btn-secondary:hover { background: #005baa; color: #fff; }
 
 .btn-ver {
     display: inline-flex;
@@ -295,44 +270,13 @@ body {
 /* ===============================
    BADGES DE ESTADO
 ================================ */
-.badge.bg-warning {
-    background-color: #ffd000 !important;
-    color: #000 !important;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-}
-
-.badge.bg-info {
-    background-color: #2563eb !important;
-    color: #fff !important;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-}
-
-.badge.bg-success {
-    background-color: #16a34a !important;
-    color: #fff !important;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-}
-
-.badge.bg-danger {
-    background-color: #dc2626 !important;
-    color: #fff !important;
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-}
+.badge.bg-warning { background-color: #ffd000 !important; color: #000 !important; font-weight: 600; padding: 6px 12px; border-radius: 20px; font-size: 12px; }
+.badge.bg-info    { background-color: #2563eb !important; color: #fff !important; font-weight: 600; padding: 6px 12px; border-radius: 20px; font-size: 12px; }
+.badge.bg-success { background-color: #16a34a !important; color: #fff !important; font-weight: 600; padding: 6px 12px; border-radius: 20px; font-size: 12px; }
+.badge.bg-danger  { background-color: #dc2626 !important; color: #fff !important; font-weight: 600; padding: 6px 12px; border-radius: 20px; font-size: 12px; }
 
 /* ===============================
-   MODAL
+   MODAL CREAR TRÁMITE
 ================================ */
 .modal {
     display: none;
@@ -353,13 +297,8 @@ body {
     overflow: hidden;
 }
 
-.modal-content h3 { margin-bottom: 15px; }
-
-.modal-content label {
-    display: block;
-    margin-top: 12px;
-    font-weight: bold;
-}
+.modal-content h3     { margin-bottom: 15px; }
+.modal-content label  { display: block; margin-top: 12px; font-weight: bold; }
 
 .modal-content input,
 .modal-content select,
@@ -397,11 +336,7 @@ body {
     transform: scale(1.1);
 }
 
-hr {
-    margin: 15px 0;
-    border: 0;
-    border-top: 1px solid #ddd;
-}
+hr { margin: 15px 0; border: 0; border-top: 1px solid #ddd; }
 
 /* ===============================
    FORMULARIOS DINÁMICOS
@@ -423,60 +358,76 @@ hr {
     color: #004080;
 }
 
-.fila-selects {
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
-}
-
+.fila-selects { display: flex; gap: 15px; align-items: flex-start; }
 .fila-selects div { flex: 1; }
 .fila-selects select { width: 100% !important; max-width: 100% !important; }
 
-.fila-doble {
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
-}
-
+.fila-doble { display: flex; gap: 15px; align-items: flex-start; }
 .fila-doble div   { flex: 1; }
-.fila-doble input { width: 100%; max-width: 100% !important; }
+.fila-doble input  { width: 100%; max-width: 100% !important; }
 .fila-doble select { width: 100% !important; max-width: 100% !important; }
 
-.fila-doble-descuento {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
-}
-
-.fila-doble-descuento > div {
-    width: 49% !important;
-    max-width: 49% !important;
-    display: flex;
-    flex-direction: column;
-}
-
+.fila-doble-descuento { display: flex; gap: 15px; margin-top: 10px; }
+.fila-doble-descuento > div { width: 49% !important; max-width: 49% !important; display: flex; flex-direction: column; }
 .fila-doble-descuento select,
 .fila-doble-descuento input { width: 100% !important; }
 
 /* ===============================
    SIDEBAR TRANSICIONES
 ================================ */
-.sidebar .menu a span {
-    transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.sidebar.active .menu a span {
-    opacity: 0;
-    transform: translateX(-10px);
-}
+.sidebar .menu a span { transition: opacity 0.2s ease, transform 0.2s ease; }
+.sidebar.active .menu a span { opacity: 0; transform: translateX(-10px); }
 
 /* ===============================
    MODAL VER DETALLE
 ================================ */
-#modalVerTramite {
-    backdrop-filter: blur(6px);
+.modal-ver {
+    display: none;
+    position: fixed;
+    inset: 0;
     background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(6px);
+    z-index: 1000;
+    overflow-y: auto;
 }
+
+.modal-ver-content {
+    background: #fff;
+    width: 90%;
+    max-width: 850px;
+    margin: 2vh auto;
+    border-radius: 12px;
+    position: relative;
+    overflow-y: auto;
+    max-height: 96vh;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+    animation: entradaModal 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.modal-ver-cerrar {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+}
+
+.modal-ver-cerrar:hover {
+    background: rgba(255,255,255,0.25);
+    transform: scale(1.1);
+}
+
+.modal-ver-content::-webkit-scrollbar { width: 0px; }
 
 @keyframes entradaModal {
     from { opacity: 0; transform: translateY(-30px) scale(0.97); }
@@ -491,12 +442,15 @@ hr {
 .modal-entrada { animation: entradaModal 0.3s cubic-bezier(0.4,0,0.2,1) forwards; }
 .modal-salida  { animation: salidaModal  0.3s cubic-bezier(0.4,0,0.2,1) forwards; }
 
+/* ===============================
+   ESTILOS DETALLE MODAL
+================================ */
 .detalle-header {
     background: linear-gradient(135deg, #002855, #2563eb);
     padding: 20px 25px;
-    border-radius: 10px 10px 0 0;
+    border-radius: 12px 12px 0 0;
     color: #fff;
-    margin: -25px -25px 0 -25px;
+    margin: 0;
 }
 
 .detalle-header-info {
@@ -508,30 +462,16 @@ hr {
 
 .detalle-id { font-size: 22px; font-weight: 700; }
 
-.detalle-badge {
-    font-size: 13px;
-    padding: 5px 14px;
-    border-radius: 20px;
-}
+.detalle-badge { font-size: 13px; padding: 5px 14px; border-radius: 20px; }
 
-.detalle-header-meta {
-    display: flex;
-    gap: 20px;
-    font-size: 13px;
-    opacity: 0.85;
-}
-
-.detalle-header-meta span {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
+.detalle-header-meta { display: flex; gap: 20px; font-size: 13px; opacity: 0.85; }
+.detalle-header-meta span { display: flex; align-items: center; gap: 6px; }
 
 .detalle-body {
-    padding: 20px 0 0 0;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
 .detalle-seccion {
@@ -560,15 +500,7 @@ hr {
 }
 
 .detalle-fila { display: flex; flex-direction: column; gap: 3px; }
-
-.detalle-label {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    color: #6b7a99;
-    letter-spacing: 0.5px;
-}
-
+.detalle-label { font-size: 11px; font-weight: 600; text-transform: uppercase; color: #6b7a99; letter-spacing: 0.5px; }
 .detalle-valor { font-size: 14px; color: #1a1a2e; font-weight: 500; }
 
 .detalle-documento { margin-top: 5px; }
@@ -583,23 +515,11 @@ hr {
     border: 1px solid #e0e0e0;
 }
 
-.archivo-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
+.archivo-info { display: flex; align-items: center; gap: 10px; }
 .archivo-info i { color: #e74c3c; font-size: 22px; }
 .btn-descargar i { color: #ffffff; font-size: 14px; }
 
-.sin-documento {
-    color: #999;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 0;
-}
+.sin-documento { color: #999; font-size: 14px; display: flex; align-items: center; gap: 8px; margin: 0; }
 
 .btn-descargar {
     background: #ee1506;
@@ -614,20 +534,15 @@ hr {
     gap: 6px;
 }
 
+.btn-descargar:hover { background: #c41004; color: #fff; }
+
 /* ===============================
    RESPONSIVE — TABLETS (<=992px)
 ================================ */
 @media (max-width: 992px) {
-    .tramites-top {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .tramites-controles {
-        justify-content: flex-start;
-    }
-    .buscador {
-        max-width: 100%;
-    }
+    .tramites-top { flex-direction: column; align-items: stretch; }
+    .tramites-controles { justify-content: flex-start; }
+    .buscador { max-width: 100%; }
 }
 
 /* ===============================
@@ -636,29 +551,18 @@ hr {
 @media (max-width: 768px) {
     .tramite-section { padding: 15px; }
     .tramites-contenedor { padding: 15px; }
-
     .tramites-top { flex-direction: column; align-items: stretch; }
-
-    .tramites-controles {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-    }
-
+    .tramites-controles { flex-direction: column; align-items: stretch; gap: 8px; }
     .buscador { max-width: 100%; }
-
     #ordenFecha { width: 100%; }
-
     .btn-crear { width: 100%; justify-content: center; }
-
     .tabla-tramites { font-size: 12px; }
     .tabla-tramites th,
     .tabla-tramites td { padding: 8px 10px; }
     .btn-ver { padding: 4px 8px; font-size: 11px; }
-
     .modal-content { width: 95%; margin: 5% auto; padding: 15px; }
     .form-grid { grid-template-columns: 1fr; }
     .detalle-grid { grid-template-columns: 1fr; }
-    .detalle-header { margin: -15px -15px 0 -15px; }
     .detalle-header-meta { flex-direction: column; gap: 5px; }
+    .modal-ver-content { width: 95%; margin: 5% auto; }
 }
