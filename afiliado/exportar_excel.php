@@ -34,10 +34,7 @@ switch ($filtro) {
 // ===============================
 // CONSULTA 1: TRÁMITES POR ESTADO
 // ===============================
-$sql = "SELECT estado, COUNT(id_tramite) AS total
-        FROM tramites
-        WHERE id_departamento = ? $condicionFecha
-        GROUP BY estado";
+$sql  = "SELECT estado, COUNT(id_tramite) AS total FROM tramites WHERE id_departamento = ? $condicionFecha GROUP BY estado";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id_departamento);
 $stmt->execute();
@@ -46,41 +43,11 @@ $porEstado = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 // ===============================
 // CONSULTA 2: TRÁMITES POR TIPO
 // ===============================
-$sql = "SELECT tipo_tramite, COUNT(id_tramite) AS total
-        FROM tramites
-        WHERE id_departamento = ? $condicionFecha
-        GROUP BY tipo_tramite
-        ORDER BY total DESC";
+$sql  = "SELECT tipo_tramite, COUNT(id_tramite) AS total FROM tramites WHERE id_departamento = ? $condicionFecha GROUP BY tipo_tramite ORDER BY total DESC";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $id_departamento);
 $stmt->execute();
 $porTipo = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-// ===============================
-// CONSULTA 3: TRÁMITES POR MES
-// ===============================
-$nombresMeses = [1=>"Enero",2=>"Febrero",3=>"Marzo",4=>"Abril",5=>"Mayo",6=>"Junio",7=>"Julio",8=>"Agosto",9=>"Septiembre",10=>"Octubre",11=>"Noviembre",12=>"Diciembre"];
-
-$sql = "SELECT MONTH(fecha_creacion) AS mes, COUNT(id_tramite) AS total
-        FROM tramites
-        WHERE id_departamento = ? AND YEAR(fecha_creacion) = YEAR(CURDATE())
-        GROUP BY mes ORDER BY mes";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id_departamento);
-$stmt->execute();
-$porMes = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-// ===============================
-// CONSULTA 4: TRÁMITES POR ESTADO Y MES
-// ===============================
-$sql = "SELECT MONTH(fecha_creacion) AS mes, estado, COUNT(id_tramite) AS total
-        FROM tramites
-        WHERE id_departamento = ? AND YEAR(fecha_creacion) = YEAR(CURDATE())
-        GROUP BY mes, estado ORDER BY mes";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $id_departamento);
-$stmt->execute();
-$porEstadoMes = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <html>
@@ -102,8 +69,8 @@ $porEstadoMes = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 <h2>Reporte de Trámites — Sección 49</h2>
 <p class="periodo">Período: <?= $periodoTexto ?> | Generado: <?= date('d/m/Y H:i') ?></p>
 
-<!-- HOJA 1: POR ESTADO -->
-<h3>📊 Trámites por estado</h3>
+<!-- TABLA 1: POR ESTADO -->
+<h3>Trámites por estado</h3>
 <table>
     <tr>
         <th>Estado</th>
@@ -117,8 +84,8 @@ $porEstadoMes = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <?php endforeach; ?>
 </table>
 
-<!-- HOJA 2: POR TIPO -->
-<h3>📋 Trámites por tipo</h3>
+<!-- TABLA 2: POR TIPO -->
+<h3>Trámites por tipo</h3>
 <table>
     <tr>
         <th>Tipo de trámite</th>
@@ -127,38 +94,6 @@ $porEstadoMes = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     <?php foreach ($porTipo as $fila): ?>
     <tr>
         <td><?= $fila['tipo_tramite'] ?></td>
-        <td><?= $fila['total'] ?></td>
-    </tr>
-    <?php endforeach; ?>
-</table>
-
-<!-- HOJA 3: POR MES -->
-<h3>📅 Trámites por mes (año actual)</h3>
-<table>
-    <tr>
-        <th>Mes</th>
-        <th>Total</th>
-    </tr>
-    <?php foreach ($porMes as $fila): ?>
-    <tr>
-        <td><?= $nombresMeses[$fila['mes']] ?></td>
-        <td><?= $fila['total'] ?></td>
-    </tr>
-    <?php endforeach; ?>
-</table>
-
-<!-- HOJA 4: POR ESTADO Y MES -->
-<h3>📈 Trámites por estado y mes</h3>
-<table>
-    <tr>
-        <th>Mes</th>
-        <th>Estado</th>
-        <th>Total</th>
-    </tr>
-    <?php foreach ($porEstadoMes as $fila): ?>
-    <tr>
-        <td><?= $nombresMeses[$fila['mes']] ?></td>
-        <td><?= $fila['estado'] ?></td>
         <td><?= $fila['total'] ?></td>
     </tr>
     <?php endforeach; ?>

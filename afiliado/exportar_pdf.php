@@ -29,25 +29,18 @@ switch ($filtro) {
 // ===============================
 
 // Por estado
-$sql = "SELECT estado, COUNT(id_tramite) AS total FROM tramites WHERE id_departamento = ? $condicionFecha GROUP BY estado";
-$stmt = $conn->prepare($sql); $stmt->bind_param("i", $id_departamento); $stmt->execute();
+$sql  = "SELECT estado, COUNT(id_tramite) AS total FROM tramites WHERE id_departamento = ? $condicionFecha GROUP BY estado";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_departamento);
+$stmt->execute();
 $porEstado = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
 // Por tipo
-$sql = "SELECT tipo_tramite, COUNT(id_tramite) AS total FROM tramites WHERE id_departamento = ? $condicionFecha GROUP BY tipo_tramite ORDER BY total DESC";
-$stmt = $conn->prepare($sql); $stmt->bind_param("i", $id_departamento); $stmt->execute();
+$sql  = "SELECT tipo_tramite, COUNT(id_tramite) AS total FROM tramites WHERE id_departamento = ? $condicionFecha GROUP BY tipo_tramite ORDER BY total DESC";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $id_departamento);
+$stmt->execute();
 $porTipo = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-// Por mes
-$nombresMeses = [1=>"Enero",2=>"Febrero",3=>"Marzo",4=>"Abril",5=>"Mayo",6=>"Junio",7=>"Julio",8=>"Agosto",9=>"Septiembre",10=>"Octubre",11=>"Noviembre",12=>"Diciembre"];
-$sql = "SELECT MONTH(fecha_creacion) AS mes, COUNT(id_tramite) AS total FROM tramites WHERE id_departamento = ? AND YEAR(fecha_creacion) = YEAR(CURDATE()) GROUP BY mes ORDER BY mes";
-$stmt = $conn->prepare($sql); $stmt->bind_param("i", $id_departamento); $stmt->execute();
-$porMes = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-
-// Por estado y mes
-$sql = "SELECT MONTH(fecha_creacion) AS mes, estado, COUNT(id_tramite) AS total FROM tramites WHERE id_departamento = ? AND YEAR(fecha_creacion) = YEAR(CURDATE()) GROUP BY mes, estado ORDER BY mes";
-$stmt = $conn->prepare($sql); $stmt->bind_param("i", $id_departamento); $stmt->execute();
-$porEstadoMes = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
 
 // ===============================
 // GENERAR PDF CON FPDF
@@ -103,12 +96,9 @@ class PDF extends FPDF {
 $pdf = new PDF('P', 'mm', 'A4');
 $pdf->SetMargins(15, 15, 15);
 $pdf->SetAutoPageBreak(true, 20);
-
-// ===============================
-// PÁGINA 1: ESTADO Y TIPO
-// ===============================
 $pdf->AddPage();
 
+// Período y fecha
 $pdf->SetFont('Arial', '', 9);
 $pdf->SetTextColor(100, 100, 100);
 $pdf->Cell(0, 6, 'Periodo: ' . $periodoTexto . '   |   Generado: ' . date('d/m/Y H:i'), 0, 1, 'R');
@@ -131,31 +121,6 @@ $pdf->TablaEncabezado(['Tipo de tramite', 'Total'], [130, 55]);
 $fill = false;
 foreach ($porTipo as $fila) {
     $pdf->TablaFila([$fila['tipo_tramite'], $fila['total']], [130, 55], $fill);
-    $fill = !$fill;
-}
-
-// ===============================
-// PÁGINA 2: MES Y ESTADO POR MES
-// ===============================
-$pdf->AddPage();
-
-// Tabla por mes
-$pdf->TituloSeccion('Tramites por mes (anio actual)');
-$pdf->TablaEncabezado(['Mes', 'Total'], [130, 55]);
-$fill = false;
-foreach ($porMes as $fila) {
-    $pdf->TablaFila([$nombresMeses[$fila['mes']], $fila['total']], [130, 55], $fill);
-    $fill = !$fill;
-}
-
-$pdf->Ln(8);
-
-// Tabla por estado y mes
-$pdf->TituloSeccion('Tramites por estado y mes');
-$pdf->TablaEncabezado(['Mes', 'Estado', 'Total'], [80, 80, 25]);
-$fill = false;
-foreach ($porEstadoMes as $fila) {
-    $pdf->TablaFila([$nombresMeses[$fila['mes']], $fila['estado'], $fila['total']], [80, 80, 25], $fill);
     $fill = !$fill;
 }
 
