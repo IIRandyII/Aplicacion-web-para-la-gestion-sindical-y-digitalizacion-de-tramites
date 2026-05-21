@@ -26,6 +26,7 @@ body {
     margin-left: 80px;
 }
 
+
 /* ===============================
    CARDS
 ================================ */
@@ -241,17 +242,18 @@ body {
     background: rgba(0,0,0,0.45);
     backdrop-filter: blur(6px);
     z-index: 1000;
+    overflow-y: auto; /* 👈 agregar esto */
 }
 
 .modal-afiliado-content {
     background: #fff;
     width: 90%;
     max-width: 850px;
-    margin: 4vh auto;
+    margin: 2vh auto;
     border-radius: 12px;
     position: relative;
     overflow-y: auto;
-    max-height: 90vh;
+    max-height: 96vh;
     box-shadow: 0 20px 50px rgba(0,0,0,0.2);
     animation: entradaModal 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
@@ -429,6 +431,11 @@ body {
 
 .modal-afiliado-cerrar:hover {
     background: rgba(240, 239, 239, 0.39);
+}
+
+/* Ocultar la X de Bootstrap en el modal del dashboard */
+#modalTramiteAfiliado .detalle-cerrar {
+    display: none;
 }
 
 /* ===============================
