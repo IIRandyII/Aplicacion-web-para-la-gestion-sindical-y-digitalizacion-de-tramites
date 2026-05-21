@@ -68,11 +68,6 @@
     margin-bottom: 25px;
 }
 
-/* Gráficas que ocupan todo el ancho */
-.grafica-full {
-    grid-column: 1 / -1;
-}
-
 /* Box de cada gráfica */
 .grafica-box {
     background: #fff;
@@ -149,10 +144,6 @@
 
     .graficas-grid {
         grid-template-columns: 1fr;
-    }
-
-    .grafica-full {
-        grid-column: 1;
     }
 
     .botones-reportes {

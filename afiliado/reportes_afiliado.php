@@ -66,54 +66,6 @@ while ($fila = $resTipo->fetch_assoc()) {
     $tipos[]       = $fila['tipo_tramite'];
     $totalesTipo[] = $fila['total'];
 }
-
-// ===============================
-// GRÁFICA 3: TRÁMITES POR MES
-// ===============================
-$sqlMes = "SELECT MONTH(fecha_creacion) AS mes, COUNT(id_tramite) AS total
-           FROM tramites
-           WHERE id_departamento = ? AND YEAR(fecha_creacion) = YEAR(CURDATE())
-           GROUP BY mes
-           ORDER BY mes";
-$stmtMes = $conn->prepare($sqlMes);
-$stmtMes->bind_param("i", $id_departamento);
-$stmtMes->execute();
-$resMes = $stmtMes->get_result();
-
-$nombresMeses = [1=>"Ene",2=>"Feb",3=>"Mar",4=>"Abr",5=>"May",6=>"Jun",7=>"Jul",8=>"Ago",9=>"Sep",10=>"Oct",11=>"Nov",12=>"Dic"];
-$meses      = [];
-$totalesMes = [];
-while ($fila = $resMes->fetch_assoc()) {
-    $meses[]      = $nombresMeses[$fila['mes']];
-    $totalesMes[] = $fila['total'];
-}
-
-// ===============================
-// GRÁFICA 4: TRÁMITES POR ESTADO Y MES
-// Barras apiladas
-// ===============================
-$sqlApilada = "SELECT MONTH(fecha_creacion) AS mes, estado, COUNT(id_tramite) AS total
-               FROM tramites
-               WHERE id_departamento = ? AND YEAR(fecha_creacion) = YEAR(CURDATE())
-               GROUP BY mes, estado
-               ORDER BY mes";
-$stmtApilada = $conn->prepare($sqlApilada);
-$stmtApilada->bind_param("i", $id_departamento);
-$stmtApilada->execute();
-$resApilada = $stmtApilada->get_result();
-
-$datosApilada = [];
-while ($fila = $resApilada->fetch_assoc()) {
-    $mes    = $nombresMeses[$fila['mes']];
-    $estado = $fila['estado'];
-    if (!isset($datosApilada[$estado])) {
-        $datosApilada[$estado] = [];
-    }
-    $datosApilada[$estado][$mes] = $fila['total'];
-}
-
-// Meses únicos para el eje X
-$mesesApilada = array_values($nombresMeses);
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -174,22 +126,6 @@ $mesesApilada = array_values($nombresMeses);
                 </div>
             </div>
 
-            <!-- GRÁFICA 3: POR MES -->
-            <div class="grafica-box grafica-full">
-                <h4><i class="fa-solid fa-chart-line"></i> Trámites por mes (año actual)</h4>
-                <div class="grafica-contenedor">
-                    <canvas id="graficaMeses"></canvas>
-                </div>
-            </div>
-
-            <!-- GRÁFICA 4: BARRAS APILADAS -->
-            <div class="grafica-box grafica-full">
-                <h4><i class="fa-solid fa-chart-bar"></i> Trámites por estado y mes</h4>
-                <div class="grafica-contenedor">
-                    <canvas id="graficaApilada"></canvas>
-                </div>
-            </div>
-
         </div>
 
         <!-- BOTONES DE EXPORTACIÓN -->
@@ -210,145 +146,15 @@ $mesesApilada = array_values($nombresMeses);
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
-// Colores del sistema
-const coloresEstado = {
-    "Pendiente":   "#ffd000",
-    "En revisión": "#2563eb",
-    "Aprobado":    "#16a34a",
-    "Rechazado":   "#dc2626"
-};
-
-// ===============================
-// GRÁFICA 1: DONA - POR ESTADO
-// ===============================
-const estados       = <?= json_encode($estados) ?>;
-const totalesEstado = <?= json_encode($totalesEstado) ?>;
-
-new Chart(document.getElementById("graficaEstado"), {
-    type: "doughnut",
-    data: {
-        labels: estados,
-        datasets: [{
-            data: totalesEstado,
-            backgroundColor: estados.map(e => coloresEstado[e] ?? "#94a3b8"),
-            borderWidth: 2,
-            borderColor: "#fff"
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: "bottom",
-                labels: { font: { size: 13 }, padding: 15 }
-            }
-        }
-    }
-});
-
-// ===============================
-// GRÁFICA 2: BARRAS HORIZONTALES - POR TIPO
-// ===============================
-const tipos       = <?= json_encode($tipos) ?>;
-const totalesTipo = <?= json_encode($totalesTipo) ?>;
-
-new Chart(document.getElementById("graficaTipos"), {
-    type: "bar",
-    data: {
-        labels: tipos,
-        datasets: [{
-            label: "Cantidad",
-            data: totalesTipo,
-            backgroundColor: "rgba(0, 40, 85, 0.8)",
-            borderRadius: 6,
-            borderSkipped: false
-        }]
-    },
-    options: {
-        indexAxis: "y",
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-            x: { beginAtZero: true, ticks: { stepSize: 1 } },
-            y: { ticks: { font: { size: 12 } } }
-        }
-    }
-});
-
-// ===============================
-// GRÁFICA 3: LÍNEA CON ÁREA - POR MES
-// ===============================
-const meses      = <?= json_encode($meses) ?>;
-const totalesMes = <?= json_encode($totalesMes) ?>;
-
-new Chart(document.getElementById("graficaMeses"), {
-    type: "line",
-    data: {
-        labels: meses,
-        datasets: [{
-            label: "Trámites",
-            data: totalesMes,
-            borderColor: "#2563eb",
-            backgroundColor: "rgba(37, 99, 235, 0.15)",
-            borderWidth: 3,
-            fill: true,
-            tension: 0.4,
-            pointBackgroundColor: "#002855",
-            pointRadius: 5,
-            pointHoverRadius: 7
-        }]
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: {
-            y: { beginAtZero: true, ticks: { stepSize: 1 } }
-        }
-    }
-});
-
-// ===============================
-// GRÁFICA 4: BARRAS APILADAS
-// ===============================
-const mesesApilada  = <?= json_encode($mesesApilada) ?>;
-const datosApilada  = <?= json_encode($datosApilada) ?>;
-const estadosKeys   = Object.keys(datosApilada);
-
-const datasetsApilada = estadosKeys.map(estado => ({
-    label: estado,
-    data: mesesApilada.map(mes => datosApilada[estado][mes] ?? 0),
-    backgroundColor: coloresEstado[estado] ?? "#94a3b8",
-    borderRadius: 4
-}));
-
-new Chart(document.getElementById("graficaApilada"), {
-    type: "bar",
-    data: {
-        labels: mesesApilada,
-        datasets: datasetsApilada
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: "bottom",
-                labels: { font: { size: 12 }, padding: 12 }
-            }
-        },
-        scales: {
-            x: { stacked: true },
-            y: { stacked: true, beginAtZero: true, ticks: { stepSize: 1 } }
-        }
-    }
-});
+    const estados       = <?= json_encode($estados) ?>;
+    const totalesEstado = <?= json_encode($totalesEstado) ?>;
+    const tipos         = <?= json_encode($tipos) ?>;
+    const totalesTipo   = <?= json_encode($totalesTipo) ?>;
 </script>
 
 <!-- SCRIPTS -->
 <script src="../assets/js/afiliado/sidebar_afiliado.js"></script>
+<script src="../assets/js/afiliado/reporte_afiliado.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
