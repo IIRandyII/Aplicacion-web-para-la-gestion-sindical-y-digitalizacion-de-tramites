@@ -6,10 +6,18 @@ function verTramite(id) {
         .then(res => res.text())
         .then(html => {
             document.getElementById("contenidoModal").innerHTML = html;
-            const modal = new bootstrap.Modal(document.getElementById("modalTramite"));
-            modal.show();
+            document.getElementById("modalTramiteArchivado").style.display = "block";
         });
 }
+
+document.getElementById("cerrarModalArchivado").onclick = () => {
+    document.getElementById("modalTramiteArchivado").style.display = "none";
+};
+
+window.addEventListener("click", (e) => {
+    const modal = document.getElementById("modalTramiteArchivado");
+    if (e.target === modal) modal.style.display = "none";
+});
 
 // ===============================
 // PAGINACIÓN + FILTROS

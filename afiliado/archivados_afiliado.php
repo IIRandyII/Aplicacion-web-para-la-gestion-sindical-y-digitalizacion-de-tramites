@@ -115,16 +115,13 @@ $archivados = $stmt->get_result();
 
     </section>
 
-    <!-- MODAL VER TRÁMITE -->
-    <div class="modal fade" id="modalTramite" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content p-0 overflow-hidden">
-                <div class="modal-body p-0" id="contenidoModal">
-                    Cargando...
-                </div>
-            </div>
-        </div>
+<!-- MODAL VER TRÁMITE -->
+<div class="modal-afiliado" id="modalTramiteArchivado">
+    <div class="modal-afiliado-content">
+        <span class="modal-afiliado-cerrar" id="cerrarModalArchivado">&times;</span>
+        <div id="contenidoModal">Cargando...</div>
     </div>
+</div>
 
 </main>
 
