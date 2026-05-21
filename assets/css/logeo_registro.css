@@ -1,20 +1,14 @@
 /* =============================================
    VARIABLES GLOBALES
-   Colores principales del sistema sindical
    ============================================= */
 :root {
-    --azul: #003A8F;
-    --amarillo: #ffd000;
-    --negro: #000000;
+    --azul:   #003A8F;
+    --verde:  #0f960f;
     --blanco: #FFFFFF;
-    --rojo: #C62828;
-    --verde: #0f960f;
 }
 
 /* =============================================
    RESET GENERAL
-   Elimina márgenes y padding por defecto
-   del navegador en todos los elementos
    ============================================= */
 * {
     margin: 0;
@@ -25,15 +19,9 @@
 
 /* =============================================
    BODY
-   Fondo degradado azul a negro, centra
-   verticalmente el contenido en pantalla
    ============================================= */
 body {
-    background: linear-gradient(
-        135deg,
-        var(--azul),
-        var(--negro)
-    );
+    background: linear-gradient(135deg, var(--azul), #000000);
     height: 100vh;
     display: flex;
     align-items: center;
@@ -42,8 +30,6 @@ body {
 
 /* =============================================
    TARJETA DE AUTENTICACIÓN
-   Contenedor principal del formulario
-   de login y registro
    ============================================= */
 .auth-card {
     background: var(--blanco);
@@ -52,55 +38,57 @@ body {
     border-radius: 10px;
     text-align: center;
     box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
 }
 
-/* Logo del sindicato */
+/* Logo */
 .auth-card img {
-    margin-top: -20px;
     width: 120px;
-    margin-bottom: 15px;
+    margin-bottom: 4px;
 }
 
-/* Título principal */
+/* Título */
 .auth-card h2 {
-    color: var(--negro);
-    margin-bottom: 5px;
-    margin-top: -25px;
+    color: #000000;
+    font-size: 20px;
 }
 
-/* Subtítulo "Sección 49" */
+/* Subtítulo */
 .auth-card p {
     color: var(--azul);
-    margin-top: -5px;
     font-size: 14px;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
 }
 
 /* =============================================
-   INPUTS DEL FORMULARIO
+   FORMULARIO
    ============================================= */
+.auth-card form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 
-/* Estilo base de todos los inputs */
 .auth-card input {
     width: 100%;
     padding: 12px;
-    margin-bottom: 15px;
     border-radius: 5px;
     border: 1px solid #ccc;
     font-size: 14px;
 }
 
-/* Borde azul al hacer foco en un input */
 .auth-card input:focus {
     outline: none;
     border-color: var(--azul);
 }
 
 /* =============================================
-   BOTÓN DE ENVÍO
+   BOTÓN
    ============================================= */
-
-/* Estilo base del botón */
 .auth-card button {
     width: 100%;
     padding: 12px;
@@ -110,21 +98,18 @@ body {
     border-radius: 5px;
     font-size: 15px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: background 0.3s;
 }
 
-/* Oscurece el botón al pasar el mouse */
 .auth-card button:hover {
     background: #0c7a0c;
 }
 
 /* =============================================
    ENLACE DE NAVEGACIÓN
-   (Registrarse / Ya tienes cuenta)
    ============================================= */
 .auth-card a {
     display: block;
-    margin-top: 15px;
     font-size: 14px;
     text-decoration: none;
     color: var(--azul);
@@ -136,36 +121,10 @@ body {
 
 /* =============================================
    ALERTAS
-   Mensajes de error y éxito dentro de la card
+   Solo necesitan existir en el DOM para que
+   alertas.js detecte el tipo y lance SweetAlert.
+   El div se oculta inmediatamente via JS.
    ============================================= */
-
-/* Estilo base de todas las alertas */
 .alert {
-    padding: 12px;
-    border-radius: 6px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    animation: fadeIn 0.4s ease-in-out;
-}
-
-/* Clase que se agrega con JS para ocultar la alerta suavemente */
-.alert.ocultar {
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.6s ease;
-}
-
-/* =============================================
-   ANIMACIÓN FADE IN
-   Entrada suave de la alerta al aparecer
-   ============================================= */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-5px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    display: none;
 }

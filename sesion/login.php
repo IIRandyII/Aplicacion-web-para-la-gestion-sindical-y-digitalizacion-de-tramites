@@ -2,16 +2,23 @@
 session_start();
 require_once __DIR__ . "/../config/db.php";
 
-// Si ya hay sesión iniciada, redirigir automáticamente
-if (isset($_SESSION["rol"])) {
-    if ($_SESSION["rol"] === "admin") {
-        header("Location: ../admin/dashboard_admin.php");
-    } elseif ($_SESSION["rol"] === "afiliado") {
+// ===============================
+// FUNCIÓN DE REDIRECCIÓN POR ROL
+// Centralizada para no repetir
+// la lógica en dos lugares
+// ===============================
+function redirigirPorRol(string $rol): void {
+    if ($rol === "afiliado") {
         header("Location: ../afiliado/dashboard_afiliado.php");
     } else {
         header("Location: ../usuario/dashboard_usuario.php");
     }
     exit();
+}
+
+// Si ya hay sesión iniciada, redirigir automáticamente
+if (isset($_SESSION["rol"])) {
+    redirigirPorRol($_SESSION["rol"]);
 }
 
 // Capturar mensaje de registro exitoso enviado desde register.php
@@ -24,15 +31,14 @@ if (isset($_SESSION["registro_exitoso"])) {
 $error = null;
 
 // Procesar formulario de login
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
-    $email    = trim($_POST["email"]);
-    $password = trim($_POST["password"]);
+    $email    = trim($_POST["email"]    ?? "");
+    $password = trim($_POST["password"] ?? "");
 
-    if (!empty($email) && !empty($password)) {
+    if ($email !== "" && $password !== "") {
 
-        $sql = "SELECT * FROM usuarios WHERE email = ?";
-        $stmt = $conn->prepare($sql);
+        $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
@@ -41,29 +47,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $user = $result->fetch_assoc();
 
-            // ⚠️ SIN HASH por ahora (luego lo mejoramos)
             if ($password === $user["password"]) {
 
-                // 🔐 Crear sesión
+                // Crear sesión
                 $_SESSION["id_usuario"]      = $user["id_usuario"];
                 $_SESSION["nombre"]          = $user["nombre"];
                 $_SESSION["rol"]             = $user["rol"];
                 $_SESSION["id_departamento"] = $user["id_departamento"];
 
-                // 🕒 Actualizar fecha de acceso
+                // Actualizar fecha de acceso
                 $update = $conn->prepare("UPDATE usuarios SET fecha_acceso = NOW() WHERE id_usuario = ?");
                 $update->bind_param("i", $user["id_usuario"]);
                 $update->execute();
 
-                // 🚀 Redirección según rol
-                if ($user["rol"] === "admin") {
-                    header("Location: ../admin/dashboard_admin.php");
-                } elseif ($user["rol"] === "afiliado") {
-                    header("Location: ../afiliado/dashboard_afiliado.php");
-                } else {
-                    header("Location: ../usuario/dashboard_usuario.php");
-                }
-                exit();
+                redirigirPorRol($user["rol"]);
 
             } else {
                 $error = "Contraseña incorrecta.";
@@ -93,27 +90,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h2>Sistema Sindical</h2>
     <p>Sección 49</p>
 
-    <!-- Alerta de error de login -->
     <?php if ($error): ?>
-        <div class="alert alert-error" id="alerta">
-            <?php echo $error; ?>
-        </div>
+        <div class="alert alert-error" id="alerta"><?= htmlspecialchars($error) ?></div>
     <?php endif; ?>
 
-    <!-- Alerta de registro exitoso enviada desde register.php -->
     <?php if ($toast_success): ?>
-        <div class="alert alert-success" id="alerta">
-            <?php echo $toast_success; ?>
-        </div>
+        <div class="alert alert-success" id="alerta"><?= htmlspecialchars($toast_success) ?></div>
     <?php endif; ?>
 
     <form method="POST" autocomplete="off">
-        <input type="email" name="email" placeholder="Correo" required>
+        <input type="email"    name="email"    placeholder="Correo"     required>
         <input type="password" name="password" placeholder="Contraseña" required>
         <button type="submit">Iniciar sesión</button>
     </form>
 
-    <a href="register.php">¿Aun no tienes cuenta? Registrate</a>
+    <a href="register.php">¿Aún no tienes cuenta? Regístrate</a>
+
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
