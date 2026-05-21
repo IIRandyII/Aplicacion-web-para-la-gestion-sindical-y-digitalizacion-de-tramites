@@ -1,16 +1,47 @@
 // ===============================
+// DASHBOARD USUARIO
+// Lógica principal del dashboard:
+// cards, contador animado, carrusel
+// y modal de aviso completo
+// ===============================
+
+// -----------------------------------------------
+// Cache de elementos del modal de aviso
+// (una sola búsqueda en el DOM al cargar)
+// -----------------------------------------------
+const modalAvisoEl    = document.getElementById("modalAvisoUsuario");
+const modalDeptNombre = document.getElementById("modalAvisoDeptNombre");
+const modalTitulo     = document.getElementById("modalAvisoTitulo");
+const modalMensaje    = document.getElementById("modalAvisoMensaje");
+const modalFecha      = document.getElementById("modalAvisoFecha");
+const modalBadge      = document.getElementById("modalAvisoTipoBadge");
+
+// ===============================
+// PUNTO DE ENTRADA ÚNICO
+// Todo se inicializa aquí al cargar
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+    inicializarCards();
+    inicializarCarrusel();
+    inicializarModalAviso();
+    cargarConteo();
+});
+
+// ===============================
 // CARDS - CLICK
 // Abre modal según estado al
 // hacer click en una card
 // ===============================
-document.querySelectorAll(".info-card").forEach(card => {
-    card.addEventListener("click", () => {
-        const estado = card.dataset.estado;
-        if (estado) {
-            openModal(estado);
-        }
+function inicializarCards() {
+    document.querySelectorAll(".info-card").forEach(card => {
+        card.addEventListener("click", () => {
+            const estado = card.dataset.estado;
+            if (estado) {
+                openModal(estado); // función existente en otro archivo
+            }
+        });
     });
-});
+}
 
 // ===============================
 // EFECTO CONTADOR ANIMADO
@@ -23,7 +54,6 @@ function animarContador(elemento, valorFinal, duracion = 800) {
         return;
     }
 
-    let inicio    = 0;
     let startTime = null;
 
     function paso(timestamp) {
@@ -43,28 +73,27 @@ function animarContador(elemento, valorFinal, duracion = 800) {
 
 // ===============================
 // CONTEO DINÁMICO
+// Trae los totales del usuario
+// desde el servidor
 // ===============================
 function cargarConteo() {
-    fetch('obtener_conteo_usuario.php')
-    .then(response => response.json())
-    .then(data => {
-        animarContador(document.getElementById('total'),      data.total      || 0);
-        animarContador(document.getElementById('pendientes'), data.pendientes || 0);
-        animarContador(document.getElementById('revision'),   data.revision   || 0);
-        animarContador(document.getElementById('aprobados'),  data.aprobados  || 0);
-    })
-    .catch(error => console.error('Error al cargar conteo:', error));
+    fetch("obtener_conteo_usuario.php")
+        .then(response => response.json())
+        .then(data => {
+            animarContador(document.getElementById("total"),      data.total      || 0);
+            animarContador(document.getElementById("pendientes"), data.pendientes || 0);
+            animarContador(document.getElementById("revision"),   data.revision   || 0);
+            animarContador(document.getElementById("aprobados"),  data.aprobados  || 0);
+        })
+        .catch(error => console.error("Error al cargar conteo:", error));
 }
-
-document.addEventListener("DOMContentLoaded", cargarConteo);
-
 
 // ===============================
 // CARRUSEL DE AVISOS
 // Automático cada 4 segundos,
 // navegación manual y swipe táctil
 // ===============================
-document.addEventListener("DOMContentLoaded", () => {
+function inicializarCarrusel() {
 
     const contenedor  = document.getElementById("carruselContenedor");
     const btnPrev     = document.getElementById("btnPrev");
@@ -124,51 +153,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function siguiente() {
-        irA((indiceActual + 1) % totalPuntos);
-    }
-
-    function anterior() {
-        irA((indiceActual - 1 + totalPuntos) % totalPuntos);
-    }
+    function siguiente() { irA((indiceActual + 1) % totalPuntos); }
+    function anterior()  { irA((indiceActual - 1 + totalPuntos) % totalPuntos); }
 
     // -----------------------------------------------
     // Botones prev / next (visibles en tablet/desktop)
     // -----------------------------------------------
-    if (btnNext) {
-        btnNext.addEventListener("click", () => {
-            siguiente();
-            reiniciarIntervalo();
-        });
-    }
-
-    if (btnPrev) {
-        btnPrev.addEventListener("click", () => {
-            anterior();
-            reiniciarIntervalo();
-        });
-    }
+    if (btnNext) btnNext.addEventListener("click", () => { siguiente(); reiniciarIntervalo(); });
+    if (btnPrev) btnPrev.addEventListener("click", () => { anterior();  reiniciarIntervalo(); });
 
     // -----------------------------------------------
     // Swipe táctil para móvil
     // -----------------------------------------------
     let touchStartX = 0;
-    let touchEndX   = 0;
 
     contenedor.addEventListener("touchstart", (e) => {
         touchStartX = e.changedTouches[0].screenX;
     }, { passive: true });
 
     contenedor.addEventListener("touchend", (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        const diff = touchStartX - touchEndX;
-
+        const diff = touchStartX - e.changedTouches[0].screenX;
         if (Math.abs(diff) > 50) { // umbral mínimo de 50px
-            if (diff > 0) {
-                siguiente();
-            } else {
-                anterior();
-            }
+            diff > 0 ? siguiente() : anterior();
             reiniciarIntervalo();
         }
     }, { passive: true });
@@ -176,14 +182,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // -----------------------------------------------
     // Autoplay cada 4 segundos
     // -----------------------------------------------
-    function iniciarIntervalo() {
-        intervalo = setInterval(siguiente, 4000);
-    }
-
-    function reiniciarIntervalo() {
-        clearInterval(intervalo);
-        iniciarIntervalo();
-    }
+    function iniciarIntervalo()    { intervalo = setInterval(siguiente, 4000); }
+    function reiniciarIntervalo()  { clearInterval(intervalo); iniciarIntervalo(); }
 
     // -----------------------------------------------
     // Recalcular al cambiar tamaño de ventana
@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const nuevosItemsPorVista = calcularItemsPorVista();
             if (nuevosItemsPorVista !== itemsPorVista) {
                 itemsPorVista = nuevosItemsPorVista;
-                indiceActual  = 0;   // resetear al inicio
+                indiceActual  = 0;
                 crearIndicadores();
                 irA(0);
             }
@@ -206,33 +206,29 @@ document.addEventListener("DOMContentLoaded", () => {
     crearIndicadores();
     irA(0);
     iniciarIntervalo();
-});
+}
 
 // ===============================
 // MODAL DE AVISO COMPLETO
-// Se agregaron tipo y tipoLabel
-// para mostrar el badge de tipo
+// Lee los datos desde data-attributes
+// para evitar inyección en onclick
 // ===============================
-function abrirModalAviso(titulo, mensaje, departamento, fecha, tipo, tipoLabel) {
-    document.getElementById("modalAvisoDeptNombre").textContent = departamento;
-    document.getElementById("modalAvisoTitulo").textContent     = titulo;
-    document.getElementById("modalAvisoMensaje").textContent    = mensaje;
-    document.getElementById("modalAvisoFecha").textContent      = "Publicado: " + fecha;
+function inicializarModalAviso() {
 
-    // Badge de tipo en el header del modal
-    const badge       = document.getElementById("modalAvisoTipoBadge");
-    badge.textContent = tipoLabel || "General";
-    badge.className   = "aviso-tipo-badge tipo-" + (tipo || "general");
+    // Abrir modal al hacer click en cualquier aviso del carrusel
+    document.getElementById("carruselContenedor")?.addEventListener("click", (e) => {
+        const item = e.target.closest(".carrusel-item");
+        if (!item) return;
 
-    document.getElementById("modalAvisoUsuario").classList.add("activo");
+        modalDeptNombre.textContent = item.dataset.departamento;
+        modalTitulo.textContent     = item.dataset.titulo;
+        modalMensaje.textContent    = item.dataset.mensaje;
+        modalFecha.textContent      = "Publicado: " + item.dataset.fecha;
+
+        // Badge de tipo en el header del modal
+        modalBadge.textContent = item.dataset.tipoLabel || "General";
+        modalBadge.className   = "aviso-tipo-badge tipo-" + (item.dataset.tipo || "general");
+
+        abrirModal("modalAvisoUsuario"); // función de utils.js
+    });
 }
-
-document.getElementById("cerrarModalAvisoUsuario").addEventListener("click", () => {
-    document.getElementById("modalAvisoUsuario").classList.remove("activo");
-});
-
-document.getElementById("modalAvisoUsuario").addEventListener("click", (e) => {
-    if (e.target === document.getElementById("modalAvisoUsuario")) {
-        document.getElementById("modalAvisoUsuario").classList.remove("activo");
-    }
-});

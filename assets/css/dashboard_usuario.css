@@ -91,16 +91,21 @@ body {
     border-left: 4px solid #002855;
     padding: 18px 20px;
     border-radius: 0 10px 10px 0;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
     display: flex;
     flex-direction: column;
     gap: 8px;
     cursor: pointer;
 }
 
-.aviso:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0,40,85,0.1);
+/* -----------------------------------------------
+   Hover unificado: .aviso y .carrusel-item
+   comparten el mismo efecto
+----------------------------------------------- */
+.aviso:hover,
+.carrusel-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,40,85,0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 /* Fila superior: departamento + badge tipo */
@@ -205,13 +210,7 @@ body {
     min-width: 0;
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
     box-sizing: border-box;
-}
-
-.carrusel-item:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(0,40,85,0.15);
 }
 
 .carrusel-btn {
@@ -291,7 +290,7 @@ body {
     align-items: center;
 }
 
-/* Meta: departamento + badge tipo en el header del modal */
+/* departamento + badge tipo en el header del modal */
 .modal-aviso-usuario-meta {
     display: flex;
     align-items: center;

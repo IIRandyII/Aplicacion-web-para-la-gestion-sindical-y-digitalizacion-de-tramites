@@ -22,11 +22,11 @@ $stmtAvisos = $conn->prepare("
 $stmtAvisos->execute();
 $avisos = $stmtAvisos->get_result();
 
-// Mapa de tipo → etiqueta, clase CSS y color de borde
+// Mapa de tipo → etiqueta y clase CSS
 $tipoConfig = [
-    'general'     => ['label' => 'General',     'clase' => 'general',     'borde' => '#1a6eb5'],
-    'urgente'     => ['label' => 'Urgente',      'clase' => 'urgente',     'borde' => '#c0392b'],
-    'informativo' => ['label' => 'Informativo',  'clase' => 'informativo', 'borde' => '#1a9e75'],
+    'general'     => ['label' => 'General',     'clase' => 'general'],
+    'urgente'     => ['label' => 'Urgente',      'clase' => 'urgente'],
+    'informativo' => ['label' => 'Informativo',  'clase' => 'informativo'],
 ];
 ?>
 <!DOCTYPE html>
@@ -98,18 +98,24 @@ $tipoConfig = [
 
             <div class="carrusel-contenedor" id="carruselContenedor">
                 <?php foreach ($listaAvisos as $aviso):
-                    $tipo   = $aviso['tipo'] ?? 'general';
-                    $config = $tipoConfig[$tipo] ?? $tipoConfig['general'];
+                    $tipo            = $aviso['tipo'] ?? 'general';
+                    $config          = $tipoConfig[$tipo] ?? $tipoConfig['general'];
+                    // La fecha se calcula una sola vez por aviso
+                    $fechaFormateada = date("d/m/Y H:i", strtotime($aviso['fecha_creacion']));
                 ?>
+                    <!--
+                        Los datos se pasan por data-attributes en lugar de onclick inline,
+                        evitando XSS y manteniendo el HTML limpio.
+                        El JS los lee con item.dataset.*
+                    -->
                     <div class="aviso carrusel-item aviso-tipo-<?= $config['clase'] ?>"
-                         onclick="abrirModalAviso(
-                             '<?= addslashes(htmlspecialchars($aviso['titulo'])) ?>',
-                             '<?= addslashes(htmlspecialchars($aviso['mensaje'])) ?>',
-                             '<?= addslashes(htmlspecialchars($aviso['departamento'])) ?>',
-                             '<?= date("d/m/Y H:i", strtotime($aviso['fecha_creacion'])) ?>',
-                             '<?= $config['clase'] ?>',
-                             '<?= $config['label'] ?>'
-                         )">
+                         data-titulo="<?= htmlspecialchars($aviso['titulo'],      ENT_QUOTES) ?>"
+                         data-mensaje="<?= htmlspecialchars($aviso['mensaje'],     ENT_QUOTES) ?>"
+                         data-departamento="<?= htmlspecialchars($aviso['departamento'], ENT_QUOTES) ?>"
+                         data-fecha="<?= $fechaFormateada ?>"
+                         data-tipo="<?= $config['clase'] ?>"
+                         data-tipo-label="<?= $config['label'] ?>">
+
                         <div class="aviso-top-row">
                             <span class="aviso-departamento">
                                 <i class="fa-solid fa-building"></i>
@@ -121,9 +127,7 @@ $tipoConfig = [
                         </div>
                         <h4><?= htmlspecialchars($aviso['titulo']) ?></h4>
                         <p><?= htmlspecialchars($aviso['mensaje']) ?></p>
-                        <span class="fecha">
-                            Publicado: <?= date("d/m/Y H:i", strtotime($aviso['fecha_creacion'])) ?>
-                        </span>
+                        <span class="fecha">Publicado: <?= $fechaFormateada ?></span>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -146,7 +150,11 @@ $tipoConfig = [
     </section>
 
     <!-- MODAL AVISO -->
-    <div class="modal-aviso-usuario" id="modalAvisoUsuario">
+    <!--
+        data-modal-id permite al listener global de utils.js
+        cerrar este modal
+    -->
+    <div class="modal-aviso-usuario" id="modalAvisoUsuario" data-modal-id="modalAvisoUsuario">
         <div class="modal-aviso-usuario-content">
             <div class="modal-aviso-usuario-header">
                 <div class="modal-aviso-usuario-meta">
@@ -156,7 +164,9 @@ $tipoConfig = [
                     </span>
                     <span class="aviso-tipo-badge" id="modalAvisoTipoBadge"></span>
                 </div>
-                <button class="modal-aviso-usuario-cerrar" id="cerrarModalAvisoUsuario">
+                <!-- data-cerrar-modal global de utils.js -->
+                <button class="modal-aviso-usuario-cerrar"
+                        data-cerrar-modal="modalAvisoUsuario">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -172,6 +182,7 @@ $tipoConfig = [
 
 <script src="../assets/js/sidebar_usuario.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="../assets/js/utils.js"></script>
 <script src="../assets/js/dashboard_usuario.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
