@@ -100,4 +100,30 @@ $documentoHTML = !empty($tramite['documento_respaldo']) ? "
         <?= $documentoHTML ?>
     </div>
 
+    <!-- CAMBIAR ESTADO -->
+<div class="detalle-seccion">
+    <h4 class="detalle-seccion-titulo"><i class="fas fa-exchange-alt"></i> Actualizar estado</h4>
+    <div class="detalle-grid">
+        <div class="detalle-fila" style="flex-direction: column; gap: 8px;">
+            <span class="detalle-label">Nuevo estado</span>
+            <select id="nuevoEstado" class="form-select">
+                <option value="Pendiente"   <?= $tramite['estado'] === 'Pendiente'   ? 'selected' : '' ?>>Pendiente</option>
+                <option value="En revisión" <?= $tramite['estado'] === 'En revisión' ? 'selected' : '' ?>>En revisión</option>
+                <option value="Aprobado"    <?= $tramite['estado'] === 'Aprobado'    ? 'selected' : '' ?>>Aprobado</option>
+                <option value="Rechazado"   <?= $tramite['estado'] === 'Rechazado'   ? 'selected' : '' ?>>Rechazado</option>
+            </select>
+        </div>
+        <div class="detalle-fila" style="flex-direction: column; gap: 8px;">
+            <span class="detalle-label">Comentario <small class="text-muted">(obligatorio si se rechaza)</small></span>
+            <textarea id="comentarioEstado" class="form-control" rows="3" 
+                      placeholder="Escribe una justificación o comentario..."></textarea>
+        </div>
+    </div>
+    <div style="margin-top: 12px; text-align: right;">
+        <button class="btn btn-primary" onclick="actualizarEstado(<?= $tramite['id_tramite'] ?>)">
+            <i class="fas fa-save"></i> Guardar cambios
+        </button>
+    </div>
+</div>
+
 </div>
